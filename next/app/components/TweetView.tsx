@@ -3,12 +3,14 @@ import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faComment,
   faRetweet,
-  faHeart,
-  faBookmark,
   faArrowUpFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faComment,
+  faHeart,
+  faBookmark,
+} from "@fortawesome/free-regular-svg-icons";
 
 export const TweetView = () => {
   //https://twitter.com/TwitterJP/status/1570218396775481344
@@ -32,7 +34,7 @@ export const TweetView = () => {
       <div className={styles.body}>
         今日から４日間ゲームのことしか考えないと決めたので、ヘッダーもゲーム仕様にしてみました
       </div>
-      <div className={styles.bottom}>午前10:10 · 2022年9月15日</div>
+      <div className={styles.time}>午前10:10 · 2022年9月15日</div>
       <div className={styles.reactions}>
         <div>
           <span className={styles.reactionvalue}>63</span>
@@ -51,12 +53,13 @@ export const TweetView = () => {
           <span className={styles.reactionname}> ブックマーク</span>
         </div>
       </div>
-      <FontAwesomeIcon icon={faComment} />
-      <FontAwesomeIcon icon={faRetweet} />
-      <FontAwesomeIcon icon={faHeart} />
-      <FontAwesomeIcon icon={faBookmark} />
-      <FontAwesomeIcon icon={faArrowUpFromBracket} />
-      <FontAwesomeIcon icon={faComment} />
+      <div className={styles.actions}>
+        <FontAwesomeIcon className={styles.icon} s icon={faComment} />
+        <FontAwesomeIcon className={styles.icon} icon={faRetweet} />
+        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+        <FontAwesomeIcon className={styles.icon} icon={faBookmark} />
+        <FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
+      </div>
     </div>
   );
 };

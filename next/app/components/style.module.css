@@ -56,8 +56,21 @@
   color: black;
 }
 
-.bottom {
+.time {
   color: rgb(83, 100, 113);
   font-size: 15px;
   margin: 16px 0px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 16px 40px;
+}
+
+.icon {
+  display: inline-block;
+  font-size: 20px;
+  color: rgb(83, 100, 113);
 }
