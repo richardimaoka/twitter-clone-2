@@ -1,6 +1,15 @@
 import styles from "./style.module.css";
 import Image from "next/image";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faComment,
+  faRetweet,
+  faHeart,
+  faBookmark,
+  faArrowUpFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+
 export const TweetView = () => {
   //https://twitter.com/TwitterJP/status/1570218396775481344
   return (
@@ -42,6 +51,12 @@ export const TweetView = () => {
           <span className={styles.reactionname}> ブックマーク</span>
         </div>
       </div>
+      <FontAwesomeIcon icon={faComment} />
+      <FontAwesomeIcon icon={faRetweet} />
+      <FontAwesomeIcon icon={faHeart} />
+      <FontAwesomeIcon icon={faBookmark} />
+      <FontAwesomeIcon icon={faArrowUpFromBracket} />
+      <FontAwesomeIcon icon={faComment} />
     </div>
   );
 };
