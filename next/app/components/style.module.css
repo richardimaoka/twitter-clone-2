@@ -1,10 +1,26 @@
-.twitter {
+.tweet {
   background-color: white;
+  padding: 4px;
 }
 
 /* class for tweet header, don't confuse with <header> tag*/
 .header {
   display: flex;
+  gap: 10px;
+}
+
+.profilepic {
+  border-radius: 20px;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.userid {
+  font-size: 15px;
+  color: rgb(83, 100, 113);
 }
 
 /* class for tweet body, don't confuse with <body> tag*/

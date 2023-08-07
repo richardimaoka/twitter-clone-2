@@ -8,6 +8,7 @@ export const TweetView = () => {
       <div className={styles.header}>
         <div>
           <Image
+            className={styles.profilepic}
             src="/images/twitter.jpg"
             width={40}
             height={40}
@@ -15,8 +16,8 @@ export const TweetView = () => {
           />
         </div>
         <div>
-          <div>Japan</div>
-          <div>&#064;TwitterJP</div>
+          <div className={styles.username}>Japan</div>
+          <div className={styles.userid}>&#064;TwitterJP</div>
         </div>
       </div>
       <div className={styles.body}>
