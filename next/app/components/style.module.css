@@ -1,11 +1,14 @@
 .column {
   width: 600px;
+  height: 100svh;
   margin: 0 auto;
+  border-left: 1px solid rgb(239, 243, 244);
+  border-right: 1px solid rgb(239, 243, 244);
 }
 
 .tweet {
   background-color: white;
-  padding: 4px;
+  padding: 16px;
 }
 
 /* class for tweet header, don't confuse with <header> tag*/
@@ -31,9 +34,11 @@
 /* class for tweet body, don't confuse with <body> tag*/
 .body {
   font-size: 17px;
+  margin-top: 12px;
 }
 
 .bottom {
   color: rgb(83, 100, 113);
   font-size: 15px;
+  margin: 16px 0px;
 }
