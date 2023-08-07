@@ -37,6 +37,25 @@
   margin-top: 12px;
 }
 
+.reactions {
+  display: flex;
+  gap: 10px;
+  padding: 16px 0px;
+  border-top: 1px solid rgb(239, 243, 244);
+  border-bottom: 1px solid rgb(239, 243, 244);
+}
+
+.reactionvalue {
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+}
+
+.reactionname {
+  font-size: 14px;
+  color: black;
+}
+
 .bottom {
   color: rgb(83, 100, 113);
   font-size: 15px;
