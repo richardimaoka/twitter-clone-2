@@ -1,9 +1,9 @@
-import { TweetView } from "./components/Tweet";
+import { TweetColumn } from "./components/TweetColumn";
 
 export default function Home() {
   return (
     <main>
-      <TweetView />
+      <TweetColumn />
     </main>
   );
 }

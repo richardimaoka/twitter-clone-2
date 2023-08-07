@@ -1,3 +1,8 @@
+.column {
+  width: 600px;
+  margin: 0 auto;
+}
+
 .tweet {
   background-color: white;
   padding: 4px;
