@@ -1,16 +1,39 @@
-import styles from "./style.module.css";
 import Image from "next/image";
+import styles from "./style.module.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faRetweet,
   faArrowUpFromBracket,
+  faBookmark,
   faComment,
   faHeart,
-  faBookmark,
+  faRetweet,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const TweetView = () => {
+import { FragmentType, graphql, useFragment } from "@/libs/gql";
+
+const fragmentDefinition = graphql(`
+  fragment TweetFragment on Tweet {
+    userName
+    userId
+    body
+    time
+    date
+    retweets
+    quotes
+    likes
+    bookmarks
+  }
+`);
+
+interface TweetViewProps {
+  fragment: FragmentType<typeof fragmentDefinition>;
+}
+
+export const TweetView = (props: TweetViewProps) => {
+  const fragment = useFragment(fragmentDefinition, props.fragment);
+  const atMark = "&#064;"; //HTML escaped
+
   //https://twitter.com/TwitterJP/status/1570218396775481344
   return (
     <div className={styles.tweet}>
@@ -25,29 +48,31 @@ export const TweetView = () => {
           />
         </div>
         <div>
-          <div className={styles.username}>Japan</div>
-          <div className={styles.userid}>&#064;TwitterJP</div>
+          <div className={styles.username}>{fragment.userName}</div>
+          <div className={styles.userid}>
+            {atMark} {fragment.userId}
+          </div>
         </div>
       </div>
-      <div className={styles.body}>
-        今日から４日間ゲームのことしか考えないと決めたので、ヘッダーもゲーム仕様にしてみました
+      <div className={styles.body}>{fragment.body}</div>
+      <div className={styles.time}>
+        {fragment.date} · {fragment.time}
       </div>
-      <div className={styles.time}>午前10:10 · 2022年9月15日</div>
       <div className={styles.reactions}>
         <div>
-          <span className={styles.reactionvalue}>63</span>
+          <span className={styles.reactionvalue}>{fragment.retweets}</span>
           <span className={styles.reactionname}> 件のリツイート</span>
         </div>
         <div>
-          <span className={styles.reactionvalue}>15</span>
+          <span className={styles.reactionvalue}>{fragment.quotes}</span>
           <span className={styles.reactionname}> 件の引用</span>
         </div>
         <div>
-          <span className={styles.reactionvalue}>371</span>
+          <span className={styles.reactionvalue}>{fragment.likes}</span>
           <span className={styles.reactionname}> 件のいいね</span>
         </div>
         <div>
-          <span className={styles.reactionvalue}>8</span>
+          <span className={styles.reactionvalue}>{fragment.bookmarks}</span>
           <span className={styles.reactionname}> ブックマーク</span>
         </div>
       </div>
