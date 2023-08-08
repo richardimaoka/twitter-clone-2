@@ -12,6 +12,7 @@ type Tweet {
   quotes: Int
   likes: Int
   bookmarks: Int
+  replies: [Tweet]
 }
 
 type Query {
