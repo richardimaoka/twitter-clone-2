@@ -15,4 +15,8 @@ tmux split-window -v -t "$SESSION"
 tmux select-layout even-vertical   # to avoid 'no space for new pane'
 tmux send-keys -t "$SESSION:0.2" '(cd next && npm run dev)' C-m
 
+tmux split-window -v -t "$SESSION"
+tmux select-layout even-vertical   # to avoid 'no space for new pane'
+tmux send-keys -t "$SESSION:0.3" '(cd next && npm run codegen)' C-m
+
 tmux attach -t "$SESSION"
