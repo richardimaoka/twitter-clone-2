@@ -32,7 +32,6 @@ interface TweetViewProps {
 
 export const TweetView = (props: TweetViewProps) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
-  const atMark = "&#064;"; //HTML escaped
 
   //https://twitter.com/TwitterJP/status/1570218396775481344
   return (
@@ -49,9 +48,7 @@ export const TweetView = (props: TweetViewProps) => {
         </div>
         <div>
           <div className={styles.username}>{fragment.userName}</div>
-          <div className={styles.userid}>
-            {atMark} {fragment.userId}
-          </div>
+          <div className={styles.userid}>&#064;{fragment.userId}</div>
         </div>
       </div>
       <div className={styles.body}>{fragment.body}</div>
