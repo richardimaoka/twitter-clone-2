@@ -52,7 +52,7 @@ export const TweetView = () => {
         </div>
       </div>
       <div className={styles.actions}>
-        <FontAwesomeIcon className={styles.icon} s icon={faComment} />
+        <FontAwesomeIcon className={styles.icon} icon={faComment} />
         <FontAwesomeIcon className={styles.icon} icon={faRetweet} />
         <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         <FontAwesomeIcon className={styles.icon} icon={faBookmark} />
