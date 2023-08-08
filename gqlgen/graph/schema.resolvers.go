@@ -6,14 +6,29 @@ package graph
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
 // Tweet is the resolver for the tweet field.
 func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
-	panic(fmt.Errorf("not implemented: Tweet - tweet"))
+	bytes, err := os.ReadFile("data/tweet.json")
+	if err != nil {
+		return nil, err
+	}
+
+	var tweet model.Tweet
+	err = json.Unmarshal(bytes, &tweet)
+	if err != nil {
+		log.Printf("Error in Tweet - %v", err)
+		return nil, fmt.Errorf("internal server error")
+	}
+
+	return &tweet, nil
 }
 
 // Query returns QueryResolver implementation.
