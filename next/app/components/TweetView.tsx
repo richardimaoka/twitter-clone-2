@@ -5,12 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRetweet,
   faArrowUpFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
-import {
   faComment,
   faHeart,
   faBookmark,
-} from "@fortawesome/free-regular-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 
 export const TweetView = () => {
   //https://twitter.com/TwitterJP/status/1570218396775481344
