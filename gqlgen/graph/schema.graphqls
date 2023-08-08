@@ -2,27 +2,18 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
-}
-
-type User {
-  id: ID!
-  name: String!
+type Tweet {
+  userName: String
+  userId: String
+  body: String
+  time: String
+  date: String
+  retweets: Int
+  quotes: Int
+  likes: Int
+  bookmarks: Int
 }
 
 type Query {
-  todos: [Todo!]!
-}
-
-input NewTodo {
-  text: String!
-  userId: String!
-}
-
-type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  tweet: Tweet
 }

@@ -2,19 +2,14 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
-}
-
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+type Tweet struct {
+	UserName  *string `json:"userName,omitempty"`
+	UserID    *string `json:"userId,omitempty"`
+	Body      *string `json:"body,omitempty"`
+	Time      *string `json:"time,omitempty"`
+	Date      *string `json:"date,omitempty"`
+	Retweets  *int    `json:"retweets,omitempty"`
+	Quotes    *int    `json:"quotes,omitempty"`
+	Likes     *int    `json:"likes,omitempty"`
+	Bookmarks *int    `json:"bookmarks,omitempty"`
 }
