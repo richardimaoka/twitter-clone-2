@@ -18,6 +18,7 @@ const fragmentDefinition = graphql(`
     userId
     profilePicture
     body
+    picturePath
     time
     date
     retweets
@@ -36,6 +37,7 @@ export const TweetView = (props: TweetViewProps) => {
   const noProfilePic = "/images/no-profile-egg.png";
 
   //https://twitter.com/TwitterJP/status/1570218396775481344
+  //https://twitter.com/TwitterJP/status/1587301348604841987
   return (
     <div className={styles.tweet}>
       <div className={styles.header}>

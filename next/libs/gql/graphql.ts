@@ -40,6 +40,7 @@ export type Tweet = {
   bookmarks?: Maybe<Scalars["Int"]["output"]>;
   date?: Maybe<Scalars["String"]["output"]>;
   likes?: Maybe<Scalars["Int"]["output"]>;
+  picturePath?: Maybe<Scalars["String"]["output"]>;
   profilePicture?: Maybe<Scalars["String"]["output"]>;
   quotes?: Maybe<Scalars["Int"]["output"]>;
   replies?: Maybe<Array<Maybe<Tweet>>>;
@@ -87,6 +88,7 @@ export type TweetFragmentFragment = {
   userId?: string | null;
   profilePicture?: string | null;
   body?: string | null;
+  picturePath?: string | null;
   time?: string | null;
   date?: string | null;
   retweets?: number | null;
@@ -125,6 +127,7 @@ export const TweetFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "userId" } },
           { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
@@ -209,6 +212,7 @@ export const TweetThreadFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "userId" } },
           { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
@@ -275,6 +279,7 @@ export const TweetColumnFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "userId" } },
           { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
@@ -377,6 +382,7 @@ export const PageQueryDocument = {
           { kind: "Field", name: { kind: "Name", value: "userId" } },
           { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },

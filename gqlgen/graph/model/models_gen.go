@@ -7,6 +7,7 @@ type Tweet struct {
 	UserID         *string  `json:"userId,omitempty"`
 	ProfilePicture *string  `json:"profilePicture,omitempty"`
 	Body           *string  `json:"body,omitempty"`
+	PicturePath    *string  `json:"picturePath,omitempty"`
 	Time           *string  `json:"time,omitempty"`
 	Date           *string  `json:"date,omitempty"`
 	Retweets       *int     `json:"retweets,omitempty"`
