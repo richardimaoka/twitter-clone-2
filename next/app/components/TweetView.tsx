@@ -16,6 +16,7 @@ const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
     userName
     userId
+    profilePicture
     body
     time
     date
@@ -32,6 +33,7 @@ interface TweetViewProps {
 
 export const TweetView = (props: TweetViewProps) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
+  const noProfilePic = "/images/no-profile-egg.png";
 
   //https://twitter.com/TwitterJP/status/1570218396775481344
   return (
@@ -40,7 +42,9 @@ export const TweetView = (props: TweetViewProps) => {
         <div>
           <Image
             className={styles.profilepic}
-            src="/images/twitter.jpg"
+            src={
+              fragment.profilePicture ? fragment.profilePicture : noProfilePic
+            }
             width={40}
             height={40}
             alt={"user profile pic"}

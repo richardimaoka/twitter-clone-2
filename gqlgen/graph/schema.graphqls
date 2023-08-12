@@ -5,6 +5,7 @@
 type Tweet {
   userName: String
   userId: String
+  profilePicture: String
   body: String
   time: String
   date: String

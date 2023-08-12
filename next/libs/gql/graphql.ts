@@ -40,6 +40,7 @@ export type Tweet = {
   bookmarks?: Maybe<Scalars["Int"]["output"]>;
   date?: Maybe<Scalars["String"]["output"]>;
   likes?: Maybe<Scalars["Int"]["output"]>;
+  profilePicture?: Maybe<Scalars["String"]["output"]>;
   quotes?: Maybe<Scalars["Int"]["output"]>;
   replies?: Maybe<Array<Maybe<Tweet>>>;
   retweets?: Maybe<Scalars["Int"]["output"]>;
@@ -56,6 +57,7 @@ export type TweetFragmentFragment = {
   __typename: "Tweet";
   userName?: string | null;
   userId?: string | null;
+  profilePicture?: string | null;
   body?: string | null;
   time?: string | null;
   date?: string | null;
@@ -93,6 +95,7 @@ export const TweetFragmentFragmentDoc = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "userName" } },
           { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
@@ -137,6 +140,7 @@ export const TweetColumnFragmentFragmentDoc = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "userName" } },
           { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
@@ -187,6 +191,7 @@ export const PageQueryDocument = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "userName" } },
           { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },

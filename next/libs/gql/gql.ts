@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetFragment\n  }\n":
     types.TweetColumnFragmentFragmentDoc,
-  "\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n":
+  "\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n":
     types.TweetFragmentFragmentDoc,
   "\n  query PageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n":
     types.PageQueryDocument,
@@ -45,8 +45,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n",
-): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n"];
+  source: "\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n",
+): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
