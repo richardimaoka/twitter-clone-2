@@ -19,5 +19,12 @@ interface TweetThreadProps {
 export const TweetThread = (props: TweetThreadProps) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
-  return <TweetView fragment={fragment} />;
+  return (
+    <>
+      <TweetView fragment={fragment} />
+      {fragment.replies?.map(
+        (reply, index) => reply && <TweetView key={index} fragment={reply} />
+      )}
+    </>
+  );
 };
