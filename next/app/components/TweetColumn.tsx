@@ -1,11 +1,11 @@
-import { TweetView } from "./TweetView";
+import { TweetThread } from "./TweetThread";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
   fragment TweetColumnFragment on Tweet {
-    ...TweetFragment
+    ...TweetThreadFragment
   }
 `);
 
@@ -18,7 +18,7 @@ export const TweetColumn = (props: TweetColumnProps) => {
 
   return (
     <div className={styles.column}>
-      <TweetView fragment={fragment} />
+      <TweetThread fragment={fragment} />
     </div>
   );
 };

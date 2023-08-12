@@ -2,6 +2,7 @@ import { TweetColumn } from "./components/TweetColumn";
 import { getClient } from "@/libs/apolloClient";
 import { graphql } from "@/libs/gql";
 import { print } from "graphql";
+
 const queryDefinition = graphql(/* GraphQL */ `
   query PageQuery {
     tweet {

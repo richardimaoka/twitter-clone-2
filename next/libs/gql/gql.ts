@@ -13,8 +13,10 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetFragment\n  }\n":
+  "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetThreadFragment\n  }\n":
     types.TweetColumnFragmentFragmentDoc,
+  "\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetFragment\n    }\n  }\n":
+    types.TweetThreadFragmentFragmentDoc,
   "\n  fragment TweetFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n":
     types.TweetFragmentFragmentDoc,
   "\n  query PageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n":
@@ -39,8 +41,14 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetFragment\n  }\n",
-): (typeof documents)["\n  fragment TweetColumnFragment on Tweet {\n    ...TweetFragment\n  }\n"];
+  source: "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetThreadFragment\n  }\n",
+): (typeof documents)["\n  fragment TweetColumnFragment on Tweet {\n    ...TweetThreadFragment\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetFragment\n    }\n  }\n",
+): (typeof documents)["\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
