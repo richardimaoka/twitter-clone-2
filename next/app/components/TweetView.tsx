@@ -19,6 +19,8 @@ const fragmentDefinition = graphql(`
     profilePicture
     body
     picturePath
+    pictureWidth
+    pictureHeight
     time
     date
     retweets
@@ -58,6 +60,17 @@ export const TweetView = (props: TweetViewProps) => {
         </div>
       </div>
       <div className={styles.body}>{fragment.body}</div>
+      {fragment.picturePath &&
+        fragment.pictureWidth &&
+        fragment.pictureHeight && (
+          <Image
+            className={styles.tweetpic}
+            src={fragment.picturePath}
+            width={fragment.pictureWidth}
+            height={fragment.pictureHeight}
+            alt={"tweet pic"}
+          />
+        )}
       <div className={styles.time}>
         {fragment.date} · {fragment.time}
       </div>

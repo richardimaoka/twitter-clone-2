@@ -37,6 +37,13 @@
   margin-top: 12px;
 }
 
+.tweetpic {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
 .reactions {
   display: flex;
   gap: 10px;

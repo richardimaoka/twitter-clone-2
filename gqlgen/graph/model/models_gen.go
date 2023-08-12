@@ -8,6 +8,8 @@ type Tweet struct {
 	ProfilePicture *string  `json:"profilePicture,omitempty"`
 	Body           *string  `json:"body,omitempty"`
 	PicturePath    *string  `json:"picturePath,omitempty"`
+	PictureWidth   *int     `json:"pictureWidth,omitempty"`
+	PictureHeight  *int     `json:"pictureHeight,omitempty"`
 	Time           *string  `json:"time,omitempty"`
 	Date           *string  `json:"date,omitempty"`
 	Retweets       *int     `json:"retweets,omitempty"`

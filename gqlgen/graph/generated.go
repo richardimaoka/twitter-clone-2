@@ -53,7 +53,9 @@ type ComplexityRoot struct {
 		Bookmarks      func(childComplexity int) int
 		Date           func(childComplexity int) int
 		Likes          func(childComplexity int) int
+		PictureHeight  func(childComplexity int) int
 		PicturePath    func(childComplexity int) int
+		PictureWidth   func(childComplexity int) int
 		ProfilePicture func(childComplexity int) int
 		Quotes         func(childComplexity int) int
 		Replies        func(childComplexity int) int
@@ -118,12 +120,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tweet.Likes(childComplexity), true
 
+	case "Tweet.pictureHeight":
+		if e.complexity.Tweet.PictureHeight == nil {
+			break
+		}
+
+		return e.complexity.Tweet.PictureHeight(childComplexity), true
+
 	case "Tweet.picturePath":
 		if e.complexity.Tweet.PicturePath == nil {
 			break
 		}
 
 		return e.complexity.Tweet.PicturePath(childComplexity), true
+
+	case "Tweet.pictureWidth":
+		if e.complexity.Tweet.PictureWidth == nil {
+			break
+		}
+
+		return e.complexity.Tweet.PictureWidth(childComplexity), true
 
 	case "Tweet.profilePicture":
 		if e.complexity.Tweet.ProfilePicture == nil {
@@ -381,6 +397,10 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
 				return ec.fieldContext_Tweet_picturePath(ctx, field)
+			case "pictureWidth":
+				return ec.fieldContext_Tweet_pictureWidth(ctx, field)
+			case "pictureHeight":
+				return ec.fieldContext_Tweet_pictureHeight(ctx, field)
 			case "time":
 				return ec.fieldContext_Tweet_time(ctx, field)
 			case "date":
@@ -736,6 +756,88 @@ func (ec *executionContext) fieldContext_Tweet_picturePath(ctx context.Context, 
 	return fc, nil
 }
 
+func (ec *executionContext) _Tweet_pictureWidth(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_pictureWidth(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PictureWidth, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_pictureWidth(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tweet_pictureHeight(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_pictureHeight(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PictureHeight, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_pictureHeight(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Tweet_time(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Tweet_time(ctx, field)
 	if err != nil {
@@ -1028,6 +1130,10 @@ func (ec *executionContext) fieldContext_Tweet_replies(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
 				return ec.fieldContext_Tweet_picturePath(ctx, field)
+			case "pictureWidth":
+				return ec.fieldContext_Tweet_pictureWidth(ctx, field)
+			case "pictureHeight":
+				return ec.fieldContext_Tweet_pictureHeight(ctx, field)
 			case "time":
 				return ec.fieldContext_Tweet_time(ctx, field)
 			case "date":
@@ -2920,6 +3026,10 @@ func (ec *executionContext) _Tweet(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Tweet_body(ctx, field, obj)
 		case "picturePath":
 			out.Values[i] = ec._Tweet_picturePath(ctx, field, obj)
+		case "pictureWidth":
+			out.Values[i] = ec._Tweet_pictureWidth(ctx, field, obj)
+		case "pictureHeight":
+			out.Values[i] = ec._Tweet_pictureHeight(ctx, field, obj)
 		case "time":
 			out.Values[i] = ec._Tweet_time(ctx, field, obj)
 		case "date":

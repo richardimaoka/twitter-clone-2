@@ -8,6 +8,8 @@ type Tweet {
   profilePicture: String
   body: String
   picturePath: String
+  pictureWidth: Int
+  pictureHeight: Int
   time: String
   date: String
   retweets: Int
