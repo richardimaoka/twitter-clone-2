@@ -24,6 +24,9 @@ const fragmentDefinition = graphql(`
     quotes
     likes
     bookmarks
+    replies {
+      ...TweetFragment
+    }
   }
 `);
 
