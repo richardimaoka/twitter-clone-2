@@ -54,6 +54,7 @@ type ComplexityRoot struct {
 		Date      func(childComplexity int) int
 		Likes     func(childComplexity int) int
 		Quotes    func(childComplexity int) int
+		Replies   func(childComplexity int) int
 		Retweets  func(childComplexity int) int
 		Time      func(childComplexity int) int
 		UserID    func(childComplexity int) int
@@ -121,6 +122,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Tweet.Quotes(childComplexity), true
+
+	case "Tweet.replies":
+		if e.complexity.Tweet.Replies == nil {
+			break
+		}
+
+		return e.complexity.Tweet.Replies(childComplexity), true
 
 	case "Tweet.retweets":
 		if e.complexity.Tweet.Retweets == nil {
@@ -365,6 +373,8 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 				return ec.fieldContext_Tweet_likes(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
@@ -865,6 +875,69 @@ func (ec *executionContext) fieldContext_Tweet_bookmarks(ctx context.Context, fi
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tweet_replies(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_replies(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Replies, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Tweet)
+	fc.Result = res
+	return ec.marshalOTweet2ᚕᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_replies(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "userName":
+				return ec.fieldContext_Tweet_userName(ctx, field)
+			case "userId":
+				return ec.fieldContext_Tweet_userId(ctx, field)
+			case "body":
+				return ec.fieldContext_Tweet_body(ctx, field)
+			case "time":
+				return ec.fieldContext_Tweet_time(ctx, field)
+			case "date":
+				return ec.fieldContext_Tweet_date(ctx, field)
+			case "retweets":
+				return ec.fieldContext_Tweet_retweets(ctx, field)
+			case "quotes":
+				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "likes":
+				return ec.fieldContext_Tweet_likes(ctx, field)
+			case "bookmarks":
+				return ec.fieldContext_Tweet_bookmarks(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
 	}
 	return fc, nil
@@ -2749,6 +2822,8 @@ func (ec *executionContext) _Tweet(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Tweet_likes(ctx, field, obj)
 		case "bookmarks":
 			out.Values[i] = ec._Tweet_bookmarks(ctx, field, obj)
+		case "replies":
+			out.Values[i] = ec._Tweet_replies(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -3437,6 +3512,47 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	}
 	res := graphql.MarshalString(*v)
 	return res
+}
+
+func (ec *executionContext) marshalOTweet2ᚕᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx context.Context, sel ast.SelectionSet, v []*model.Tweet) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOTweet2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
 }
 
 func (ec *executionContext) marshalOTweet2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx context.Context, sel ast.SelectionSet, v *model.Tweet) graphql.Marshaler {

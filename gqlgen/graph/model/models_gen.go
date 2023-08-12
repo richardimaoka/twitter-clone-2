@@ -3,13 +3,14 @@
 package model
 
 type Tweet struct {
-	UserName  *string `json:"userName,omitempty"`
-	UserID    *string `json:"userId,omitempty"`
-	Body      *string `json:"body,omitempty"`
-	Time      *string `json:"time,omitempty"`
-	Date      *string `json:"date,omitempty"`
-	Retweets  *int    `json:"retweets,omitempty"`
-	Quotes    *int    `json:"quotes,omitempty"`
-	Likes     *int    `json:"likes,omitempty"`
-	Bookmarks *int    `json:"bookmarks,omitempty"`
+	UserName  *string  `json:"userName,omitempty"`
+	UserID    *string  `json:"userId,omitempty"`
+	Body      *string  `json:"body,omitempty"`
+	Time      *string  `json:"time,omitempty"`
+	Date      *string  `json:"date,omitempty"`
+	Retweets  *int     `json:"retweets,omitempty"`
+	Quotes    *int     `json:"quotes,omitempty"`
+	Likes     *int     `json:"likes,omitempty"`
+	Bookmarks *int     `json:"bookmarks,omitempty"`
+	Replies   []*Tweet `json:"replies,omitempty"`
 }
