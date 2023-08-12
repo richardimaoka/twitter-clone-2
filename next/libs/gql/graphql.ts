@@ -55,11 +55,25 @@ export type TweetColumnFragmentFragment = ({ __typename: "Tweet" } & {
   };
 }) & { " $fragmentName"?: "TweetColumnFragmentFragment" };
 
+export type TweetReplyFragmentFragment = {
+  __typename: "Tweet";
+  userName?: string | null;
+  userId?: string | null;
+  profilePicture?: string | null;
+  body?: string | null;
+  date?: string | null;
+  retweets?: number | null;
+  quotes?: number | null;
+  likes?: number | null;
+} & { " $fragmentName"?: "TweetReplyFragmentFragment" };
+
 export type TweetThreadFragmentFragment = ({
   __typename: "Tweet";
   replies?: Array<
     | ({ __typename: "Tweet" } & {
-        " $fragmentRefs"?: { TweetFragmentFragment: TweetFragmentFragment };
+        " $fragmentRefs"?: {
+          TweetReplyFragmentFragment: TweetReplyFragmentFragment;
+        };
       })
     | null
   > | null;
@@ -122,6 +136,32 @@ export const TweetFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TweetFragmentFragment, unknown>;
+export const TweetReplyFragmentFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TweetReplyFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "userName" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+          { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "likes" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TweetReplyFragmentFragment, unknown>;
 export const TweetThreadFragmentFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -147,7 +187,7 @@ export const TweetThreadFragmentFragmentDoc = {
               selections: [
                 {
                   kind: "FragmentSpread",
-                  name: { kind: "Name", value: "TweetFragment" },
+                  name: { kind: "Name", value: "TweetReplyFragment" },
                 },
               ],
             },
@@ -175,6 +215,27 @@ export const TweetThreadFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
           { kind: "Field", name: { kind: "Name", value: "likes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TweetReplyFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "userName" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+          { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "likes" } },
         ],
       },
     },
@@ -225,6 +286,27 @@ export const TweetColumnFragmentFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TweetReplyFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "userName" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+          { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "likes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "TweetThreadFragment" },
       typeCondition: {
         kind: "NamedType",
@@ -245,7 +327,7 @@ export const TweetColumnFragmentFragmentDoc = {
               selections: [
                 {
                   kind: "FragmentSpread",
-                  name: { kind: "Name", value: "TweetFragment" },
+                  name: { kind: "Name", value: "TweetReplyFragment" },
                 },
               ],
             },
@@ -306,6 +388,27 @@ export const PageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TweetReplyFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "userName" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+          { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "likes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "TweetThreadFragment" },
       typeCondition: {
         kind: "NamedType",
@@ -326,7 +429,7 @@ export const PageQueryDocument = {
               selections: [
                 {
                   kind: "FragmentSpread",
-                  name: { kind: "Name", value: "TweetFragment" },
+                  name: { kind: "Name", value: "TweetReplyFragment" },
                 },
               ],
             },
