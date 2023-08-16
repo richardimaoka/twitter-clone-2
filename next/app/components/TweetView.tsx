@@ -3,12 +3,11 @@ import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetThreadActions } from "./TweetThreadActions";
+import { TweetThreadHeader } from "./TweetThreadHeader";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
-    userName
-    userId
-    profilePicture
+    ...TweetThreadHeaderFragment
     body
     picturePath
     pictureWidth
@@ -34,23 +33,7 @@ export const TweetView = (props: TweetViewProps) => {
   //https://twitter.com/TwitterJP/status/1587301348604841987
   return (
     <div className={styles.tweet}>
-      <div className={styles.header}>
-        <div>
-          <Image
-            className={styles.profilepic}
-            src={
-              fragment.profilePicture ? fragment.profilePicture : noProfilePic
-            }
-            width={40}
-            height={40}
-            alt={"user profile pic"}
-          />
-        </div>
-        <div>
-          <div className={styles.username}>{fragment.userName}</div>
-          <div className={styles.userid}>&#064;{fragment.userId}</div>
-        </div>
-      </div>
+      <TweetThreadHeader fragment={fragment} />
       <div className={styles.body}>{fragment.body}</div>
       {fragment.picturePath &&
         fragment.pictureWidth &&
