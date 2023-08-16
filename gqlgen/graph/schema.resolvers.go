@@ -33,7 +33,19 @@ func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 
 // Timeline is the resolver for the timeline field.
 func (r *queryResolver) Timeline(ctx context.Context) ([]*model.Tweet, error) {
-	panic(fmt.Errorf("not implemented: Timeline - timeline"))
+	bytes, err := os.ReadFile("data/timeline.json")
+	if err != nil {
+		return nil, err
+	}
+
+	var tweets []*model.Tweet
+	err = json.Unmarshal(bytes, &tweets)
+	if err != nil {
+		log.Printf("Error in Tweet - %v", err)
+		return nil, fmt.Errorf("internal server error")
+	}
+
+	return tweets, nil
 }
 
 // Query returns QueryResolver implementation.
