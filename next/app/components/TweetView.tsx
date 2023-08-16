@@ -1,16 +1,8 @@
 import Image from "next/image";
 import styles from "./style.module.css";
 
-import {
-  faArrowUpFromBracket,
-  faBookmark,
-  faComment,
-  faHeart,
-  faRetweet,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
+import { TweetThreadActions } from "./TweetThreadActions";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
@@ -92,13 +84,7 @@ export const TweetView = (props: TweetViewProps) => {
           <span className={styles.reactionname}> ブックマーク</span>
         </div>
       </div>
-      <div className={styles.actions}>
-        <FontAwesomeIcon className={styles.icon} icon={faComment} />
-        <FontAwesomeIcon className={styles.icon} icon={faRetweet} />
-        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
-        <FontAwesomeIcon className={styles.icon} icon={faBookmark} />
-        <FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
-      </div>
+      <TweetThreadActions />
     </div>
   );
 };
