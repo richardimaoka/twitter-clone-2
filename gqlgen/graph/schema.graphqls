@@ -3,6 +3,7 @@
 # https://gqlgen.com/getting-started/
 
 type Tweet {
+  tweetId: ID
   userName: String
   userId: String
   profilePicture: String
