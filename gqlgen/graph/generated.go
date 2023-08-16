@@ -45,7 +45,8 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Query struct {
-		Tweet func(childComplexity int) int
+		Timeline func(childComplexity int) int
+		Tweet    func(childComplexity int) int
 	}
 
 	Tweet struct {
@@ -68,6 +69,7 @@ type ComplexityRoot struct {
 
 type QueryResolver interface {
 	Tweet(ctx context.Context) (*model.Tweet, error)
+	Timeline(ctx context.Context) ([]*model.Tweet, error)
 }
 
 type executableSchema struct {
@@ -84,6 +86,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e, 0, 0, nil}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "Query.timeline":
+		if e.complexity.Query.Timeline == nil {
+			break
+		}
+
+		return e.complexity.Query.Timeline(childComplexity), true
 
 	case "Query.tweet":
 		if e.complexity.Query.Tweet == nil {
@@ -380,6 +389,77 @@ func (ec *executionContext) _Query_tweet(ctx context.Context, field graphql.Coll
 }
 
 func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "userName":
+				return ec.fieldContext_Tweet_userName(ctx, field)
+			case "userId":
+				return ec.fieldContext_Tweet_userId(ctx, field)
+			case "profilePicture":
+				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "body":
+				return ec.fieldContext_Tweet_body(ctx, field)
+			case "picturePath":
+				return ec.fieldContext_Tweet_picturePath(ctx, field)
+			case "pictureWidth":
+				return ec.fieldContext_Tweet_pictureWidth(ctx, field)
+			case "pictureHeight":
+				return ec.fieldContext_Tweet_pictureHeight(ctx, field)
+			case "time":
+				return ec.fieldContext_Tweet_time(ctx, field)
+			case "date":
+				return ec.fieldContext_Tweet_date(ctx, field)
+			case "retweets":
+				return ec.fieldContext_Tweet_retweets(ctx, field)
+			case "quotes":
+				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "likes":
+				return ec.fieldContext_Tweet_likes(ctx, field)
+			case "bookmarks":
+				return ec.fieldContext_Tweet_bookmarks(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_timeline(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_timeline(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Timeline(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Tweet)
+	fc.Result = res
+	return ec.marshalOTweet2ᚕᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweetᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_timeline(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -2974,6 +3054,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "timeline":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_timeline(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "__type":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___type(ctx, field)
@@ -3423,6 +3522,16 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
+func (ec *executionContext) marshalNTweet2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx context.Context, sel ast.SelectionSet, v *model.Tweet) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Tweet(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalN__Directive2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐDirective(ctx context.Context, sel ast.SelectionSet, v introspection.Directive) graphql.Marshaler {
 	return ec.___Directive(ctx, sel, &v)
 }
@@ -3771,6 +3880,53 @@ func (ec *executionContext) marshalOTweet2ᚕᚖgithubᚗcomᚋrichardimaokaᚋt
 
 	}
 	wg.Wait()
+
+	return ret
+}
+
+func (ec *executionContext) marshalOTweet2ᚕᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweetᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Tweet) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNTweet2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
 
 	return ret
 }

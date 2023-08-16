@@ -21,4 +21,5 @@ type Tweet {
 
 type Query {
   tweet: Tweet
+  timeline: [Tweet!]
 }

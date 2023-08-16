@@ -31,6 +31,7 @@ export type Scalars = {
 
 export type Query = {
   __typename: "Query";
+  timeline?: Maybe<Array<Tweet>>;
   tweet?: Maybe<Tweet>;
 };
 

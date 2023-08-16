@@ -31,6 +31,11 @@ func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 	return &tweet, nil
 }
 
+// Timeline is the resolver for the timeline field.
+func (r *queryResolver) Timeline(ctx context.Context) ([]*model.Tweet, error) {
+	panic(fmt.Errorf("not implemented: Timeline - timeline"))
+}
+
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
