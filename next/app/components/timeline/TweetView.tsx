@@ -4,9 +4,11 @@ import styles from "./style.module.css";
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetActions } from "./TweetActions";
 import { Header } from "./Header";
+import { ProfilePic } from "./ProfilePic";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetFragment on Tweet {
+    ...TimelineProfilePicFragment
     ...TimelineHeaderFragment
     ...TimelineTweetActionsFragment
     body
@@ -34,20 +36,25 @@ export const TweetView = (props: TweetViewProps) => {
   //https://twitter.com/TwitterJP/status/1587301348604841987
   return (
     <div className={styles.tweet}>
-      <Header fragment={fragment} />
-      <div className={styles.body}>{fragment.body}</div>
-      {fragment.picturePath &&
-        fragment.pictureWidth &&
-        fragment.pictureHeight && (
-          <Image
-            className={styles.tweetpic}
-            src={fragment.picturePath}
-            width={fragment.pictureWidth}
-            height={fragment.pictureHeight}
-            alt={"tweet pic"}
-          />
-        )}
-      <TweetActions fragment={fragment} />
+      <div>
+        <ProfilePic fragment={fragment} />
+      </div>
+      <div>
+        <Header fragment={fragment} />
+        <div className={styles.body}>{fragment.body}</div>
+        {fragment.picturePath &&
+          fragment.pictureWidth &&
+          fragment.pictureHeight && (
+            <Image
+              className={styles.tweetpic}
+              src={fragment.picturePath}
+              width={fragment.pictureWidth}
+              height={fragment.pictureHeight}
+              alt={"tweet pic"}
+            />
+          )}
+        <TweetActions fragment={fragment} />
+      </div>
     </div>
   );
 };

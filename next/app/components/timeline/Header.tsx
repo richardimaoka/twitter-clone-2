@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./style.module.css";
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
@@ -21,7 +20,8 @@ export const Header = (props: Props) => {
     <div className={styles.header}>
       <span className={styles.username}>{fragment.userName}</span>
       <span className={styles.userid}>&#064;{fragment.userId}</span>
-      <span className={styles.userid}>{fragment.date}</span>
+      <span>&#183;</span>
+      <span className={styles.date}>{fragment.date}</span>
     </div>
   );
 };
