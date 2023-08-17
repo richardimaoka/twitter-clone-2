@@ -2,8 +2,8 @@ import Image from "next/image";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { TweetThreadActions } from "./thread/TweetThreadActions";
-import { TweetThreadHeader } from "./thread/TweetThreadHeader";
+import { TweetThreadActions } from "../thread/TweetThreadActions";
+import { TweetThreadHeader } from "../thread/TweetThreadHeader";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
