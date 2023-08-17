@@ -10,6 +10,7 @@ config.autoAddCss = false;
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ApolloWrapper } from "./ApolloWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ApolloWrapper>
+      <html lang="en">
+        <body className={inter.className}>{children}</body>
+      </html>
+    </ApolloWrapper>
   );
 }
