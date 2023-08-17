@@ -2,7 +2,6 @@ import Image from "next/image";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { TweetThreadActions } from "../thread/TweetThreadActions";
 import { TweetThreadHeader } from "../thread/TweetThreadHeader";
 
 const fragmentDefinition = graphql(`
@@ -67,7 +66,6 @@ export const TweetView = (props: TweetViewProps) => {
           <span className={styles.reactionname}> ブックマーク</span>
         </div>
       </div>
-      <TweetThreadActions />
     </div>
   );
 };
