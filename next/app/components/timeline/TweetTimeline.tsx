@@ -1,31 +1,33 @@
+import { useSuspenseQuery } from "@apollo/client";
 import { TweetView } from "./TweetView";
 import styles from "./style.module.css";
 
-import { FragmentType, graphql, useFragment } from "@/libs/gql";
+import { graphql } from "@/libs/gql";
 
-const fragmentDefinition = graphql(`
-  fragment TweetTimelineFragment on Query {
-    timeline {
+const queryDefinition = graphql(/* GraphQL */ `
+  query TimeLinePageQuery($currentTime: String!) {
+    timeline(currentTime: $currentTime) {
       ...TimelineTweetFragment
       tweetId
     }
   }
 `);
 
-interface TweetTimelineProps {
-  fragment: FragmentType<typeof fragmentDefinition>;
-}
+export const TweetTimelineView = () => {
+  // console.log(print(queryDefinition));
 
-export const TweetTimelineView = (props: TweetTimelineProps) => {
-  const fragment = useFragment(fragmentDefinition, props.fragment);
+  const currentTime = new Date();
+  const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
+    variables: { currentTime: currentTime.toISOString() },
+  });
 
-  if (!fragment.timeline) {
-    return <></>;
+  if (!data.timeline) {
+    return <div>no data</div>;
   }
 
   return (
     <div className={styles.column}>
-      {fragment.timeline.map((tweet) => (
+      {data.timeline.map((tweet) => (
         <TweetView key={tweet.tweetId} fragment={tweet} />
       ))}
     </div>

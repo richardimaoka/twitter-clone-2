@@ -27,6 +27,7 @@ func main() {
 	router.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowCredentials: true,
+		AllowedHeaders:   []string{"Access-Control-Allow-Credentials", "Content-Type"},
 		Debug:            true,
 	}).Handler)
 

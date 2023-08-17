@@ -23,5 +23,5 @@ type Tweet {
 
 type Query {
   tweet: Tweet
-  timeline: [Tweet!]
+  timeline(currentTime: String!): [Tweet!]
 }
