@@ -1,0 +1,136 @@
+.column {
+  width: 600px;
+  height: 100svh;
+  margin: 0 auto;
+  border-left: 1px solid rgb(239, 243, 244);
+  border-right: 1px solid rgb(239, 243, 244);
+}
+
+.tweet {
+  background-color: white;
+  padding: 16px;
+}
+
+/* class for tweet header, don't confuse with <header> tag*/
+.header {
+  display: flex;
+  gap: 10px;
+}
+
+.profilepic {
+  border-radius: 20px;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.userid {
+  font-size: 15px;
+  color: rgb(83, 100, 113);
+}
+
+/* class for tweet body, don't confuse with <body> tag*/
+.body {
+  font-size: 17px;
+  margin-top: 12px;
+}
+
+.tweetpic {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.reactions {
+  display: flex;
+  gap: 10px;
+  padding: 16px 0px;
+  border-top: 1px solid rgb(239, 243, 244);
+  border-bottom: 1px solid rgb(239, 243, 244);
+}
+
+.reactionvalue {
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+}
+
+.reactionname {
+  font-size: 14px;
+  color: black;
+}
+
+.time {
+  color: rgb(83, 100, 113);
+  font-size: 15px;
+  margin: 16px 0px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 16px 40px;
+}
+
+.icon {
+  display: inline-block;
+  font-size: 20px;
+  color: rgb(122, 148, 168);
+}
+
+.reply {
+  display: flex;
+  gap: 12px;
+}
+
+.replyLeft {
+  flex-grow: 0;
+}
+
+.replyRight {
+  flex-grow: 1;
+}
+
+.replyHeader {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+}
+
+.reolyBody {
+  font-size: 17px;
+  margin-top: 4px;
+}
+
+.replyTime {
+  color: rgb(83, 100, 113);
+  font-size: 15px;
+}
+
+.replyActions {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0px;
+}
+
+.replyActionItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 45px;
+}
+
+.replyActionValue {
+  font-size: 14px;
+  color: rgb(122, 148, 168);
+}
+
+.iconReply {
+  display: inline-block;
+  font-size: 16px;
+  color: rgb(122, 148, 168);
+}

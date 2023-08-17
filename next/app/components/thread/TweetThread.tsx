@@ -1,5 +1,5 @@
 import { TweetReply } from "./TweetReply";
-import { TweetView } from "./TweetView";
+import { TweetView } from "../TweetView";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
