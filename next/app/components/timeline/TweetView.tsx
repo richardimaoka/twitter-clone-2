@@ -2,12 +2,12 @@ import Image from "next/image";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { TweetThreadHeader } from "../thread/TweetThreadHeader";
 import { TweetActions } from "./TweetActions";
+import { Header } from "./Header";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetFragment on Tweet {
-    ...TweetThreadHeaderFragment
+    ...TimelineHeaderFragment
     ...TimelineTweetActionsFragment
     body
     picturePath
@@ -34,7 +34,7 @@ export const TweetView = (props: TweetViewProps) => {
   //https://twitter.com/TwitterJP/status/1587301348604841987
   return (
     <div className={styles.tweet}>
-      <TweetThreadHeader fragment={fragment} />
+      <Header fragment={fragment} />
       <div className={styles.body}>{fragment.body}</div>
       {fragment.picturePath &&
         fragment.pictureWidth &&

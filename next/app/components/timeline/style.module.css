@@ -27,8 +27,15 @@
 }
 
 .userid {
+  margin-left: 8px;
   font-size: 15px;
   color: rgb(83, 100, 113);
+}
+
+.time {
+  color: rgb(83, 100, 113);
+  font-size: 15px;
+  margin: 16px 0px;
 }
 
 /* class for tweet body, don't confuse with <body> tag*/
@@ -61,12 +68,6 @@
 .reactionname {
   font-size: 14px;
   color: black;
-}
-
-.time {
-  color: rgb(83, 100, 113);
-  font-size: 15px;
-  margin: 16px 0px;
 }
 
 .actions {
