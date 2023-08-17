@@ -1,6 +1,7 @@
 "use client";
 // ^ this file needs the "use client" pragma
 
+import { onError } from "@apollo/client/link/error";
 import { ApolloLink, HttpLink } from "@apollo/client";
 import {
   ApolloNextAppProvider,
@@ -8,6 +9,17 @@ import {
   NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 
 // have a function to create a client for you
 function makeClient() {
@@ -29,6 +41,7 @@ function makeClient() {
     link:
       typeof window === "undefined"
         ? ApolloLink.from([
+            errorLink,
             // in a SSR environment, if you use multipart features like
             // @defer, you need to decide how to handle these.
             // This strips all interfaces with a `@defer` directive from your queries.
