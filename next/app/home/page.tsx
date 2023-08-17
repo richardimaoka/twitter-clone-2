@@ -13,7 +13,12 @@ const queryDefinition = graphql(/* GraphQL */ `
 
 export default function Home() {
   // console.log(print(queryDefinition));
-  const { data } = useSuspenseQuery(queryDefinition);
+  const { data, fetchMore } = useSuspenseQuery(queryDefinition);
 
-  return <main>{data && <TweetTimelineView fragment={data} />}</main>;
+  return (
+    <main>
+      <button onClick={() => fetchMore({})}>recent tweets</button>
+      {data && <TweetTimelineView fragment={data} />}
+    </main>
+  );
 }
