@@ -6,7 +6,7 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 const fragmentDefinition = graphql(`
   fragment TweetTimelineFragment on Query {
     timeline {
-      ...TweetFragment
+      ...TimelineTweetFragment
       tweetId
     }
   }

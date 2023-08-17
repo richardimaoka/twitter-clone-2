@@ -23,12 +23,36 @@ const fragmentDefinition = graphql(`
   }
 `);
 
-export const TweetActions = () => (
-  <div className={styles.actions}>
-    <FontAwesomeIcon className={styles.icon} icon={faComment} />
-    <FontAwesomeIcon className={styles.icon} icon={faRetweet} />
-    <FontAwesomeIcon className={styles.icon} icon={faHeart} />
-    <FontAwesomeIcon className={styles.icon} icon={faChartColumn} />
-    <FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
-  </div>
-);
+interface Props {
+  fragment: FragmentType<typeof fragmentDefinition>;
+}
+
+export const TweetActions = (props: Props) => {
+  const fragment = useFragment(fragmentDefinition, props.fragment);
+
+  return (
+    <div className={styles.actions}>
+      <div>
+        <FontAwesomeIcon className={styles.icon} icon={faComment} />
+        <span className={styles.reactionvalue}>
+          {fragment.replies ? fragment.replies.length : ""}
+        </span>
+      </div>
+      <div>
+        <FontAwesomeIcon className={styles.icon} icon={faRetweet} />
+        <span className={styles.reactionvalue}>{fragment.retweets}</span>
+      </div>
+      <div>
+        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+        <span className={styles.reactionvalue}>{fragment.likes}</span>
+      </div>
+      <div>
+        <FontAwesomeIcon className={styles.icon} icon={faChartColumn} />
+        <span className={styles.reactionvalue}>{fragment.impressions}</span>
+      </div>
+      <div>
+        <FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
+      </div>
+    </div>
+  );
+};

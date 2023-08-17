@@ -53,9 +53,9 @@
 }
 
 .reactionvalue {
+  padding: 0px 10px;
   font-size: 14px;
-  font-weight: 700;
-  color: black;
+  color: rgb(83, 100, 113);
 }
 
 .reactionname {
@@ -72,8 +72,7 @@
 .actions {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
-  padding: 16px 40px;
+  padding: 16px 0px;
 }
 
 .icon {

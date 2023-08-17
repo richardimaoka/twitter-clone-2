@@ -6,8 +6,9 @@ import { TweetThreadHeader } from "../thread/TweetThreadHeader";
 import { TweetActions } from "./TweetActions";
 
 const fragmentDefinition = graphql(`
-  fragment TweetFragment on Tweet {
+  fragment TimelineTweetFragment on Tweet {
     ...TweetThreadHeaderFragment
+    ...TimelineTweetActionsFragment
     body
     picturePath
     pictureWidth
@@ -46,7 +47,7 @@ export const TweetView = (props: TweetViewProps) => {
             alt={"tweet pic"}
           />
         )}
-      <TweetActions />
+      <TweetActions fragment={fragment} />
     </div>
   );
 };
