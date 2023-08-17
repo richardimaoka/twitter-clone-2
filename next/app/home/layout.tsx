@@ -25,10 +25,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ApolloWrapper>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ApolloWrapper>
+    <html lang="en">
+      <body className={inter.className}>
+        <ApolloWrapper>{children}</ApolloWrapper>
+      </body>
+    </html>
   );
 }
