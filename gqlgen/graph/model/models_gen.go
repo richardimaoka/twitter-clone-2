@@ -18,4 +18,5 @@ type Tweet struct {
 	Likes          *int     `json:"likes,omitempty"`
 	Bookmarks      *int     `json:"bookmarks,omitempty"`
 	Replies        []*Tweet `json:"replies,omitempty"`
+	Impressions    *int     `json:"impressions,omitempty"`
 }

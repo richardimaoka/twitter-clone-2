@@ -18,6 +18,7 @@ type Tweet {
   likes: Int
   bookmarks: Int
   replies: [Tweet]
+  impressions: Int
 }
 
 type Query {

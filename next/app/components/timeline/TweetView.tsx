@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetThreadHeader } from "../thread/TweetThreadHeader";
+import { TweetActions } from "./TweetActions";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
@@ -45,27 +46,7 @@ export const TweetView = (props: TweetViewProps) => {
             alt={"tweet pic"}
           />
         )}
-      <div className={styles.time}>
-        {fragment.date} · {fragment.time}
-      </div>
-      <div className={styles.reactions}>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.retweets}</span>
-          <span className={styles.reactionname}> 件のリツイート</span>
-        </div>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.quotes}</span>
-          <span className={styles.reactionname}> 件の引用</span>
-        </div>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.likes}</span>
-          <span className={styles.reactionname}> 件のいいね</span>
-        </div>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.bookmarks}</span>
-          <span className={styles.reactionname}> ブックマーク</span>
-        </div>
-      </div>
+      <TweetActions />
     </div>
   );
 };

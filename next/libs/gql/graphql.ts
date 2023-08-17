@@ -40,6 +40,7 @@ export type Tweet = {
   body?: Maybe<Scalars["String"]["output"]>;
   bookmarks?: Maybe<Scalars["Int"]["output"]>;
   date?: Maybe<Scalars["String"]["output"]>;
+  impressions?: Maybe<Scalars["Int"]["output"]>;
   likes?: Maybe<Scalars["Int"]["output"]>;
   pictureHeight?: Maybe<Scalars["Int"]["output"]>;
   picturePath?: Maybe<Scalars["String"]["output"]>;
@@ -110,6 +111,15 @@ export type TweetFragmentFragment = ({
     TweetThreadHeaderFragmentFragment: TweetThreadHeaderFragmentFragment;
   };
 }) & { " $fragmentName"?: "TweetFragmentFragment" };
+
+export type TimelineTweetActionsFragmentFragment = {
+  __typename: "Tweet";
+  retweets?: number | null;
+  likes?: number | null;
+  bookmarks?: number | null;
+  impressions?: number | null;
+  replies?: Array<{ __typename: "Tweet" } | null> | null;
+} & { " $fragmentName"?: "TimelineTweetActionsFragmentFragment" };
 
 export type TweetTimelineFragmentFragment = {
   __typename: "Query";
@@ -438,6 +448,38 @@ export const TweetColumnFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TweetColumnFragmentFragment, unknown>;
+export const TimelineTweetActionsFragmentFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TimelineTweetActionsFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "replies" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "__typename" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "impressions" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TimelineTweetActionsFragmentFragment, unknown>;
 export const TweetTimelineFragmentFragmentDoc = {
   kind: "Document",
   definitions: [
