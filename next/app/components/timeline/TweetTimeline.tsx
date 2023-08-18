@@ -7,23 +7,9 @@ import styles from "./style.module.css";
 import { graphql } from "@/libs/gql";
 import { useEffect, useState } from "react";
 
-const queryDefinition = graphql(/* GraphQL */ `
-  query TimeLinePageQuery($currentTime: String!) {
-    timeline(currentTime: $currentTime) {
-      ...TimelineTweetFragment
-      tweetId
-    }
-  }
-`);
-
-export const TweetTimelineView = () => {
-  // console.log(print(queryDefinition));
+export const LoadMoreTweetsButton = () => {
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
   const [currentTime, setCurrentTime] = useState(initialTime);
-
-  const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
-    variables: { currentTime: currentTime.toISOString() },
-  });
 
   useEffect(() => {
     console.log(currentTime);
@@ -36,9 +22,30 @@ export const TweetTimelineView = () => {
       h = currentTime.getHours() + 1,
       min = currentTime.getMinutes(),
       s = currentTime.getSeconds();
+
     const updatedTime = new Date(y, m, d, h, min, s);
     setCurrentTime(updatedTime);
   };
+
+  return <button onClick={onClick}>最新ツイートを表示</button>;
+};
+
+const queryDefinition = graphql(/* GraphQL */ `
+  query TimeLinePageQuery($currentTime: String!) {
+    timeline(currentTime: $currentTime) {
+      ...TimelineTweetFragment
+      tweetId
+    }
+  }
+`);
+
+export const TweetTimelineView = () => {
+  // console.log(print(queryDefinition));
+  const initialTime = new Date("2023-08-18T09:30:10.000Z");
+
+  const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
+    variables: { currentTime: initialTime.toISOString() },
+  });
 
   if (!data.timeline) {
     return <div>no data</div>;
@@ -46,7 +53,7 @@ export const TweetTimelineView = () => {
 
   return (
     <div className={styles.column}>
-      <button onClick={onClick}>最新ツイートを表示</button>
+      <LoadMoreTweetsButton />
       {data.timeline.map((tweet) => (
         <TweetView key={tweet.tweetId} fragment={tweet} />
       ))}
