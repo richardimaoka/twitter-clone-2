@@ -15,6 +15,9 @@ const config: CodegenConfig = {
         dedupeFragments: true, //GraphQL】 There can be only one fragment named XxxFragment error - https://zenn.dev/bicstone/articles/graphql-dedupe-fragments, https://github.com/dotansimha/graphql-code-generator/issues/8670
       },
     },
+    "libs/apollo-helpers.ts": {
+      plugins: ["typescript-apollo-client-helpers"],
+    },
   },
   watch: ["app/**/*.tsx", "../gqlgen/graph/schema.graphqls"],
   hooks: { afterOneFileWrite: ["npx prettier --write"] },
