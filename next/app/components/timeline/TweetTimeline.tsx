@@ -6,6 +6,7 @@ import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
 import { Suspense, startTransition, useEffect, useState } from "react";
+import { toTimeString } from "@/libs/gql/timeString";
 
 export const LoadMoreTweetsButton = () => {
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
@@ -41,11 +42,11 @@ const queryDefinition = graphql(/* GraphQL */ `
 
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
-  const initialTime = new Date("2023-08-18T09:30:10.000Z");
-  const [value, setValue] = useState(initialTime.toISOString());
+  const initialTime = "2023-08-18T09:30:10.000Z";
+  const [value, setValue] = useState(initialTime);
 
   const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
-    variables: { currentTime: { timestamp: initialTime.toISOString() } },
+    variables: { currentTime: initialTime },
   });
 
   console.log("timeline in TweetTimeline", data.timeline);
@@ -63,9 +64,12 @@ export const TweetTimelineView = () => {
       />
       <button
         onClick={() => {
-          startTransition(() => {
-            fetchMore({ variables: { currentTime: value } });
-          });
+          const timeStr = toTimeString(value);
+          if (timeStr) {
+            startTransition(() => {
+              fetchMore({ variables: { currentTime: timeStr } });
+            });
+          }
         }}
       >
         最新ツイートを表示
