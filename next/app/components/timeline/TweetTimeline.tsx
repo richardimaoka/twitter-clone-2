@@ -45,7 +45,7 @@ export const TweetTimelineView = () => {
   const [value, setValue] = useState(initialTime.toISOString());
 
   const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
-    variables: { currentTime: initialTime.toISOString() },
+    variables: { currentTime: { timestamp: initialTime.toISOString() } },
   });
 
   console.log("timeline in TweetTimeline", data.timeline);
