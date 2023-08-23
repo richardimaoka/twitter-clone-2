@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
@@ -32,7 +33,8 @@ func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 }
 
 // Timeline is the resolver for the timeline field.
-func (r *queryResolver) Timeline(ctx context.Context, currentTime string) ([]*model.Tweet, error) {
+func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]*model.Tweet, error) {
+	fmt.Println("currentTime = ", currentTime)
 	bytes, err := os.ReadFile("data/timeline.json")
 	if err != nil {
 		return nil, err

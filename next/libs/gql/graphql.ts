@@ -27,6 +27,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  Time: { input: any; output: any };
 };
 
 export type Query = {
@@ -36,7 +37,7 @@ export type Query = {
 };
 
 export type QueryTimelineArgs = {
-  currentTime: Scalars["String"]["input"];
+  currentTime: Scalars["Time"]["input"];
 };
 
 export type Tweet = {
@@ -138,7 +139,7 @@ export type TimelineTweetActionsFragmentFragment = {
 } & { " $fragmentName"?: "TimelineTweetActionsFragmentFragment" };
 
 export type TimeLinePageQueryQueryVariables = Exact<{
-  currentTime: Scalars["String"]["input"];
+  currentTime: Scalars["Time"]["input"];
 }>;
 
 export type TimeLinePageQueryQuery = {
@@ -680,10 +681,7 @@ export const TimeLinePageQueryDocument = {
           },
           type: {
             kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
+            type: { kind: "NamedType", name: { kind: "Name", value: "Time" } },
           },
         },
       ],

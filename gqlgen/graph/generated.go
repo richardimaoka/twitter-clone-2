@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
@@ -45,7 +46,7 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Query struct {
-		Timeline func(childComplexity int, currentTime string) int
+		Timeline func(childComplexity int, currentTime time.Time) int
 		Tweet    func(childComplexity int) int
 	}
 
@@ -71,7 +72,7 @@ type ComplexityRoot struct {
 
 type QueryResolver interface {
 	Tweet(ctx context.Context) (*model.Tweet, error)
-	Timeline(ctx context.Context, currentTime string) ([]*model.Tweet, error)
+	Timeline(ctx context.Context, currentTime time.Time) ([]*model.Tweet, error)
 }
 
 type executableSchema struct {
@@ -99,7 +100,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Timeline(childComplexity, args["currentTime"].(string)), true
+		return e.complexity.Query.Timeline(childComplexity, args["currentTime"].(time.Time)), true
 
 	case "Query.tweet":
 		if e.complexity.Query.Tweet == nil {
@@ -346,10 +347,10 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 func (ec *executionContext) field_Query_timeline_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 string
+	var arg0 time.Time
 	if tmp, ok := rawArgs["currentTime"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("currentTime"))
-		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		arg0, err = ec.unmarshalNTime2timeᚐTime(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -485,7 +486,7 @@ func (ec *executionContext) _Query_timeline(ctx context.Context, field graphql.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Timeline(rctx, fc.Args["currentTime"].(string))
+		return ec.resolvers.Query().Timeline(rctx, fc.Args["currentTime"].(time.Time))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3659,6 +3660,21 @@ func (ec *executionContext) unmarshalNString2string(ctx context.Context, v inter
 
 func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	res := graphql.MarshalString(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
+	res, err := graphql.UnmarshalTime(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
+	res := graphql.MarshalTime(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

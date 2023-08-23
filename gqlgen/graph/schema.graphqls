@@ -2,6 +2,8 @@
 #
 # https://gqlgen.com/getting-started/
 
+scalar Time
+
 type Tweet {
   tweetId: ID
   userName: String
@@ -23,5 +25,5 @@ type Tweet {
 
 type Query {
   tweet: Tweet
-  timeline(currentTime: String!): [Tweet!]
+  timeline(currentTime: Time!): [Tweet!]
 }

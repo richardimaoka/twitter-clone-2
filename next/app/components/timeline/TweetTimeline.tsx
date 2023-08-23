@@ -31,7 +31,7 @@ export const LoadMoreTweetsButton = () => {
 };
 
 const queryDefinition = graphql(/* GraphQL */ `
-  query TimeLinePageQuery($currentTime: String!) {
+  query TimeLinePageQuery($currentTime: Time!) {
     timeline(currentTime: $currentTime) {
       ...TimelineTweetFragment
       tweetId
