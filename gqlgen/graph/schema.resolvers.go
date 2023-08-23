@@ -40,11 +40,19 @@ func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]
 		return nil, err
 	}
 
-	var tweets []*model.Tweet
-	err = json.Unmarshal(bytes, &tweets)
+	var allTweets []*model.Tweet
+	err = json.Unmarshal(bytes, &allTweets)
 	if err != nil {
 		log.Printf("Error in Tweet - %v", err)
 		return nil, fmt.Errorf("internal server error")
+	}
+
+	var tweets []*model.Tweet
+	for _, t := range allTweets {
+		fmt.Println(t)
+		if t.TimeStamp != nil && currentTime.After(*t.TimeStamp) {
+			tweets = append(tweets, t)
+		}
 	}
 
 	return tweets, nil

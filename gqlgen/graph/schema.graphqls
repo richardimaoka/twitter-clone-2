@@ -13,6 +13,7 @@ type Tweet {
   picturePath: String
   pictureWidth: Int
   pictureHeight: Int
+  timeStamp: Time
   time: String
   date: String
   retweets: Int

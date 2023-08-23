@@ -23,6 +23,7 @@ export type TweetKeySpecifier = (
   | "replies"
   | "retweets"
   | "time"
+  | "timeStamp"
   | "tweetId"
   | "userId"
   | "userName"
@@ -42,6 +43,7 @@ export type TweetFieldPolicy = {
   replies?: FieldPolicy<any> | FieldReadFunction<any>;
   retweets?: FieldPolicy<any> | FieldReadFunction<any>;
   time?: FieldPolicy<any> | FieldReadFunction<any>;
+  timeStamp?: FieldPolicy<any> | FieldReadFunction<any>;
   tweetId?: FieldPolicy<any> | FieldReadFunction<any>;
   userId?: FieldPolicy<any> | FieldReadFunction<any>;
   userName?: FieldPolicy<any> | FieldReadFunction<any>;

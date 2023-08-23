@@ -58,6 +58,7 @@ export type Tweet = {
   replies?: Maybe<Array<Maybe<Tweet>>>;
   retweets?: Maybe<Scalars["Int"]["output"]>;
   time?: Maybe<Scalars["String"]["output"]>;
+  timeStamp?: Maybe<Scalars["Time"]["output"]>;
   tweetId?: Maybe<Scalars["ID"]["output"]>;
   userId?: Maybe<Scalars["String"]["output"]>;
   userName?: Maybe<Scalars["String"]["output"]>;
