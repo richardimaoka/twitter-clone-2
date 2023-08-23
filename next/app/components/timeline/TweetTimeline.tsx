@@ -43,7 +43,7 @@ const queryDefinition = graphql(/* GraphQL */ `
 
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
-  const initialTime = "2023-08-18T09:30:10.000Z" as TimeString;
+  const initialTime = "2023-08-18T09:30:10.000Z" as TimeString; //workaround - we need a TimeString constant, or any sure way to get TimeString prop
   const [value, setValue] = useState<string>(initialTime);
 
   const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
@@ -70,6 +70,8 @@ export const TweetTimelineView = () => {
             startTransition(() => {
               fetchMore({ variables: { currentTime: timeStr } });
             });
+          } else {
+            window.alert(value + " is not a valid time string");
           }
         }}
       >
