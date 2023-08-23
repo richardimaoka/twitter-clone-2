@@ -9,6 +9,7 @@ import {
   NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { StrictTypedTypePolicies } from "@/libs/apollo-helpers";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -20,6 +21,40 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
+
+const typePolicies: StrictTypedTypePolicies = {
+  Query: {
+    fields: {
+      timeline: {
+        keyArgs: ["currentTime"],
+        read(existing, { args }) {
+          console.log(
+            "read existing - ",
+            existing,
+            "currentTime",
+            args && args.currentTime
+          );
+          return existing;
+        },
+        merge(existing, incoming) {
+          // Slicing is necessary because the existing data is
+          // immutable, and frozen in development.
+          console.log(
+            "merge called, existing = ",
+            existing,
+            "incoming = ",
+            incoming
+          );
+          if (existing) {
+            return [...existing, ...incoming];
+          } else {
+            return incoming;
+          }
+        },
+      },
+    },
+  },
+};
 
 // have a function to create a client for you
 function makeClient() {
@@ -37,7 +72,9 @@ function makeClient() {
 
   return new NextSSRApolloClient({
     // use the `NextSSRInMemoryCache`, not the normal `InMemoryCache`
-    cache: new NextSSRInMemoryCache(),
+    cache: new NextSSRInMemoryCache({
+      typePolicies,
+    }),
     link:
       typeof window === "undefined"
         ? ApolloLink.from([

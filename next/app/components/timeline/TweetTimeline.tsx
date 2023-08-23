@@ -5,7 +5,7 @@ import { TweetView } from "./TweetView";
 import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
-import { useEffect, useState } from "react";
+import { Suspense, startTransition, useEffect, useState } from "react";
 
 export const LoadMoreTweetsButton = () => {
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
@@ -42,10 +42,13 @@ const queryDefinition = graphql(/* GraphQL */ `
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
+  const [value, setValue] = useState(initialTime.toISOString());
 
   const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
     variables: { currentTime: initialTime.toISOString() },
   });
+
+  console.log("timeline in TweetTimeline", data.timeline);
 
   if (!data.timeline) {
     return <div>no data</div>;
@@ -53,7 +56,20 @@ export const TweetTimelineView = () => {
 
   return (
     <div className={styles.column}>
-      <LoadMoreTweetsButton />
+      <input
+        type="text"
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
+      />
+      <button
+        onClick={() => {
+          startTransition(() => {
+            fetchMore({ variables: { currentTime: value } });
+          });
+        }}
+      >
+        最新ツイートを表示
+      </button>
       {data.timeline.map((tweet) => (
         <TweetView key={tweet.tweetId} fragment={tweet} />
       ))}
