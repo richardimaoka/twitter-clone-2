@@ -12,12 +12,43 @@ import (
 	"os"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
 // PostTweet is the resolver for the postTweet field.
 func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.Tweet, error) {
-	panic(fmt.Errorf("not implemented: PostTweet - postTweet"))
+	tweetId := uuid.New().String()
+	userName := "リチャード 伊真岡"
+	userId := "richardimaoka"
+	profilePicture := "/images/richard-picture.png"
+	timeStamp := time.Now()
+	time := fmt.Sprintf("%d時%d分", timeStamp.Hour(), timeStamp.Minute())
+	date := fmt.Sprintf("%d年%d月%d日", timeStamp.Year(), timeStamp.Month(), timeStamp.Day())
+
+	newTweet := model.Tweet{
+		TweetID:        &tweetId,
+		UserName:       &userName,
+		UserID:         &userId,
+		ProfilePicture: &profilePicture,
+		Body:           &body,
+		// PicturePath
+		// PictureWidth
+		// PictureHeight
+		TimeStamp: &timeStamp,
+		Time:      &time,
+		Date:      &date,
+		// Retweets
+		// Quotes
+		// Likes
+		// Bookmarks
+		// Replies
+		// Impressions
+	}
+
+	r.Resolver.allTweets = append([]*model.Tweet{&newTweet}, r.Resolver.allTweets...)
+	fmt.Println("len all tweets = ", len(r.Resolver.allTweets))
+	return &newTweet, nil
 }
 
 // Tweet is the resolver for the tweet field.
@@ -40,7 +71,7 @@ func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 // Timeline is the resolver for the timeline field.
 func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]*model.Tweet, error) {
 	fmt.Println("currentTime = ", currentTime)
-
+	fmt.Println("len all tweets = ", len(r.Resolver.allTweets))
 	var tweets []*model.Tweet
 	for _, t := range r.Resolver.allTweets {
 		if t.TimeStamp != nil && currentTime.After(*t.TimeStamp) {

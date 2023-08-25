@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/99designs/gqlgen v0.17.36
 	github.com/go-chi/chi v1.5.4
+	github.com/google/uuid v1.3.1
 	github.com/rs/cors v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.8
 )
