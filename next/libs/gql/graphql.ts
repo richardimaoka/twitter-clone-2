@@ -165,6 +165,7 @@ export type TimelineTweetFragmentFragment = ({
   pictureHeight?: number | null;
   time?: string | null;
   date?: string | null;
+  timeStamp?: TimeString | null;
   retweets?: number | null;
   quotes?: number | null;
   likes?: number | null;
@@ -603,6 +604,7 @@ export const TimelineTweetFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "timeStamp" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
           { kind: "Field", name: { kind: "Name", value: "likes" } },
@@ -804,6 +806,7 @@ export const TimeLinePageQueryDocument = {
           { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
           { kind: "Field", name: { kind: "Name", value: "time" } },
           { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "timeStamp" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
           { kind: "Field", name: { kind: "Name", value: "likes" } },

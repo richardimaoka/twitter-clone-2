@@ -17,6 +17,7 @@ const fragmentDefinition = graphql(`
     pictureHeight
     time
     date
+    timeStamp
     retweets
     quotes
     likes

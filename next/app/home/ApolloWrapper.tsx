@@ -10,6 +10,7 @@ import {
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
 import { StrictTypedTypePolicies } from "@/libs/apollo-helpers";
+import { Tweet } from "@/libs/gql/graphql";
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -26,30 +27,30 @@ const typePolicies: StrictTypedTypePolicies = {
   Query: {
     fields: {
       timeline: {
-        keyArgs: ["currentTime"],
-        read(existing, { args }) {
-          console.log(
-            "read existing - ",
-            existing,
-            "currentTime",
-            args && args.currentTime
-          );
-          return existing;
+        keyArgs: false,
+        // Return all items stored so far, to avoid ambiguities
+        // about the order of the items.
+        read(existing) {
+          if (!existing) return undefined;
+
+          const tweets: Tweet[] = Object.values(existing);
+          tweets.sort((a, b) => {
+            const aTime = a.timeStamp ? new Date(a.timeStamp).getTime() : 0;
+            const bTime = b.timeStamp ? new Date(b.timeStamp).getTime() : 0;
+            return aTime - bTime;
+          });
         },
-        merge(existing, incoming) {
-          // Slicing is necessary because the existing data is
-          // immutable, and frozen in development.
-          console.log(
-            "merge called, existing = ",
-            existing,
-            "incoming = ",
-            incoming
-          );
-          if (existing) {
-            return [...existing, ...incoming];
-          } else {
-            return incoming;
-          }
+        // While args.cursor may still be important for requesting
+        // a given page, it no longer has any role to play in the
+        // merge function.
+        merge(existing, incoming: Tweet[], { readField }) {
+          const merged = { ...existing };
+          incoming.forEach((t) => {
+            if (t.tweetId) {
+              merged[t.tweetId] = t;
+            }
+          });
+          return merged;
         },
       },
     },

@@ -49,7 +49,6 @@ func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]
 
 	var tweets []*model.Tweet
 	for _, t := range allTweets {
-		fmt.Println(t)
 		if t.TimeStamp != nil && currentTime.After(*t.TimeStamp) {
 			tweets = append(tweets, t)
 		}
