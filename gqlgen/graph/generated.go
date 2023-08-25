@@ -77,7 +77,7 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	PostTweet(ctx context.Context, body string) (*string, error)
+	PostTweet(ctx context.Context, body string) (*model.Tweet, error)
 }
 type QueryResolver interface {
 	Tweet(ctx context.Context) (*model.Tweet, error)
@@ -478,9 +478,9 @@ func (ec *executionContext) _Mutation_postTweet(ctx context.Context, field graph
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*model.Tweet)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOTweet2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -490,7 +490,43 @@ func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			switch field.Name {
+			case "tweetId":
+				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "userName":
+				return ec.fieldContext_Tweet_userName(ctx, field)
+			case "userId":
+				return ec.fieldContext_Tweet_userId(ctx, field)
+			case "profilePicture":
+				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "body":
+				return ec.fieldContext_Tweet_body(ctx, field)
+			case "picturePath":
+				return ec.fieldContext_Tweet_picturePath(ctx, field)
+			case "pictureWidth":
+				return ec.fieldContext_Tweet_pictureWidth(ctx, field)
+			case "pictureHeight":
+				return ec.fieldContext_Tweet_pictureHeight(ctx, field)
+			case "timeStamp":
+				return ec.fieldContext_Tweet_timeStamp(ctx, field)
+			case "time":
+				return ec.fieldContext_Tweet_time(ctx, field)
+			case "date":
+				return ec.fieldContext_Tweet_date(ctx, field)
+			case "retweets":
+				return ec.fieldContext_Tweet_retweets(ctx, field)
+			case "quotes":
+				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "likes":
+				return ec.fieldContext_Tweet_likes(ctx, field)
+			case "bookmarks":
+				return ec.fieldContext_Tweet_bookmarks(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
+			case "impressions":
+				return ec.fieldContext_Tweet_impressions(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
 	}
 	defer func() {

@@ -35,7 +35,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename: "Mutation";
-  postTweet?: Maybe<Scalars["String"]["output"]>;
+  postTweet?: Maybe<Tweet>;
 };
 
 export type MutationPostTweetArgs = {
@@ -157,7 +157,7 @@ export type PostTwMutationVariables = Exact<{
 
 export type PostTwMutation = {
   __typename: "Mutation";
-  postTweet?: string | null;
+  postTweet?: { __typename: "Tweet"; body?: string | null } | null;
 };
 
 export type TimeLinePageQueryQueryVariables = Exact<{
@@ -725,6 +725,12 @@ export const PostTwDocument = {
                 },
               },
             ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "body" } },
+              ],
+            },
           },
         ],
       },

@@ -16,7 +16,7 @@ import (
 )
 
 // PostTweet is the resolver for the postTweet field.
-func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*string, error) {
+func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.Tweet, error) {
 	panic(fmt.Errorf("not implemented: PostTweet - postTweet"))
 }
 

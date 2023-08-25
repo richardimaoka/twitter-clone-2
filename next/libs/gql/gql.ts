@@ -29,7 +29,7 @@ const documents = {
     types.TimelineProfilePicFragmentFragmentDoc,
   "\n  fragment TimelineTweetActionsFragment on Tweet {\n    retweets\n    likes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n":
     types.TimelineTweetActionsFragmentFragmentDoc,
-  "\n  mutation postTw($body: String!) {\n    postTweet(body: $body)\n  }\n":
+  "\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      body\n    }\n  }\n":
     types.PostTwDocument,
   "\n  query TimeLinePageQuery($currentTime: Time!) {\n    timeline(currentTime: $currentTime) {\n      ...TimelineTweetFragment\n      tweetId\n    }\n  }\n":
     types.TimeLinePageQueryDocument,
@@ -105,8 +105,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation postTw($body: String!) {\n    postTweet(body: $body)\n  }\n",
-): (typeof documents)["\n  mutation postTw($body: String!) {\n    postTweet(body: $body)\n  }\n"];
+  source: "\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      body\n    }\n  }\n",
+): (typeof documents)["\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      body\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -4,7 +4,9 @@ import Image from "next/image";
 
 const definition = graphql(/* GraphQL */ `
   mutation postTw($body: String!) {
-    postTweet(body: $body)
+    postTweet(body: $body) {
+      body
+    }
   }
 `);
 
@@ -20,7 +22,11 @@ export const TweetInput = () => {
         height={40}
       />
       <input type="text" placeholder="いまどうしてる？" />
-      <button onClick={(e) => e.target}>ツイートする</button>
+      <button
+        onClick={(e) => mutateFunction({ variables: { body: "hello world" } })}
+      >
+        ツイートする
+      </button>
     </div>
   );
 };
