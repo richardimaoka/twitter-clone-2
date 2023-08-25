@@ -31,6 +31,8 @@ func main() {
 		Debug:            true,
 	}).Handler)
 
+	router.Use(graph.AuthMiddleware)
+
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
