@@ -151,6 +151,15 @@ export type TimelineTweetActionsFragmentFragment = {
   replies?: Array<{ __typename: "Tweet" } | null> | null;
 } & { " $fragmentName"?: "TimelineTweetActionsFragmentFragment" };
 
+export type PostTwMutationVariables = Exact<{
+  body: Scalars["String"]["input"];
+}>;
+
+export type PostTwMutation = {
+  __typename: "Mutation";
+  postTweet?: string | null;
+};
+
 export type TimeLinePageQueryQueryVariables = Exact<{
   currentTime: Scalars["Time"]["input"];
 }>;
@@ -680,6 +689,48 @@ export const TimelineTweetFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TimelineTweetFragmentFragment, unknown>;
+export const PostTwDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "postTw" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "body" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "postTweet" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "body" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "body" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PostTwMutation, PostTwMutationVariables>;
 export const TimeLinePageQueryDocument = {
   kind: "Document",
   definitions: [

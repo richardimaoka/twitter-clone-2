@@ -8,6 +8,7 @@ import { graphql } from "@/libs/gql";
 import { Suspense, startTransition, useEffect, useState } from "react";
 import { toTimeString } from "@/libs/gql/timeString";
 import { TimeString } from "@/libs/gql/graphql";
+import { TweetInput } from "./TweetInput";
 
 export const LoadMoreTweetsButton = () => {
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
@@ -56,25 +57,28 @@ export const TweetTimelineView = () => {
 
   return (
     <div className={styles.column}>
-      <input
-        type="text"
-        onChange={(e) => setValue(e.target.value)}
-        value={value}
-      />
-      <button
-        onClick={() => {
-          const timeStr = toTimeString(value);
-          if (timeStr) {
-            startTransition(() => {
-              fetchMore({ variables: { currentTime: timeStr } });
-            });
-          } else {
-            window.alert(value + " is not a valid time string");
-          }
-        }}
-      >
-        最新ツイートを表示
-      </button>
+      <div>
+        <input
+          type="text"
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+        />
+        <button
+          onClick={() => {
+            const timeStr = toTimeString(value);
+            if (timeStr) {
+              startTransition(() => {
+                fetchMore({ variables: { currentTime: timeStr } });
+              });
+            } else {
+              window.alert(value + " is not a valid time string");
+            }
+          }}
+        >
+          最新ツイートを表示
+        </button>
+      </div>
+      <TweetInput />
       {data.timeline.map((tweet) => (
         <TweetView key={tweet.tweetId} fragment={tweet} />
       ))}
