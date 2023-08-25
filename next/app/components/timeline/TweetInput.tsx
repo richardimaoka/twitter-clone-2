@@ -5,13 +5,45 @@ import Image from "next/image";
 const definition = graphql(/* GraphQL */ `
   mutation postTw($body: String!) {
     postTweet(body: $body) {
+      tweetId
+      userName
+      userId
+      profilePicture
       body
+      picturePath
+      pictureWidth
+      pictureHeight
+      timeStamp
+      time
+      date
+      retweets
+      quotes
+      likes
+      bookmarks
+      impressions
     }
   }
 `);
 
 export const TweetInput = () => {
-  const [mutateFunction, { data, loading, error }] = useMutation(definition);
+  const [mutateFunction, { data, loading, error }] = useMutation(definition, {
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          timeline(existing) {
+            const tweetId = data?.postTweet?.tweetId;
+            if (!tweetId) {
+              return existing;
+            }
+
+            const merged = { ...existing };
+            merged[tweetId] = data.postTweet;
+            return merged;
+          },
+        },
+      });
+    },
+  });
 
   return (
     <div>

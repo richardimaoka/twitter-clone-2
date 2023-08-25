@@ -157,7 +157,25 @@ export type PostTwMutationVariables = Exact<{
 
 export type PostTwMutation = {
   __typename: "Mutation";
-  postTweet?: { __typename: "Tweet"; body?: string | null } | null;
+  postTweet?: {
+    __typename: "Tweet";
+    tweetId?: string | null;
+    userName?: string | null;
+    userId?: string | null;
+    profilePicture?: string | null;
+    body?: string | null;
+    picturePath?: string | null;
+    pictureWidth?: number | null;
+    pictureHeight?: number | null;
+    timeStamp?: TimeString | null;
+    time?: string | null;
+    date?: string | null;
+    retweets?: number | null;
+    quotes?: number | null;
+    likes?: number | null;
+    bookmarks?: number | null;
+    impressions?: number | null;
+  } | null;
 };
 
 export type TimeLinePageQueryQueryVariables = Exact<{
@@ -728,7 +746,31 @@ export const PostTwDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+                { kind: "Field", name: { kind: "Name", value: "userName" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "profilePicture" },
+                },
                 { kind: "Field", name: { kind: "Name", value: "body" } },
+                { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "pictureWidth" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "pictureHeight" },
+                },
+                { kind: "Field", name: { kind: "Name", value: "timeStamp" } },
+                { kind: "Field", name: { kind: "Name", value: "time" } },
+                { kind: "Field", name: { kind: "Name", value: "date" } },
+                { kind: "Field", name: { kind: "Name", value: "retweets" } },
+                { kind: "Field", name: { kind: "Name", value: "quotes" } },
+                { kind: "Field", name: { kind: "Name", value: "likes" } },
+                { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+                { kind: "Field", name: { kind: "Name", value: "impressions" } },
               ],
             },
           },
