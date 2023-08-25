@@ -33,6 +33,15 @@ export type Scalars = {
   Time: { input: TimeString; output: TimeString };
 };
 
+export type Mutation = {
+  __typename: "Mutation";
+  postTweet?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type MutationPostTweetArgs = {
+  body: Scalars["String"]["input"];
+};
+
 export type Query = {
   __typename: "Query";
   timeline?: Maybe<Array<Tweet>>;

@@ -28,3 +28,7 @@ type Query {
   tweet: Tweet
   timeline(currentTime: Time!): [Tweet!]
 }
+
+type Mutation {
+  postTweet(body: String!): String
+}

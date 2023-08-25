@@ -15,6 +15,11 @@ import (
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
+// PostTweet is the resolver for the postTweet field.
+func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*string, error) {
+	panic(fmt.Errorf("not implemented: PostTweet - postTweet"))
+}
+
 // Tweet is the resolver for the tweet field.
 func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 	bytes, err := os.ReadFile("data/tweet.json")
@@ -57,7 +62,11 @@ func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]
 	return tweets, nil
 }
 
+// Mutation returns MutationResolver implementation.
+func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
+
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
+type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

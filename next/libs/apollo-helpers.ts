@@ -4,6 +4,10 @@ import {
   TypePolicies,
   TypePolicy,
 } from "@apollo/client/cache";
+export type MutationKeySpecifier = ("postTweet" | MutationKeySpecifier)[];
+export type MutationFieldPolicy = {
+  postTweet?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type QueryKeySpecifier = ("timeline" | "tweet" | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
   timeline?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -49,6 +53,13 @@ export type TweetFieldPolicy = {
   userName?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type StrictTypedTypePolicies = {
+  Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
+    keyFields?:
+      | false
+      | MutationKeySpecifier
+      | (() => undefined | MutationKeySpecifier);
+    fields?: MutationFieldPolicy;
+  };
   Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
     keyFields?:
       | false
