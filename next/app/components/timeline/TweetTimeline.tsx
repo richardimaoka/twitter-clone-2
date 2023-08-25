@@ -50,8 +50,6 @@ export const TweetTimelineView = () => {
     variables: { currentTime: initialTime },
   });
 
-  console.log("timeline in TweetTimeline", data.timeline);
-
   if (!data.timeline) {
     return <div>no data</div>;
   }
