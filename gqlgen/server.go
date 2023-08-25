@@ -33,7 +33,11 @@ func main() {
 
 	router.Use(graph.AuthMiddleware)
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	resolver, err := graph.NewResolver()
+	if err != nil {
+		panic(err)
+	}
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: resolver}))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", srv)

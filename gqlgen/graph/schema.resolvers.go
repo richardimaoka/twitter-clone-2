@@ -40,20 +40,9 @@ func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 // Timeline is the resolver for the timeline field.
 func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]*model.Tweet, error) {
 	fmt.Println("currentTime = ", currentTime)
-	bytes, err := os.ReadFile("data/timeline.json")
-	if err != nil {
-		return nil, err
-	}
-
-	var allTweets []*model.Tweet
-	err = json.Unmarshal(bytes, &allTweets)
-	if err != nil {
-		log.Printf("Error in Tweet - %v", err)
-		return nil, fmt.Errorf("internal server error")
-	}
 
 	var tweets []*model.Tweet
-	for _, t := range allTweets {
+	for _, t := range r.Resolver.allTweets {
 		if t.TimeStamp != nil && currentTime.After(*t.TimeStamp) {
 			tweets = append(tweets, t)
 		}
