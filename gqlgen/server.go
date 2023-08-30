@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
 
+	firebase "firebase.google.com/go/v4"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
@@ -15,6 +17,11 @@ import (
 const defaultPort = "8080"
 
 func main() {
+	_, err := firebase.NewApp(context.Background(), nil)
+	if err != nil {
+		log.Fatalf("error initializing app: %v\n", err)
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
