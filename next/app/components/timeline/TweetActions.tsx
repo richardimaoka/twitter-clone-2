@@ -43,7 +43,9 @@ export const TweetActions = (props: Props) => {
         <span className={styles.reactionvalue}>{fragment.retweets}</span>
       </div>
       <div>
-        <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+        <button>
+          <FontAwesomeIcon className={styles.icon} icon={faHeart} />
+        </button>
         <span className={styles.reactionvalue}>{fragment.likes}</span>
       </div>
       <div>
