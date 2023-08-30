@@ -149,12 +149,26 @@ export type TimelineProfilePicFragmentFragment = {
 
 export type TimelineTweetActionsFragmentFragment = {
   __typename: "Tweet";
+  tweetId?: string | null;
   retweets?: number | null;
   likes?: number | null;
   bookmarks?: number | null;
   impressions?: number | null;
   replies?: Array<{ __typename: "Tweet" } | null> | null;
 } & { " $fragmentName"?: "TimelineTweetActionsFragmentFragment" };
+
+export type LikeTwMutationVariables = Exact<{
+  tweetId: Scalars["ID"]["input"];
+}>;
+
+export type LikeTwMutation = {
+  __typename: "Mutation";
+  like?: {
+    __typename: "Tweet";
+    tweetId?: string | null;
+    likes?: number | null;
+  } | null;
+};
 
 export type PostTwMutationVariables = Exact<{
   body: Scalars["String"]["input"];
@@ -595,6 +609,7 @@ export const TimelineTweetActionsFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "tweetId" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "likes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
@@ -693,6 +708,7 @@ export const TimelineTweetFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "tweetId" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "likes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
@@ -712,6 +728,55 @@ export const TimelineTweetFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TimelineTweetFragmentFragment, unknown>;
+export const LikeTwDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "likeTw" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "tweetId" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "like" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "tweetId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "tweetId" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+                { kind: "Field", name: { kind: "Name", value: "likes" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LikeTwMutation, LikeTwMutationVariables>;
 export const PostTwDocument = {
   kind: "Document",
   definitions: [
@@ -874,6 +939,7 @@ export const TimeLinePageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "tweetId" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "likes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },

@@ -10,9 +10,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
+import { useMutation } from "@apollo/client";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetActionsFragment on Tweet {
+    tweetId
     retweets
     likes
     bookmarks
@@ -23,12 +25,27 @@ const fragmentDefinition = graphql(`
   }
 `);
 
+const mutationDefinition = graphql(/* GraphQL */ `
+  mutation likeTw($tweetId: ID!) {
+    like(tweetId: $tweetId) {
+      tweetId
+      likes
+    }
+  }
+`);
+
 interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
 export const TweetActions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
+  const [mutateFunction] = useMutation(mutationDefinition);
+  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    if (fragment.tweetId) {
+      mutateFunction({ variables: { tweetId: fragment.tweetId } });
+    }
+  };
 
   return (
     <div className={styles.actions}>
@@ -43,7 +60,7 @@ export const TweetActions = (props: Props) => {
         <span className={styles.reactionvalue}>{fragment.retweets}</span>
       </div>
       <div>
-        <button>
+        <button onClick={onClick}>
           <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         </button>
         <span className={styles.reactionvalue}>{fragment.likes}</span>
