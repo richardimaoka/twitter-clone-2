@@ -53,7 +53,15 @@ func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.T
 
 // Like is the resolver for the like field.
 func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Tweet, error) {
-	panic(fmt.Errorf("not implemented: Like - like"))
+	for _, t := range r.Resolver.allTweets {
+		if t.TweetID != nil && *t.TweetID == tweetID {
+			likes := *t.Likes
+			likes++
+			t.Likes = &likes
+			return t, nil
+		}
+	}
+	return nil, fmt.Errorf("tweet not found")
 }
 
 // Tweet is the resolver for the tweet field.
