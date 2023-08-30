@@ -15,27 +15,27 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetThreadFragment\n  }\n":
     types.TweetColumnFragmentFragmentDoc,
-  "\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    likes\n  }\n":
+  "\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    numLikes\n  }\n":
     types.TweetReplyFragmentFragmentDoc,
   "\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n":
     types.TweetThreadFragmentFragmentDoc,
   "\n  fragment TweetThreadHeaderFragment on Tweet {\n    userName\n    userId\n    profilePicture\n  }\n":
     types.TweetThreadHeaderFragmentFragmentDoc,
-  "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n":
+  "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n":
     types.TweetFragmentFragmentDoc,
   "\n  fragment TimelineHeaderFragment on Tweet {\n    userName\n    userId\n    date\n  }\n":
     types.TimelineHeaderFragmentFragmentDoc,
   "\n  fragment TimelineProfilePicFragment on Tweet {\n    profilePicture\n  }\n":
     types.TimelineProfilePicFragmentFragmentDoc,
-  "\n  fragment TimelineTweetActionsFragment on Tweet {\n    tweetId\n    retweets\n    likes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n":
+  "\n  fragment TimelineTweetActionsFragment on Tweet {\n    tweetId\n    retweets\n    numLikes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n":
     types.TimelineTweetActionsFragmentFragmentDoc,
-  "\n  mutation likeTw($tweetId: ID!) {\n    like(tweetId: $tweetId) {\n      tweetId\n      likes\n    }\n  }\n":
+  "\n  mutation likeTw($tweetId: ID!) {\n    like(tweetId: $tweetId) {\n      tweetId\n      numLikes\n    }\n  }\n":
     types.LikeTwDocument,
-  "\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      tweetId\n      userName\n      userId\n      profilePicture\n      body\n      picturePath\n      pictureWidth\n      pictureHeight\n      timeStamp\n      time\n      date\n      retweets\n      quotes\n      likes\n      bookmarks\n      impressions\n    }\n  }\n":
+  "\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      tweetId\n      userName\n      userId\n      profilePicture\n      body\n      picturePath\n      pictureWidth\n      pictureHeight\n      timeStamp\n      time\n      date\n      retweets\n      quotes\n      numLikes\n      bookmarks\n      impressions\n    }\n  }\n":
     types.PostTwDocument,
   "\n  query TimeLinePageQuery($currentTime: Time!) {\n    timeline(currentTime: $currentTime) {\n      ...TimelineTweetFragment\n      tweetId\n    }\n  }\n":
     types.TimeLinePageQueryDocument,
-  "\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n":
+  "\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n":
     types.TimelineTweetFragmentFragmentDoc,
   "\n  query PageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n":
     types.PageQueryDocument,
@@ -65,8 +65,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    likes\n  }\n",
-): (typeof documents)["\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    likes\n  }\n"];
+  source: "\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    numLikes\n  }\n",
+): (typeof documents)["\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    numLikes\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -83,8 +83,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n",
-): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n"];
+  source: "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n",
+): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -101,20 +101,20 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TimelineTweetActionsFragment on Tweet {\n    tweetId\n    retweets\n    likes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n",
-): (typeof documents)["\n  fragment TimelineTweetActionsFragment on Tweet {\n    tweetId\n    retweets\n    likes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n"];
+  source: "\n  fragment TimelineTweetActionsFragment on Tweet {\n    tweetId\n    retweets\n    numLikes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n",
+): (typeof documents)["\n  fragment TimelineTweetActionsFragment on Tweet {\n    tweetId\n    retweets\n    numLikes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation likeTw($tweetId: ID!) {\n    like(tweetId: $tweetId) {\n      tweetId\n      likes\n    }\n  }\n",
-): (typeof documents)["\n  mutation likeTw($tweetId: ID!) {\n    like(tweetId: $tweetId) {\n      tweetId\n      likes\n    }\n  }\n"];
+  source: "\n  mutation likeTw($tweetId: ID!) {\n    like(tweetId: $tweetId) {\n      tweetId\n      numLikes\n    }\n  }\n",
+): (typeof documents)["\n  mutation likeTw($tweetId: ID!) {\n    like(tweetId: $tweetId) {\n      tweetId\n      numLikes\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      tweetId\n      userName\n      userId\n      profilePicture\n      body\n      picturePath\n      pictureWidth\n      pictureHeight\n      timeStamp\n      time\n      date\n      retweets\n      quotes\n      likes\n      bookmarks\n      impressions\n    }\n  }\n",
-): (typeof documents)["\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      tweetId\n      userName\n      userId\n      profilePicture\n      body\n      picturePath\n      pictureWidth\n      pictureHeight\n      timeStamp\n      time\n      date\n      retweets\n      quotes\n      likes\n      bookmarks\n      impressions\n    }\n  }\n"];
+  source: "\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      tweetId\n      userName\n      userId\n      profilePicture\n      body\n      picturePath\n      pictureWidth\n      pictureHeight\n      timeStamp\n      time\n      date\n      retweets\n      quotes\n      numLikes\n      bookmarks\n      impressions\n    }\n  }\n",
+): (typeof documents)["\n  mutation postTw($body: String!) {\n    postTweet(body: $body) {\n      tweetId\n      userName\n      userId\n      profilePicture\n      body\n      picturePath\n      pictureWidth\n      pictureHeight\n      timeStamp\n      time\n      date\n      retweets\n      quotes\n      numLikes\n      bookmarks\n      impressions\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -125,8 +125,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n",
-): (typeof documents)["\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    likes\n    bookmarks\n  }\n"];
+  source: "\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n",
+): (typeof documents)["\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

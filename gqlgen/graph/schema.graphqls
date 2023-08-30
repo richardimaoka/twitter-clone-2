@@ -18,7 +18,7 @@ type Tweet {
   date: String
   retweets: Int
   quotes: Int
-  likes: Int
+  numLikes: Int
   bookmarks: Int
   replies: [Tweet]
   impressions: Int

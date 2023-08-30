@@ -16,7 +16,7 @@ const fragmentDefinition = graphql(`
     date
     retweets
     quotes
-    likes
+    numLikes
     bookmarks
   }
 `);
@@ -59,7 +59,7 @@ export const TweetView = (props: TweetViewProps) => {
           <span className={styles.reactionname}> 件の引用</span>
         </div>
         <div>
-          <span className={styles.reactionvalue}>{fragment.likes}</span>
+          <span className={styles.reactionvalue}>{fragment.numLikes}</span>
           <span className={styles.reactionname}> 件のいいね</span>
         </div>
         <div>

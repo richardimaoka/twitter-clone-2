@@ -23,7 +23,7 @@ export type TweetKeySpecifier = (
   | "bookmarks"
   | "date"
   | "impressions"
-  | "likes"
+  | "numLikes"
   | "pictureHeight"
   | "picturePath"
   | "pictureWidth"
@@ -43,7 +43,7 @@ export type TweetFieldPolicy = {
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>;
   date?: FieldPolicy<any> | FieldReadFunction<any>;
   impressions?: FieldPolicy<any> | FieldReadFunction<any>;
-  likes?: FieldPolicy<any> | FieldReadFunction<any>;
+  numLikes?: FieldPolicy<any> | FieldReadFunction<any>;
   pictureHeight?: FieldPolicy<any> | FieldReadFunction<any>;
   picturePath?: FieldPolicy<any> | FieldReadFunction<any>;
   pictureWidth?: FieldPolicy<any> | FieldReadFunction<any>;

@@ -18,7 +18,7 @@ const definition = graphql(/* GraphQL */ `
       date
       retweets
       quotes
-      likes
+      numLikes
       bookmarks
       impressions
     }

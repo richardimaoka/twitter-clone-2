@@ -16,7 +16,7 @@ const fragmentDefinition = graphql(`
   fragment TimelineTweetActionsFragment on Tweet {
     tweetId
     retweets
-    likes
+    numLikes
     bookmarks
     replies {
       __typename
@@ -29,7 +29,7 @@ const mutationDefinition = graphql(/* GraphQL */ `
   mutation likeTw($tweetId: ID!) {
     like(tweetId: $tweetId) {
       tweetId
-      likes
+      numLikes
     }
   }
 `);
@@ -63,7 +63,7 @@ export const TweetActions = (props: Props) => {
         <button onClick={onClick}>
           <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         </button>
-        <span className={styles.reactionvalue}>{fragment.likes}</span>
+        <span className={styles.reactionvalue}>{fragment.numLikes}</span>
       </div>
       <div>
         <FontAwesomeIcon className={styles.icon} icon={faChartColumn} />

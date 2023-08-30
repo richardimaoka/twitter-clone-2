@@ -53,11 +53,13 @@ func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.T
 
 // Like is the resolver for the like field.
 func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Tweet, error) {
+	log.Printf("like on tweetID = %v", tweetID)
 	for _, t := range r.Resolver.allTweets {
 		if t.TweetID != nil && *t.TweetID == tweetID {
-			likes := *t.Likes
+			log.Printf("incrementing like = %d", *t.NumLikes)
+			likes := *t.NumLikes
 			likes++
-			t.Likes = &likes
+			t.NumLikes = &likes
 			return t, nil
 		}
 	}

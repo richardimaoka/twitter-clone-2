@@ -63,7 +63,7 @@ export type Tweet = {
   bookmarks?: Maybe<Scalars["Int"]["output"]>;
   date?: Maybe<Scalars["String"]["output"]>;
   impressions?: Maybe<Scalars["Int"]["output"]>;
-  likes?: Maybe<Scalars["Int"]["output"]>;
+  numLikes?: Maybe<Scalars["Int"]["output"]>;
   pictureHeight?: Maybe<Scalars["Int"]["output"]>;
   picturePath?: Maybe<Scalars["String"]["output"]>;
   pictureWidth?: Maybe<Scalars["Int"]["output"]>;
@@ -93,7 +93,7 @@ export type TweetReplyFragmentFragment = {
   date?: string | null;
   retweets?: number | null;
   quotes?: number | null;
-  likes?: number | null;
+  numLikes?: number | null;
 } & { " $fragmentName"?: "TweetReplyFragmentFragment" };
 
 export type TweetThreadFragmentFragment = ({
@@ -127,7 +127,7 @@ export type TweetFragmentFragment = ({
   date?: string | null;
   retweets?: number | null;
   quotes?: number | null;
-  likes?: number | null;
+  numLikes?: number | null;
   bookmarks?: number | null;
 } & {
   " $fragmentRefs"?: {
@@ -151,7 +151,7 @@ export type TimelineTweetActionsFragmentFragment = {
   __typename: "Tweet";
   tweetId?: string | null;
   retweets?: number | null;
-  likes?: number | null;
+  numLikes?: number | null;
   bookmarks?: number | null;
   impressions?: number | null;
   replies?: Array<{ __typename: "Tweet" } | null> | null;
@@ -166,7 +166,7 @@ export type LikeTwMutation = {
   like?: {
     __typename: "Tweet";
     tweetId?: string | null;
-    likes?: number | null;
+    numLikes?: number | null;
   } | null;
 };
 
@@ -191,7 +191,7 @@ export type PostTwMutation = {
     date?: string | null;
     retweets?: number | null;
     quotes?: number | null;
-    likes?: number | null;
+    numLikes?: number | null;
     bookmarks?: number | null;
     impressions?: number | null;
   } | null;
@@ -223,7 +223,7 @@ export type TimelineTweetFragmentFragment = ({
   timeStamp?: TimeString | null;
   retweets?: number | null;
   quotes?: number | null;
-  likes?: number | null;
+  numLikes?: number | null;
   bookmarks?: number | null;
 } & {
   " $fragmentRefs"?: {
@@ -292,7 +292,7 @@ export const TweetFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
         ],
       },
@@ -335,7 +335,7 @@ export const TweetReplyFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
         ],
       },
     },
@@ -412,7 +412,7 @@ export const TweetThreadFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
         ],
       },
@@ -434,7 +434,7 @@ export const TweetThreadFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
         ],
       },
     },
@@ -498,7 +498,7 @@ export const TweetColumnFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
         ],
       },
@@ -520,7 +520,7 @@ export const TweetColumnFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
         ],
       },
     },
@@ -611,7 +611,7 @@ export const TimelineTweetActionsFragmentFragmentDoc = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "tweetId" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
           {
             kind: "Field",
@@ -663,7 +663,7 @@ export const TimelineTweetFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "timeStamp" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
         ],
       },
@@ -710,7 +710,7 @@ export const TimelineTweetFragmentFragmentDoc = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "tweetId" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
           {
             kind: "Field",
@@ -768,7 +768,7 @@ export const LikeTwDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "tweetId" } },
-                { kind: "Field", name: { kind: "Name", value: "likes" } },
+                { kind: "Field", name: { kind: "Name", value: "numLikes" } },
               ],
             },
           },
@@ -838,7 +838,7 @@ export const PostTwDocument = {
                 { kind: "Field", name: { kind: "Name", value: "date" } },
                 { kind: "Field", name: { kind: "Name", value: "retweets" } },
                 { kind: "Field", name: { kind: "Name", value: "quotes" } },
-                { kind: "Field", name: { kind: "Name", value: "likes" } },
+                { kind: "Field", name: { kind: "Name", value: "numLikes" } },
                 { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
                 { kind: "Field", name: { kind: "Name", value: "impressions" } },
               ],
@@ -941,7 +941,7 @@ export const TimeLinePageQueryDocument = {
         selections: [
           { kind: "Field", name: { kind: "Name", value: "tweetId" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
           {
             kind: "Field",
@@ -988,7 +988,7 @@ export const TimeLinePageQueryDocument = {
           { kind: "Field", name: { kind: "Name", value: "timeStamp" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
         ],
       },
@@ -1062,7 +1062,7 @@ export const PageQueryDocument = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
         ],
       },
@@ -1084,7 +1084,7 @@ export const PageQueryDocument = {
           { kind: "Field", name: { kind: "Name", value: "date" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
-          { kind: "Field", name: { kind: "Name", value: "likes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
         ],
       },
     },

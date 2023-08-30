@@ -20,7 +20,7 @@ const fragmentDefinition = graphql(`
     timeStamp
     retweets
     quotes
-    likes
+    numLikes
     bookmarks
   }
 `);

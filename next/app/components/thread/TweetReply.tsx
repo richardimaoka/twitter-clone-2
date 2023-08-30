@@ -21,7 +21,7 @@ const fragmentDefinition = graphql(`
     date
     retweets
     quotes
-    likes
+    numLikes
   }
 `);
 
@@ -68,7 +68,7 @@ export const TweetReply = (props: TweetReplyProps) => {
           <div className={styles.replyActionItem}>
             <FontAwesomeIcon className={styles.iconReply} icon={faHeart} />
             {fragment.retweets && fragment.retweets > 0 ? (
-              <div className={styles.replyActionValue}>{fragment.likes}</div>
+              <div className={styles.replyActionValue}>{fragment.numLikes}</div>
             ) : (
               <></>
             )}
