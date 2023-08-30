@@ -14,7 +14,7 @@ import { useMutation } from "@apollo/client";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetActionsFragment on Tweet {
-    tweetId
+    id
     retweets
     numLikes
     bookmarks
@@ -26,9 +26,9 @@ const fragmentDefinition = graphql(`
 `);
 
 const mutationDefinition = graphql(/* GraphQL */ `
-  mutation likeTw($tweetId: ID!) {
-    like(tweetId: $tweetId) {
-      tweetId
+  mutation likeTw($id: ID!) {
+    like(tweetId: $id) {
+      id
       numLikes
     }
   }
@@ -42,8 +42,8 @@ export const TweetActions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
   const [mutateFunction] = useMutation(mutationDefinition);
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (fragment.tweetId) {
-      mutateFunction({ variables: { tweetId: fragment.tweetId } });
+    if (fragment.id) {
+      mutateFunction({ variables: { id: fragment.id } });
     }
   };
 

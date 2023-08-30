@@ -60,6 +60,7 @@ type ComplexityRoot struct {
 		Body           func(childComplexity int) int
 		Bookmarks      func(childComplexity int) int
 		Date           func(childComplexity int) int
+		ID             func(childComplexity int) int
 		Impressions    func(childComplexity int) int
 		NumLikes       func(childComplexity int) int
 		PictureHeight  func(childComplexity int) int
@@ -71,7 +72,6 @@ type ComplexityRoot struct {
 		Retweets       func(childComplexity int) int
 		Time           func(childComplexity int) int
 		TimeStamp      func(childComplexity int) int
-		TweetID        func(childComplexity int) int
 		UserID         func(childComplexity int) int
 		UserName       func(childComplexity int) int
 	}
@@ -165,6 +165,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tweet.Date(childComplexity), true
 
+	case "Tweet.id":
+		if e.complexity.Tweet.ID == nil {
+			break
+		}
+
+		return e.complexity.Tweet.ID(childComplexity), true
+
 	case "Tweet.impressions":
 		if e.complexity.Tweet.Impressions == nil {
 			break
@@ -241,13 +248,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Tweet.TimeStamp(childComplexity), true
-
-	case "Tweet.tweetId":
-		if e.complexity.Tweet.TweetID == nil {
-			break
-		}
-
-		return e.complexity.Tweet.TweetID(childComplexity), true
 
 	case "Tweet.userId":
 		if e.complexity.Tweet.UserID == nil {
@@ -520,8 +520,8 @@ func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "tweetId":
-				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "id":
+				return ec.fieldContext_Tweet_id(ctx, field)
 			case "userName":
 				return ec.fieldContext_Tweet_userName(ctx, field)
 			case "userId":
@@ -608,8 +608,8 @@ func (ec *executionContext) fieldContext_Mutation_like(ctx context.Context, fiel
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "tweetId":
-				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "id":
+				return ec.fieldContext_Tweet_id(ctx, field)
 			case "userName":
 				return ec.fieldContext_Tweet_userName(ctx, field)
 			case "userId":
@@ -696,8 +696,8 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "tweetId":
-				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "id":
+				return ec.fieldContext_Tweet_id(ctx, field)
 			case "userName":
 				return ec.fieldContext_Tweet_userName(ctx, field)
 			case "userId":
@@ -773,8 +773,8 @@ func (ec *executionContext) fieldContext_Query_timeline(ctx context.Context, fie
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "tweetId":
-				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "id":
+				return ec.fieldContext_Tweet_id(ctx, field)
 			case "userName":
 				return ec.fieldContext_Tweet_userName(ctx, field)
 			case "userId":
@@ -954,8 +954,8 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Tweet_tweetId(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Tweet_tweetId(ctx, field)
+func (ec *executionContext) _Tweet_id(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -968,7 +968,7 @@ func (ec *executionContext) _Tweet_tweetId(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.TweetID, nil
+		return obj.ID, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -982,7 +982,7 @@ func (ec *executionContext) _Tweet_tweetId(ctx context.Context, field graphql.Co
 	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Tweet_tweetId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Tweet_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Tweet",
 		Field:      field,
@@ -1605,8 +1605,8 @@ func (ec *executionContext) fieldContext_Tweet_replies(ctx context.Context, fiel
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "tweetId":
-				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "id":
+				return ec.fieldContext_Tweet_id(ctx, field)
 			case "userName":
 				return ec.fieldContext_Tweet_userName(ctx, field)
 			case "userId":
@@ -3617,8 +3617,8 @@ func (ec *executionContext) _Tweet(ctx context.Context, sel ast.SelectionSet, ob
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Tweet")
-		case "tweetId":
-			out.Values[i] = ec._Tweet_tweetId(ctx, field, obj)
+		case "id":
+			out.Values[i] = ec._Tweet_id(ctx, field, obj)
 		case "userName":
 			out.Values[i] = ec._Tweet_userName(ctx, field, obj)
 		case "userId":

@@ -62,6 +62,7 @@ export type Tweet = {
   body?: Maybe<Scalars["String"]["output"]>;
   bookmarks?: Maybe<Scalars["Int"]["output"]>;
   date?: Maybe<Scalars["String"]["output"]>;
+  id?: Maybe<Scalars["ID"]["output"]>;
   impressions?: Maybe<Scalars["Int"]["output"]>;
   numLikes?: Maybe<Scalars["Int"]["output"]>;
   pictureHeight?: Maybe<Scalars["Int"]["output"]>;
@@ -73,7 +74,6 @@ export type Tweet = {
   retweets?: Maybe<Scalars["Int"]["output"]>;
   time?: Maybe<Scalars["String"]["output"]>;
   timeStamp?: Maybe<Scalars["Time"]["output"]>;
-  tweetId?: Maybe<Scalars["ID"]["output"]>;
   userId?: Maybe<Scalars["String"]["output"]>;
   userName?: Maybe<Scalars["String"]["output"]>;
 };
@@ -149,7 +149,7 @@ export type TimelineProfilePicFragmentFragment = {
 
 export type TimelineTweetActionsFragmentFragment = {
   __typename: "Tweet";
-  tweetId?: string | null;
+  id?: string | null;
   retweets?: number | null;
   numLikes?: number | null;
   bookmarks?: number | null;
@@ -158,14 +158,14 @@ export type TimelineTweetActionsFragmentFragment = {
 } & { " $fragmentName"?: "TimelineTweetActionsFragmentFragment" };
 
 export type LikeTwMutationVariables = Exact<{
-  tweetId: Scalars["ID"]["input"];
+  id: Scalars["ID"]["input"];
 }>;
 
 export type LikeTwMutation = {
   __typename: "Mutation";
   like?: {
     __typename: "Tweet";
-    tweetId?: string | null;
+    id?: string | null;
     numLikes?: number | null;
   } | null;
 };
@@ -178,7 +178,7 @@ export type PostTwMutation = {
   __typename: "Mutation";
   postTweet?: {
     __typename: "Tweet";
-    tweetId?: string | null;
+    id?: string | null;
     userName?: string | null;
     userId?: string | null;
     profilePicture?: string | null;
@@ -204,7 +204,7 @@ export type TimeLinePageQueryQueryVariables = Exact<{
 export type TimeLinePageQueryQuery = {
   __typename: "Query";
   timeline?: Array<
-    { __typename: "Tweet"; tweetId?: string | null } & {
+    { __typename: "Tweet"; id?: string | null } & {
       " $fragmentRefs"?: {
         TimelineTweetFragmentFragment: TimelineTweetFragmentFragment;
       };
@@ -609,7 +609,7 @@ export const TimelineTweetActionsFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
@@ -708,7 +708,7 @@ export const TimelineTweetFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
@@ -738,10 +738,7 @@ export const LikeTwDocument = {
       variableDefinitions: [
         {
           kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "tweetId" },
-          },
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
           type: {
             kind: "NonNullType",
             type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
@@ -760,14 +757,14 @@ export const LikeTwDocument = {
                 name: { kind: "Name", value: "tweetId" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "tweetId" },
+                  name: { kind: "Name", value: "id" },
                 },
               },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "numLikes" } },
               ],
             },
@@ -816,7 +813,7 @@ export const PostTwDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "userName" } },
                 { kind: "Field", name: { kind: "Name", value: "userId" } },
                 {
@@ -892,7 +889,7 @@ export const TimeLinePageQueryDocument = {
                   kind: "FragmentSpread",
                   name: { kind: "Name", value: "TimelineTweetFragment" },
                 },
-                { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
               ],
             },
           },
@@ -939,7 +936,7 @@ export const TimeLinePageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "tweetId" } },
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "retweets" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },

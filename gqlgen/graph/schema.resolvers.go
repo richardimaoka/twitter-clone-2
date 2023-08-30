@@ -27,7 +27,7 @@ func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.T
 	date := fmt.Sprintf("%d年%d月%d日", timeStamp.Year(), timeStamp.Month(), timeStamp.Day())
 
 	newTweet := model.Tweet{
-		TweetID:        &tweetId,
+		ID:             &tweetId,
 		UserName:       &userName,
 		UserID:         &userId,
 		ProfilePicture: &profilePicture,
@@ -55,7 +55,7 @@ func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.T
 func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Tweet, error) {
 	log.Printf("like on tweetID = %v", tweetID)
 	for _, t := range r.Resolver.allTweets {
-		if t.TweetID != nil && *t.TweetID == tweetID {
+		if t.ID != nil && *t.ID == tweetID {
 			log.Printf("incrementing like = %d", *t.NumLikes)
 			likes := *t.NumLikes
 			likes++

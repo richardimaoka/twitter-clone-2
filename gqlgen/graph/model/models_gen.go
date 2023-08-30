@@ -7,7 +7,7 @@ import (
 )
 
 type Tweet struct {
-	TweetID        *string    `json:"tweetId,omitempty"`
+	ID             *string    `json:"id,omitempty"`
 	UserName       *string    `json:"userName,omitempty"`
 	UserID         *string    `json:"userId,omitempty"`
 	ProfilePicture *string    `json:"profilePicture,omitempty"`

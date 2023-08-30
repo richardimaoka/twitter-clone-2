@@ -37,7 +37,7 @@ const queryDefinition = graphql(/* GraphQL */ `
   query TimeLinePageQuery($currentTime: Time!) {
     timeline(currentTime: $currentTime) {
       ...TimelineTweetFragment
-      tweetId
+      id
     }
   }
 `);
@@ -80,7 +80,7 @@ export const TweetTimelineView = () => {
       </div>
       <TweetInput />
       {data.timeline.map((tweet) => (
-        <TweetView key={tweet.tweetId} fragment={tweet} />
+        <TweetView key={tweet.id} fragment={tweet} />
       ))}
     </div>
   );

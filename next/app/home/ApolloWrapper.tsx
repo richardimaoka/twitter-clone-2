@@ -46,8 +46,8 @@ const typePolicies: StrictTypedTypePolicies = {
         merge(existing, incoming: Tweet[], { readField }) {
           const merged = { ...existing };
           incoming.forEach((t) => {
-            if (t.tweetId) {
-              merged[t.tweetId] = t;
+            if (t.id) {
+              merged[t.id] = t;
             }
           });
           return merged;

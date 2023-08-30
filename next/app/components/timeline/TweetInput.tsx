@@ -5,7 +5,7 @@ import Image from "next/image";
 const definition = graphql(/* GraphQL */ `
   mutation postTw($body: String!) {
     postTweet(body: $body) {
-      tweetId
+      id
       userName
       userId
       profilePicture
@@ -31,7 +31,7 @@ export const TweetInput = () => {
       cache.modify({
         fields: {
           timeline(existing) {
-            const tweetId = data?.postTweet?.tweetId;
+            const tweetId = data?.postTweet?.id;
             if (!tweetId) {
               return existing;
             }

@@ -22,6 +22,7 @@ export type TweetKeySpecifier = (
   | "body"
   | "bookmarks"
   | "date"
+  | "id"
   | "impressions"
   | "numLikes"
   | "pictureHeight"
@@ -33,7 +34,6 @@ export type TweetKeySpecifier = (
   | "retweets"
   | "time"
   | "timeStamp"
-  | "tweetId"
   | "userId"
   | "userName"
   | TweetKeySpecifier
@@ -42,6 +42,7 @@ export type TweetFieldPolicy = {
   body?: FieldPolicy<any> | FieldReadFunction<any>;
   bookmarks?: FieldPolicy<any> | FieldReadFunction<any>;
   date?: FieldPolicy<any> | FieldReadFunction<any>;
+  id?: FieldPolicy<any> | FieldReadFunction<any>;
   impressions?: FieldPolicy<any> | FieldReadFunction<any>;
   numLikes?: FieldPolicy<any> | FieldReadFunction<any>;
   pictureHeight?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -53,7 +54,6 @@ export type TweetFieldPolicy = {
   retweets?: FieldPolicy<any> | FieldReadFunction<any>;
   time?: FieldPolicy<any> | FieldReadFunction<any>;
   timeStamp?: FieldPolicy<any> | FieldReadFunction<any>;
-  tweetId?: FieldPolicy<any> | FieldReadFunction<any>;
   userId?: FieldPolicy<any> | FieldReadFunction<any>;
   userName?: FieldPolicy<any> | FieldReadFunction<any>;
 };
