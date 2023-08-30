@@ -47,6 +47,7 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Mutation struct {
+		Like      func(childComplexity int, tweetID string) int
 		PostTweet func(childComplexity int, body string) int
 	}
 
@@ -78,6 +79,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	PostTweet(ctx context.Context, body string) (*model.Tweet, error)
+	Like(ctx context.Context, tweetID string) (*model.Tweet, error)
 }
 type QueryResolver interface {
 	Tweet(ctx context.Context) (*model.Tweet, error)
@@ -98,6 +100,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e, 0, 0, nil}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "Mutation.like":
+		if e.complexity.Mutation.Like == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_like_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.Like(childComplexity, args["tweetId"].(string)), true
 
 	case "Mutation.postTweet":
 		if e.complexity.Mutation.PostTweet == nil {
@@ -372,6 +386,21 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
+func (ec *executionContext) field_Mutation_like_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["tweetId"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tweetId"))
+		arg0, err = ec.unmarshalNID2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["tweetId"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_postTweet_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -537,6 +566,94 @@ func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context,
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_postTweet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_like(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_like(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().Like(rctx, fc.Args["tweetId"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.Tweet)
+	fc.Result = res
+	return ec.marshalOTweet2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐTweet(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_like(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "tweetId":
+				return ec.fieldContext_Tweet_tweetId(ctx, field)
+			case "userName":
+				return ec.fieldContext_Tweet_userName(ctx, field)
+			case "userId":
+				return ec.fieldContext_Tweet_userId(ctx, field)
+			case "profilePicture":
+				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "body":
+				return ec.fieldContext_Tweet_body(ctx, field)
+			case "picturePath":
+				return ec.fieldContext_Tweet_picturePath(ctx, field)
+			case "pictureWidth":
+				return ec.fieldContext_Tweet_pictureWidth(ctx, field)
+			case "pictureHeight":
+				return ec.fieldContext_Tweet_pictureHeight(ctx, field)
+			case "timeStamp":
+				return ec.fieldContext_Tweet_timeStamp(ctx, field)
+			case "time":
+				return ec.fieldContext_Tweet_time(ctx, field)
+			case "date":
+				return ec.fieldContext_Tweet_date(ctx, field)
+			case "retweets":
+				return ec.fieldContext_Tweet_retweets(ctx, field)
+			case "quotes":
+				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "likes":
+				return ec.fieldContext_Tweet_likes(ctx, field)
+			case "bookmarks":
+				return ec.fieldContext_Tweet_bookmarks(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
+			case "impressions":
+				return ec.fieldContext_Tweet_impressions(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_like_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -3374,6 +3491,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_postTweet(ctx, field)
 			})
+		case "like":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_like(ctx, field)
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -3886,6 +4007,21 @@ func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interf
 
 func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.SelectionSet, v bool) graphql.Marshaler {
 	res := graphql.MarshalBoolean(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
+	res, err := graphql.UnmarshalID(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	res := graphql.MarshalID(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")

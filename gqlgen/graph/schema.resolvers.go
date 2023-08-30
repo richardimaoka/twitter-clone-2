@@ -51,6 +51,11 @@ func (r *mutationResolver) PostTweet(ctx context.Context, body string) (*model.T
 	return &newTweet, nil
 }
 
+// Like is the resolver for the like field.
+func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Tweet, error) {
+	panic(fmt.Errorf("not implemented: Like - like"))
+}
+
 // Tweet is the resolver for the tweet field.
 func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
 	bytes, err := os.ReadFile("data/tweet.json")

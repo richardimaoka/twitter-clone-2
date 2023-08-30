@@ -4,8 +4,13 @@ import {
   TypePolicies,
   TypePolicy,
 } from "@apollo/client/cache";
-export type MutationKeySpecifier = ("postTweet" | MutationKeySpecifier)[];
+export type MutationKeySpecifier = (
+  | "like"
+  | "postTweet"
+  | MutationKeySpecifier
+)[];
 export type MutationFieldPolicy = {
+  like?: FieldPolicy<any> | FieldReadFunction<any>;
   postTweet?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type QueryKeySpecifier = ("timeline" | "tweet" | QueryKeySpecifier)[];

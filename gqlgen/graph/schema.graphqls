@@ -31,4 +31,5 @@ type Query {
 
 type Mutation {
   postTweet(body: String!): Tweet
+  like(tweetId: ID!): Tweet
 }

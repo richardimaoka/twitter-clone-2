@@ -35,7 +35,12 @@ export type Scalars = {
 
 export type Mutation = {
   __typename: "Mutation";
+  like?: Maybe<Tweet>;
   postTweet?: Maybe<Tweet>;
+};
+
+export type MutationLikeArgs = {
+  tweetId: Scalars["ID"]["input"];
 };
 
 export type MutationPostTweetArgs = {
