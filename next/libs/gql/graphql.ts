@@ -170,11 +170,11 @@ export type LikeTwMutation = {
   } | null;
 };
 
-export type PostTwMutationVariables = Exact<{
+export type PostTw2MutationVariables = Exact<{
   body: Scalars["String"]["input"];
 }>;
 
-export type PostTwMutation = {
+export type PostTw2Mutation = {
   __typename: "Mutation";
   postTweet?: {
     __typename: "Tweet";
@@ -210,6 +210,21 @@ export type TimeLinePageQueryQuery = {
       };
     }
   > | null;
+};
+
+export type PostTwMutationVariables = Exact<{
+  body: Scalars["String"]["input"];
+}>;
+
+export type PostTwMutation = {
+  __typename: "Mutation";
+  postTweet?:
+    | ({ __typename: "Tweet"; id?: string | null } & {
+        " $fragmentRefs"?: {
+          TimelineTweetFragmentFragment: TimelineTweetFragmentFragment;
+        };
+      })
+    | null;
 };
 
 export type TimelineTweetFragmentFragment = ({
@@ -774,13 +789,13 @@ export const LikeTwDocument = {
     },
   ],
 } as unknown as DocumentNode<LikeTwMutation, LikeTwMutationVariables>;
-export const PostTwDocument = {
+export const PostTw2Document = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "postTw" },
+      name: { kind: "Name", value: "postTw2" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -845,7 +860,7 @@ export const PostTwDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<PostTwMutation, PostTwMutationVariables>;
+} as unknown as DocumentNode<PostTw2Mutation, PostTw2MutationVariables>;
 export const TimeLinePageQueryDocument = {
   kind: "Document",
   definitions: [
@@ -995,6 +1010,152 @@ export const TimeLinePageQueryDocument = {
   TimeLinePageQueryQuery,
   TimeLinePageQueryQueryVariables
 >;
+export const PostTwDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "postTw" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "body" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "postTweet" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "body" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "body" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "TimelineTweetFragment" },
+                },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TimelineProfilePicFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TimelineHeaderFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "userName" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "date" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TimelineTweetActionsFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "replies" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "__typename" } },
+              ],
+            },
+          },
+          { kind: "Field", name: { kind: "Name", value: "impressions" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "TimelineTweetFragment" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "TimelineProfilePicFragment" },
+          },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "TimelineHeaderFragment" },
+          },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "TimelineTweetActionsFragment" },
+          },
+          { kind: "Field", name: { kind: "Name", value: "body" } },
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
+          { kind: "Field", name: { kind: "Name", value: "time" } },
+          { kind: "Field", name: { kind: "Name", value: "date" } },
+          { kind: "Field", name: { kind: "Name", value: "timeStamp" } },
+          { kind: "Field", name: { kind: "Name", value: "retweets" } },
+          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PostTwMutation, PostTwMutationVariables>;
 export const RootPageQueryDocument = {
   kind: "Document",
   definitions: [

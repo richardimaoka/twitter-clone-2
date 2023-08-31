@@ -1,6 +1,5 @@
 "use client";
 
-import { useSuspenseQuery } from "@apollo/client";
 import { TweetView } from "./TweetView";
 import styles from "./style.module.css";
 
@@ -8,8 +7,8 @@ import { graphql } from "@/libs/gql";
 import { TimeLinePageQueryQuery, TimeString } from "@/libs/gql/graphql";
 import { toTimeString } from "@/libs/gql/timeString";
 import { request } from "graphql-request";
-import { startTransition, useEffect, useState } from "react";
-import { TweetInput } from "./TweetInput";
+import Image from "next/image";
+import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
 
 export const LoadMoreTweetsButton = () => {
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
@@ -43,6 +42,14 @@ const queryDefinition = graphql(/* GraphQL */ `
   }
 `);
 
+const mutationDefinition = graphql(/* GraphQL */ `
+  mutation postTw($body: String!) {
+    postTweet(body: $body) {
+      ...TimelineTweetFragment
+      id
+    }
+  }
+`);
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
   const initialTime = "2023-08-18T09:30:10.000Z" as TimeString; //workaround - we need a TimeString constant, or any sure way to get TimeString prop
@@ -61,6 +68,21 @@ export const TweetTimelineView = () => {
     };
     dataFetch();
   }, [value]);
+
+  const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    const url = "http://localhost:8080/query";
+    const variables = { body: "hello world" };
+    const result = await request(url, mutationDefinition, variables);
+
+    if (!result.postTweet) return;
+
+    if (tweets.timeline) {
+      setTweets({
+        __typename: "Query",
+        timeline: [result.postTweet, ...tweets.timeline],
+      });
+    }
+  };
 
   return (
     <div className={styles.column}>
@@ -82,6 +104,16 @@ export const TweetTimelineView = () => {
         >
           最新ツイートを表示
         </button>
+      </div>
+      <div>
+        <Image
+          src="/images/richard-profile.jpg"
+          alt="my profile"
+          width={40}
+          height={40}
+        />
+        <input type="text" placeholder="いまどうしてる？" />
+        <button onClick={onClick}>ツイートする</button>
       </div>
       {tweets.timeline &&
         tweets.timeline.map((tweet) => (

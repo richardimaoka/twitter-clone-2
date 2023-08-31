@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import Image from "next/image";
 
 const definition = graphql(/* GraphQL */ `
-  mutation postTw($body: String!) {
+  mutation postTw2($body: String!) {
     postTweet(body: $body) {
       id
       userName
