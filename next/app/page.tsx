@@ -1,7 +1,9 @@
 import { TweetColumn } from "./components/thread/TweetColumn";
-import { getClient } from "@/libs/apolloClient";
 import { graphql } from "@/libs/gql";
-import { print } from "graphql";
+// import { print } from "graphql";
+
+import { request, gql } from "graphql-request";
+import { useEffect } from "react";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query PageQuery {
@@ -12,10 +14,8 @@ const queryDefinition = graphql(/* GraphQL */ `
 `);
 
 export default async function Home() {
-  console.log(print(queryDefinition));
-  const { data } = await getClient().query({
-    query: queryDefinition,
-  });
+  const data = await request("http://localhost:8080/query", queryDefinition);
+  console.log(data);
 
   return <main>{data.tweet && <TweetColumn fragment={data.tweet} />}</main>;
 }
