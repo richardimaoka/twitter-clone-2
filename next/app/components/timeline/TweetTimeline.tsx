@@ -5,9 +5,10 @@ import { TweetView } from "./TweetView";
 import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
-import { Suspense, startTransition, useEffect, useState } from "react";
+import { TimeLinePageQueryQuery, TimeString } from "@/libs/gql/graphql";
 import { toTimeString } from "@/libs/gql/timeString";
-import { TimeString } from "@/libs/gql/graphql";
+import { request } from "graphql-request";
+import { startTransition, useEffect, useState } from "react";
 import { TweetInput } from "./TweetInput";
 
 export const LoadMoreTweetsButton = () => {
@@ -45,43 +46,47 @@ const queryDefinition = graphql(/* GraphQL */ `
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
   const initialTime = "2023-08-18T09:30:10.000Z" as TimeString; //workaround - we need a TimeString constant, or any sure way to get TimeString prop
-  const [value, setValue] = useState<string>(initialTime);
-
-  const { data, fetchMore } = useSuspenseQuery(queryDefinition, {
-    variables: { currentTime: initialTime },
+  const [value, setValue] = useState<TimeString>(initialTime);
+  const [tweets, setTweets] = useState<TimeLinePageQueryQuery>({
+    __typename: "Query",
+    timeline: [],
   });
 
-  if (!data.timeline) {
-    return <div>no data</div>;
-  }
+  useEffect(() => {
+    const dataFetch = async () => {
+      const url = "http://localhost:8080/query";
+      const variables = { currentTime: value };
+      const data = await request(url, queryDefinition, variables);
+      setTweets(data);
+    };
+    dataFetch();
+  }, [value]);
 
   return (
     <div className={styles.column}>
       <div>
         <input
           type="text"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => {
+            const ts = toTimeString(e.target.value);
+            if (ts) {
+              setValue(ts);
+            }
+          }}
           value={value}
         />
         <button
           onClick={() => {
             const timeStr = toTimeString(value);
-            if (timeStr) {
-              startTransition(() => {
-                fetchMore({ variables: { currentTime: timeStr } });
-              });
-            } else {
-              window.alert(value + " is not a valid time string");
-            }
           }}
         >
           最新ツイートを表示
         </button>
       </div>
-      <TweetInput />
-      {data.timeline.map((tweet) => (
-        <TweetView key={tweet.id} fragment={tweet} />
-      ))}
+      {tweets.timeline &&
+        tweets.timeline.map((tweet) => (
+          <TweetView key={tweet.id} fragment={tweet} />
+        ))}
     </div>
   );
 };
