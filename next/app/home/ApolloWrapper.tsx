@@ -31,6 +31,7 @@ const typePolicies: StrictTypedTypePolicies = {
         // Return all items stored so far, to avoid ambiguities
         // about the order of the items.
         read(existing) {
+          console.log("typePolicies timeline: existing = ", existing);
           if (!existing) return undefined;
 
           const tweets: Tweet[] = Object.values(existing);
@@ -39,17 +40,23 @@ const typePolicies: StrictTypedTypePolicies = {
             const bTime = b.timeStamp ? new Date(b.timeStamp).getTime() : 0;
             return aTime - bTime;
           });
+          console.log("returning tweets", existing);
+          return tweets;
         },
         // While args.cursor may still be important for requesting
         // a given page, it no longer has any role to play in the
         // merge function.
         merge(existing, incoming: Tweet[], { readField }) {
+          console.log("typePolicies timeline: merge, existing = ", existing);
+          console.log("typePolicies timeline: merge, incoming = ", incoming);
           const merged = { ...existing };
           incoming.forEach((t) => {
+            console.log(t);
             if (t.id) {
               merged[t.id] = t;
             }
           });
+          console.log("typePolicies timeline: merge, merged = ", merged);
           return merged;
         },
       },
