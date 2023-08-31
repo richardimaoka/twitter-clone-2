@@ -233,9 +233,9 @@ export type TimelineTweetFragmentFragment = ({
   };
 }) & { " $fragmentName"?: "TimelineTweetFragmentFragment" };
 
-export type PageQueryQueryVariables = Exact<{ [key: string]: never }>;
+export type RootPageQueryQueryVariables = Exact<{ [key: string]: never }>;
 
-export type PageQueryQuery = {
+export type RootPageQueryQuery = {
   __typename: "Query";
   tweet?:
     | ({ __typename: "Tweet" } & {
@@ -995,13 +995,13 @@ export const TimeLinePageQueryDocument = {
   TimeLinePageQueryQuery,
   TimeLinePageQueryQueryVariables
 >;
-export const PageQueryDocument = {
+export const RootPageQueryDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "query",
-      name: { kind: "Name", value: "PageQuery" },
+      name: { kind: "Name", value: "RootPageQuery" },
       selectionSet: {
         kind: "SelectionSet",
         selections: [
@@ -1133,4 +1133,4 @@ export const PageQueryDocument = {
       },
     },
   ],
-} as unknown as DocumentNode<PageQueryQuery, PageQueryQueryVariables>;
+} as unknown as DocumentNode<RootPageQueryQuery, RootPageQueryQueryVariables>;

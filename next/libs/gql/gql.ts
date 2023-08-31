@@ -37,8 +37,8 @@ const documents = {
     types.TimeLinePageQueryDocument,
   "\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n":
     types.TimelineTweetFragmentFragmentDoc,
-  "\n  query PageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n":
-    types.PageQueryDocument,
+  "\n  query RootPageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n":
+    types.RootPageQueryDocument,
 };
 
 /**
@@ -131,8 +131,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query PageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n",
-): (typeof documents)["\n  query PageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n"];
+  source: "\n  query RootPageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n",
+): (typeof documents)["\n  query RootPageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

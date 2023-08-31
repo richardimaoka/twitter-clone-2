@@ -68,6 +68,8 @@ func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Twe
 
 // Tweet is the resolver for the tweet field.
 func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
+	log.Printf("sleeping for 2 seconds")
+	time.Sleep(2 * time.Second)
 	bytes, err := os.ReadFile("data/tweet.json")
 	if err != nil {
 		return nil, err
