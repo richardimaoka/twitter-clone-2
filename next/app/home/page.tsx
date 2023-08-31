@@ -1,8 +1,8 @@
 import { graphql } from "@/libs/gql";
-import styles from "./style.module.css";
 import { request } from "graphql-request";
-import { TweetView } from "../components/timeline/TweetView";
 import { TimeString } from "@/libs/gql/graphql";
+import { TweetView } from "../components/timeline/TweetView";
+import styles from "./style.module.css";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query HomePageQuery($currentTime: Time!) {
@@ -21,13 +21,12 @@ export default async function Page() {
 
   return (
     <main>
-      {data.timeline && (
-        <div className={styles.column}>
-          {data.timeline.map((tweet) => (
-            <div key={tweet.id}>{tweet.id}</div>
+      <div className={styles.column}>
+        {data.timeline &&
+          data.timeline.map((tweet) => (
+            <TweetView key={tweet.id} fragment={tweet} />
           ))}
-        </div>
-      )}
+      </div>
     </main>
   );
 }
