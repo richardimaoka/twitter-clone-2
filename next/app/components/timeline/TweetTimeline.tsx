@@ -52,8 +52,8 @@ const mutationDefinition = graphql(/* GraphQL */ `
 `);
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
-  const initialTime = "2023-08-18T09:30:10.000Z" as TimeString; //workaround - we need a TimeString constant, or any sure way to get TimeString prop
-  const [value, setValue] = useState<TimeString>(initialTime);
+  const initialTime = "2023-08-18T09:30:10.000Z"; // "2023-08-18T09:30:10.000Z" is known to be a good TimeString
+  const [value, setValue] = useState<string>(initialTime);
   const [tweets, setTweets] = useState<TimeLinePageQueryQuery>({
     __typename: "Query",
     timeline: [],
@@ -61,10 +61,13 @@ export const TweetTimelineView = () => {
 
   useEffect(() => {
     const dataFetch = async () => {
-      const url = "http://localhost:8080/query";
-      const variables = { currentTime: value };
-      const data = await request(url, queryDefinition, variables);
-      setTweets(data);
+      const currentTime = toTimeString(value);
+      if (currentTime) {
+        const url = "http://localhost:8080/query";
+        const variables = { currentTime: currentTime };
+        const data = await request(url, queryDefinition, variables);
+        setTweets(data);
+      }
     };
     dataFetch();
   }, [value]);
@@ -90,10 +93,7 @@ export const TweetTimelineView = () => {
         <input
           type="text"
           onChange={(e) => {
-            const ts = toTimeString(e.target.value);
-            if (ts) {
-              setValue(ts);
-            }
+            setValue(e.target.value);
           }}
           value={value}
         />
