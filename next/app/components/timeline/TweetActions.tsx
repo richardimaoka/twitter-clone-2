@@ -40,12 +40,6 @@ interface Props {
 
 export const TweetActions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
-  const [mutateFunction] = useMutation(mutationDefinition);
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    if (fragment.id) {
-      mutateFunction({ variables: { id: fragment.id } });
-    }
-  };
 
   return (
     <div className={styles.actions}>
@@ -60,7 +54,7 @@ export const TweetActions = (props: Props) => {
         <span className={styles.reactionvalue}>{fragment.retweets}</span>
       </div>
       <div>
-        <button onClick={onClick}>
+        <button>
           <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         </button>
         <span className={styles.reactionvalue}>{fragment.numLikes}</span>
