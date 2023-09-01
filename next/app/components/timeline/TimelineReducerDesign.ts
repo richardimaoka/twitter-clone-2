@@ -38,9 +38,7 @@ export function emptyState(): State {
 
 function merge(cache: Record<string, Tweet>, incoming: Tweet[]) {
   incoming.forEach((tweet) => {
-    if (tweet.id) {
-      cache[tweet.id] = tweet;
-    }
+    cache[tweet.id] = tweet;
   });
 }
 
@@ -95,10 +93,7 @@ function loadNewerTweets(
   // purge cache for deleted tweets
   const deleted = timeline.slice(1000);
   deleted.forEach((tweet) => {
-    //supposedly tweet.id exists, but its type can still be null | undefined
-    if (tweet.id) {
-      delete cache[tweet.id];
-    }
+    delete cache[tweet.id];
   });
 
   return {
@@ -121,10 +116,7 @@ function loadOlderTweets(
   // purge cache for deleted tweets
   const deleted = timeline.slice(0, -1000);
   deleted.forEach((tweet) => {
-    //supposedly tweet.id exists, but its type can still be null | undefined
-    if (tweet.id) {
-      delete cache[tweet.id];
-    }
+    delete cache[tweet.id];
   });
 
   return {
