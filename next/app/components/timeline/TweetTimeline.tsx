@@ -17,29 +17,6 @@ import {
 } from "react";
 import { emptyState, reducer } from "./TimelineReducerDesign";
 
-export const LoadMoreTweetsButton = () => {
-  const initialTime = new Date("2023-08-18T09:30:10.000Z");
-  const [currentTime, setCurrentTime] = useState(initialTime);
-
-  useEffect(() => {
-    console.log(currentTime);
-  }, [currentTime]);
-
-  const onClick = () => {
-    const y = currentTime.getFullYear(),
-      m = currentTime.getMonth(),
-      d = currentTime.getDate(),
-      h = currentTime.getHours() + 1,
-      min = currentTime.getMinutes(),
-      s = currentTime.getSeconds();
-
-    const updatedTime = new Date(y, m, d, h, min, s);
-    setCurrentTime(updatedTime);
-  };
-
-  return <button onClick={onClick}>最新ツイートを表示</button>;
-};
-
 const queryDefinition = graphql(/* GraphQL */ `
   query TimeLinePageQuery($currentTime: Time!) {
     timeline(currentTime: $currentTime) {
@@ -107,8 +84,8 @@ export const TweetTimelineView = () => {
 
   return (
     <div className={styles.column}>
-      <div onClick={incrementTime}>
-        <button>最新ツイートを表示</button>
+      <div>
+        <button onClick={incrementTime}>最新ツイートを表示</button>
       </div>
       <div>
         <Image
