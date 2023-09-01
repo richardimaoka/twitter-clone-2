@@ -5,7 +5,7 @@
 scalar Time
 
 type Tweet {
-  id: ID
+  id: ID!
   userName: String
   userId: String
   profilePicture: String

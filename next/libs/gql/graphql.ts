@@ -62,7 +62,7 @@ export type Tweet = {
   body?: Maybe<Scalars["String"]["output"]>;
   bookmarks?: Maybe<Scalars["Int"]["output"]>;
   date?: Maybe<Scalars["String"]["output"]>;
-  id?: Maybe<Scalars["ID"]["output"]>;
+  id: Scalars["ID"]["output"];
   impressions?: Maybe<Scalars["Int"]["output"]>;
   numLikes?: Maybe<Scalars["Int"]["output"]>;
   pictureHeight?: Maybe<Scalars["Int"]["output"]>;
@@ -149,7 +149,7 @@ export type PostTwMutationVariables = Exact<{
 export type PostTwMutation = {
   __typename: "Mutation";
   postTweet?:
-    | ({ __typename: "Tweet"; id?: string | null } & {
+    | ({ __typename: "Tweet"; id: string } & {
         " $fragmentRefs"?: {
           TimelineTweetFragmentFragment: TimelineTweetFragmentFragment;
         };
@@ -164,7 +164,7 @@ export type TimelineProfilePicFragmentFragment = {
 
 export type TimelineTweetActionsFragmentFragment = {
   __typename: "Tweet";
-  id?: string | null;
+  id: string;
   retweets?: number | null;
   numLikes?: number | null;
   bookmarks?: number | null;
@@ -178,11 +178,7 @@ export type LikeTwMutationVariables = Exact<{
 
 export type LikeTwMutation = {
   __typename: "Mutation";
-  like?: {
-    __typename: "Tweet";
-    id?: string | null;
-    numLikes?: number | null;
-  } | null;
+  like?: { __typename: "Tweet"; id: string; numLikes?: number | null } | null;
 };
 
 export type TimeLinePageQueryQueryVariables = Exact<{
@@ -192,7 +188,7 @@ export type TimeLinePageQueryQueryVariables = Exact<{
 export type TimeLinePageQueryQuery = {
   __typename: "Query";
   timeline?: Array<
-    { __typename: "Tweet"; id?: string | null } & {
+    { __typename: "Tweet"; id: string } & {
       " $fragmentRefs"?: {
         TimelineTweetFragmentFragment: TimelineTweetFragmentFragment;
       };
