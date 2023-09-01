@@ -4,19 +4,14 @@ import { TweetView } from "./TweetView";
 import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
-import { TimeLinePageQueryQuery, TimeString } from "@/libs/gql/graphql";
 import { fromDateToTimeString, toTimeString } from "@/libs/gql/timeString";
 import { request } from "graphql-request";
 
-import {
-  MouseEvent,
-  MouseEventHandler,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
-import { emptyState, reducer } from "./TimelineReducerDesign";
+import { useEffect, useReducer, useState } from "react";
 import { PostTweetForm } from "./PostTweetForm";
+import { emptyState, reducer } from "./TimelineReducerDesign";
+import { TimeString } from "@/libs/gql/graphql";
+import { LoadMoreTweetButton } from "./LoadMoreTweetButton";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query TimeLinePageQuery($currentTime: Time!) {
@@ -29,47 +24,33 @@ const queryDefinition = graphql(/* GraphQL */ `
 
 export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
-  const initialTime = "2023-08-18T09:30:10.000Z"; // "2023-08-18T09:30:10.000Z" is known to be a good TimeString
-  const [value, setValue] = useState<string>(initialTime);
+  const initialTime = "2023-08-18T09:30:10.000Z" as TimeString; // "2023-08-18T09:30:10.000Z" is known to be a good TimeString
   const [state, dispatch] = useReducer(reducer, emptyState());
 
+  async function loadNewTweets(currentTime: TimeString) {
+    const url = "http://localhost:8080/query";
+    const variables = { currentTime: currentTime };
+    const queryResult = await request(url, queryDefinition, variables);
+    dispatch({ actionType: "LOAD_NEWER_TWEETS", queryResult: queryResult });
+  }
+
   useEffect(() => {
-    const runQuery = async () => {
-      const currentTime = toTimeString(value);
-      if (currentTime) {
-        const url = "http://localhost:8080/query";
-        const variables = { currentTime: currentTime };
-        const queryResult = await request(url, queryDefinition, variables);
-        dispatch({ actionType: "LOAD_NEWER_TWEETS", queryResult: queryResult });
-      }
-    };
-    runQuery();
-  }, [value]); // run whenever value is incremented
+    const currentTime = toTimeString(initialTime);
+    //TOOD : error handling
+    if (!currentTime) return;
 
-  const incrementTime = () => {
-    const time = toTimeString(value);
-    if (!time) return;
-
-    const currentTime = new Date(time);
-    const y = currentTime.getFullYear(),
-      m = currentTime.getMonth(),
-      d = currentTime.getDate(),
-      h = currentTime.getHours() + 1,
-      min = currentTime.getMinutes(),
-      s = currentTime.getSeconds();
-
-    const updatedTime = new Date(y, m, d, h, min, s);
-    setValue(fromDateToTimeString(updatedTime));
-    console.log(updatedTime);
-  };
-
-  const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {};
+    // trick to run async function in useEffect
+    (async () => {
+      await loadNewTweets(currentTime);
+    })();
+  }, []); // run only once
 
   return (
     <div className={styles.column}>
-      <div>
-        <button onClick={incrementTime}>最新ツイートを表示</button>
-      </div>
+      <LoadMoreTweetButton
+        loadNewTweets={loadNewTweets}
+        initialTime={initialTime}
+      />
       <PostTweetForm dispatch={dispatch} />
       {state.queryResult?.timeline &&
         state.queryResult.timeline.map((tweet) => (
