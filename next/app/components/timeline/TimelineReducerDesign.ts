@@ -15,7 +15,17 @@ interface AddSingleNewTweet {
   tweet: Tweet;
 }
 
-export type Action = LoadNewerTweets | LoadOlderTweets | AddSingleNewTweet;
+interface UpdateLike {
+  actionType: "UPDATE_LIKE";
+  tweetId: string;
+  numLikes: number;
+}
+
+export type Action =
+  | LoadNewerTweets
+  | LoadOlderTweets
+  | AddSingleNewTweet
+  | UpdateLike;
 
 export interface State {
   readonly queryResult: TimeLinePageQueryQuery;
@@ -44,6 +54,24 @@ function sortedTimeline(cache: Record<string, Tweet>): Tweet[] {
   });
 
   return timeline;
+}
+
+function updateLike(
+  cache: Record<string, Tweet>,
+  tweetId: string,
+  numLikes: number
+): State {
+  const tweet = cache[tweetId];
+
+  if (tweet) {
+    tweet.numLikes = numLikes;
+  }
+
+  const timeline = sortedTimeline(cache);
+  return {
+    queryResult: { __typename: "Query", timeline: timeline },
+    cache: cache,
+  };
 }
 
 function addSingleNewTweet(
@@ -113,6 +141,8 @@ export function reducer(state: State, action: Action) {
       return loadOlderTweets(state.cache, action.queryResult);
     case "ADD_SINGLE_NEW_TWEET":
       return addSingleNewTweet(state.cache, action.tweet);
+    case "UPDATE_LIKE":
+      return updateLike(state.cache, action.tweetId, action.numLikes);
     default:
       // exhaustivness checking - https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
       const _exhaustiveCheck: never = action;

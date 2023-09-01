@@ -41,6 +41,7 @@ interface Props {
 
 export const TweetActions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
+  async function likeTweet() {}
 
   return (
     <div className={styles.actions}>
@@ -55,7 +56,7 @@ export const TweetActions = (props: Props) => {
         <span className={styles.reactionvalue}>{fragment.retweets}</span>
       </div>
       <div>
-        <button>
+        <button onClick={likeTweet}>
           <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         </button>
         <span className={styles.reactionvalue}>{fragment.numLikes}</span>
