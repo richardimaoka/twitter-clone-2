@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { useMutation } from "@apollo/client";
+import { Action } from "./TimelineReducerDesign";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetActionsFragment on Tweet {
@@ -25,7 +25,7 @@ const fragmentDefinition = graphql(`
   }
 `);
 
-const mutationDefinition = graphql(/* GraphQL */ `
+const definition = graphql(/* GraphQL */ `
   mutation likeTw($id: ID!) {
     like(tweetId: $id) {
       id
@@ -36,6 +36,7 @@ const mutationDefinition = graphql(/* GraphQL */ `
 
 interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
+  dispatch?: (action: Action) => void;
 }
 
 export const TweetActions = (props: Props) => {
