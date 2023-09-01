@@ -35,7 +35,7 @@ function sortedTimeline(cache: Record<string, Tweet>): Tweet[] {
   timeline.sort((a, b) => {
     const aTime = a.timeStamp ? new Date(a.timeStamp).getTime() : 0;
     const bTime = b.timeStamp ? new Date(b.timeStamp).getTime() : 0;
-    return aTime - bTime;
+    return bTime - aTime;
   });
 
   return timeline;

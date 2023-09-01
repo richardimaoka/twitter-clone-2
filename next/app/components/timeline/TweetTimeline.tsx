@@ -68,17 +68,17 @@ export const TweetTimelineView = () => {
   const [state, dispatch] = useReducer(reducer, emptyState());
 
   useEffect(() => {
-    const dataFetch = async () => {
+    const runQuery = async () => {
       const currentTime = toTimeString(value);
       if (currentTime) {
         const url = "http://localhost:8080/query";
         const variables = { currentTime: currentTime };
-        const data = await request(url, queryDefinition, variables);
-        setTweets(data);
+        const queryResult = await request(url, queryDefinition, variables);
+        dispatch({ actionType: "LOAD_NEWER_TWEETS", queryResult: queryResult });
       }
     };
-    dataFetch();
-  }, [value]);
+    runQuery();
+  }, [value]); // run whenever value is incremented
 
   const incrementTime = () => {
     const time = toTimeString(value);
@@ -127,8 +127,8 @@ export const TweetTimelineView = () => {
         <input type="text" placeholder="いまどうしてる？" />
         <button onClick={onClick}>ツイートする</button>
       </div>
-      {tweets.timeline &&
-        tweets.timeline.map((tweet) => (
+      {state.queryResult?.timeline &&
+        state.queryResult.timeline.map((tweet) => (
           <TweetView key={tweet.id} fragment={tweet} />
         ))}
     </div>
