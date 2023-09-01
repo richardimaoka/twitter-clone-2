@@ -10,9 +10,9 @@ interface LoadOlderTweets {
   queryResult: TimeLinePageQueryQuery;
 }
 
-type Action = LoadNewerTweets | LoadOlderTweets;
+export type Action = LoadNewerTweets | LoadOlderTweets;
 
-interface State {
+export interface State {
   readonly queryResult: TimeLinePageQueryQuery;
   readonly cache: Record<string, Tweet>;
 }
@@ -51,7 +51,7 @@ function loadNewerTweets(
   // pick only first 1000 tweets - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
   const remains = timeline.slice(0, 1000); //slice() extracts up to but not including end
 
-  // purge cache
+  // purge cache for deleted tweets
   const deleted = timeline.slice(1000);
   deleted.forEach((tweet) => {
     //supposedly tweet.id exists, but its type can still be null | undefined
@@ -76,7 +76,7 @@ function loadOlderTweets(
   // pick only last 1000 tweets - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
   const remains = timeline.slice(-1000); // Negative index counts back from the end of the array
 
-  // purge cache
+  // purge cache for deleted tweets
   const deleted = timeline.slice(0, -1000);
   deleted.forEach((tweet) => {
     //supposedly tweet.id exists, but its type can still be null | undefined
@@ -91,7 +91,7 @@ function loadOlderTweets(
   };
 }
 
-function reducer(state: State, action: Action) {
+export function reducer(state: State, action: Action) {
   switch (action.actionType) {
     case "LOAD_NEWER_TWEETS":
       return loadNewerTweets(state.cache, action.queryResult);

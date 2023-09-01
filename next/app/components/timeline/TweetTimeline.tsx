@@ -8,7 +8,14 @@ import { TimeLinePageQueryQuery, TimeString } from "@/libs/gql/graphql";
 import { toTimeString } from "@/libs/gql/timeString";
 import { request } from "graphql-request";
 import Image from "next/image";
-import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
+import {
+  MouseEvent,
+  MouseEventHandler,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import { emptyState, reducer } from "./TimelineReducerDesign";
 
 export const LoadMoreTweetsButton = () => {
   const initialTime = new Date("2023-08-18T09:30:10.000Z");
@@ -58,6 +65,7 @@ export const TweetTimelineView = () => {
     __typename: "Query",
     timeline: [],
   });
+  const [state, dispatch] = useReducer(reducer, emptyState());
 
   useEffect(() => {
     const dataFetch = async () => {
