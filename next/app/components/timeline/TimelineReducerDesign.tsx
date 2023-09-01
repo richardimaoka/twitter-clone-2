@@ -10,7 +10,12 @@ interface LoadOlderTweets {
   queryResult: TimeLinePageQueryQuery;
 }
 
-export type Action = LoadNewerTweets | LoadOlderTweets;
+interface AddSingleNewTweet {
+  actionType: "ADD_SINGLE_NEW_TWEET";
+  tweet: Tweet;
+}
+
+export type Action = LoadNewerTweets | LoadOlderTweets | AddSingleNewTweet;
 
 export interface State {
   readonly queryResult: TimeLinePageQueryQuery;
@@ -21,8 +26,8 @@ export function emptyState(): State {
   return { queryResult: { __typename: "Query", timeline: [] }, cache: {} };
 }
 
-function merge(cache: Record<string, Tweet>, incoming: TimeLinePageQueryQuery) {
-  incoming.timeline?.forEach((tweet) => {
+function merge(cache: Record<string, Tweet>, incoming: Tweet[]) {
+  incoming.forEach((tweet) => {
     if (tweet.id) {
       cache[tweet.id] = tweet;
     }
@@ -41,11 +46,19 @@ function sortedTimeline(cache: Record<string, Tweet>): Tweet[] {
   return timeline;
 }
 
+function addSingleNewTweet(
+  cache: Record<string, Tweet>,
+  incoming: Tweet
+): State {
+  return loadNewerTweets(cache, { __typename: "Query", timeline: [incoming] });
+}
+
 function loadNewerTweets(
   cache: Record<string, Tweet>,
   incoming: TimeLinePageQueryQuery
 ): State {
-  merge(cache, incoming);
+  const incomingTweets = incoming.timeline ? incoming.timeline : [];
+  merge(cache, incomingTweets);
   const timeline = sortedTimeline(cache);
 
   // pick only first 1000 tweets - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
@@ -70,7 +83,8 @@ function loadOlderTweets(
   cache: Record<string, Tweet>,
   incoming: TimeLinePageQueryQuery
 ): State {
-  merge(cache, incoming);
+  const incomingTweets = incoming.timeline ? incoming.timeline : [];
+  merge(cache, incomingTweets);
   const timeline = sortedTimeline(cache);
 
   // pick only last 1000 tweets - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
@@ -97,6 +111,8 @@ export function reducer(state: State, action: Action) {
       return loadNewerTweets(state.cache, action.queryResult);
     case "LOAD_OLDER_TWEETS":
       return loadOlderTweets(state.cache, action.queryResult);
+    case "ADD_SINGLE_NEW_TWEET":
+      return addSingleNewTweet(state.cache, action.tweet);
     default:
       // exhaustivness checking - https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
       const _exhaustiveCheck: never = action;

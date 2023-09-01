@@ -61,10 +61,6 @@ export const TweetTimelineView = () => {
   // console.log(print(queryDefinition));
   const initialTime = "2023-08-18T09:30:10.000Z"; // "2023-08-18T09:30:10.000Z" is known to be a good TimeString
   const [value, setValue] = useState<string>(initialTime);
-  const [tweets, setTweets] = useState<TimeLinePageQueryQuery>({
-    __typename: "Query",
-    timeline: [],
-  });
   const [state, dispatch] = useReducer(reducer, emptyState());
 
   useEffect(() => {
@@ -98,18 +94,15 @@ export const TweetTimelineView = () => {
   };
 
   const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    console.log("onClick");
     const url = "http://localhost:8080/query";
     const variables = { body: "hello world" };
     const result = await request(url, mutationDefinition, variables);
 
+    //TODO: error handling
     if (!result.postTweet) return;
 
-    if (tweets.timeline) {
-      setTweets({
-        __typename: "Query",
-        timeline: [result.postTweet, ...tweets.timeline],
-      });
-    }
+    dispatch({ actionType: "ADD_SINGLE_NEW_TWEET", tweet: result.postTweet });
   };
 
   return (
