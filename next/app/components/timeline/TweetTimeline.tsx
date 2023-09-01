@@ -5,7 +5,7 @@ import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
 import { TimeLinePageQueryQuery, TimeString } from "@/libs/gql/graphql";
-import { toTimeString } from "@/libs/gql/timeString";
+import { fromDateToTimeString, toTimeString } from "@/libs/gql/timeString";
 import { request } from "graphql-request";
 import Image from "next/image";
 import {
@@ -80,6 +80,23 @@ export const TweetTimelineView = () => {
     dataFetch();
   }, [value]);
 
+  const incrementTime = () => {
+    const time = toTimeString(value);
+    if (!time) return;
+
+    const currentTime = new Date(time);
+    const y = currentTime.getFullYear(),
+      m = currentTime.getMonth(),
+      d = currentTime.getDate(),
+      h = currentTime.getHours() + 1,
+      min = currentTime.getMinutes(),
+      s = currentTime.getSeconds();
+
+    const updatedTime = new Date(y, m, d, h, min, s);
+    setValue(fromDateToTimeString(updatedTime));
+    console.log(updatedTime);
+  };
+
   const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     const url = "http://localhost:8080/query";
     const variables = { body: "hello world" };
@@ -97,21 +114,8 @@ export const TweetTimelineView = () => {
 
   return (
     <div className={styles.column}>
-      <div>
-        <input
-          type="text"
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
-          value={value}
-        />
-        <button
-          onClick={() => {
-            const timeStr = toTimeString(value);
-          }}
-        >
-          最新ツイートを表示
-        </button>
+      <div onClick={incrementTime}>
+        <button>最新ツイートを表示</button>
       </div>
       <div>
         <Image
