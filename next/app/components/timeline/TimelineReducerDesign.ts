@@ -59,6 +59,7 @@ function updateLike(
   tweetId: string,
   numLikes: number
 ): State {
+  console.log("updateLike", tweetId, numLikes);
   const tweet = cache[tweetId];
 
   if (tweet) {

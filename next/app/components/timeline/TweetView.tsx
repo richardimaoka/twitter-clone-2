@@ -5,6 +5,7 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetActions } from "./TweetActions";
 import { Header } from "./Header";
 import { ProfilePic } from "./ProfilePic";
+import { Action } from "./TimelineReducerDesign";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetFragment on Tweet {
@@ -27,6 +28,7 @@ const fragmentDefinition = graphql(`
 
 interface TweetViewProps {
   fragment: FragmentType<typeof fragmentDefinition>;
+  dispatch: (action: Action) => void;
 }
 
 export const TweetView = (props: TweetViewProps) => {
@@ -54,7 +56,7 @@ export const TweetView = (props: TweetViewProps) => {
               alt={"tweet pic"}
             />
           )}
-        <TweetActions fragment={fragment} />
+        <TweetActions fragment={fragment} dispatch={props.dispatch} />
       </div>
     </div>
   );

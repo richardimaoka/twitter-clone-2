@@ -53,7 +53,7 @@ export const TweetTimelineView = () => {
       <PostTweetForm dispatch={dispatch} />
       {state.queryResult?.timeline &&
         state.queryResult.timeline.map((tweet) => (
-          <TweetView key={tweet.id} fragment={tweet} />
+          <TweetView key={tweet.id} fragment={tweet} dispatch={dispatch} />
         ))}
     </div>
   );

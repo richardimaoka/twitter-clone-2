@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Action } from "./TimelineReducerDesign";
+import { request } from "graphql-request";
 
 const fragmentDefinition = graphql(`
   fragment TimelineTweetActionsFragment on Tweet {
@@ -25,7 +26,7 @@ const fragmentDefinition = graphql(`
   }
 `);
 
-const definition = graphql(/* GraphQL */ `
+const mutationDefinition = graphql(/* GraphQL */ `
   mutation likeTw($id: ID!) {
     like(tweetId: $id) {
       id
@@ -36,12 +37,26 @@ const definition = graphql(/* GraphQL */ `
 
 interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
-  dispatch?: (action: Action) => void;
+  dispatch: (action: Action) => void;
 }
 
 export const TweetActions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
-  async function likeTweet() {}
+
+  async function likeTweet() {
+    console.log("likeTweet");
+    const url = "http://localhost:8080/query";
+    const variables = { id: fragment.id };
+    const result = await request(url, mutationDefinition, variables);
+    if (result.like?.id && result.like?.numLikes) {
+      props.dispatch &&
+        props.dispatch({
+          actionType: "UPDATE_LIKE",
+          tweetId: result.like.id,
+          numLikes: result.like.numLikes,
+        });
+    }
+  }
 
   return (
     <div className={styles.actions}>
