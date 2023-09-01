@@ -4,14 +4,14 @@ import { TweetView } from "./TweetView";
 import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
-import { fromDateToTimeString, toTimeString } from "@/libs/gql/timeString";
+import { toTimeString } from "@/libs/gql/timeString";
 import { request } from "graphql-request";
 
-import { useEffect, useReducer, useState } from "react";
+import { TimeString } from "@/libs/gql/graphql";
+import { useEffect, useReducer } from "react";
+import { LoadMoreTweetButton } from "./LoadMoreTweetButton";
 import { PostTweetForm } from "./PostTweetForm";
 import { emptyState, reducer } from "./TimelineReducerDesign";
-import { TimeString } from "@/libs/gql/graphql";
-import { LoadMoreTweetButton } from "./LoadMoreTweetButton";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query TimeLinePageQuery($currentTime: Time!) {
@@ -36,8 +36,7 @@ export const TweetTimelineView = () => {
 
   useEffect(() => {
     const currentTime = toTimeString(initialTime);
-    //TOOD : error handling
-    if (!currentTime) return;
+    if (!currentTime) return; //TOOD : error handling
 
     // trick to run async function in useEffect
     (async () => {
