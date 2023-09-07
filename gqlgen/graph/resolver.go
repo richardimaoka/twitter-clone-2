@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 
+	"cloud.google.com/go/firestore"
+	firebase "firebase.google.com/go/v4"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
@@ -12,7 +14,9 @@ import (
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	allTweets []*model.Tweet
+	allTweets       []*model.Tweet
+	firebaseApp     *firebase.App
+	firestoreClient *firestore.Client
 }
 
 func NewResolver() (*Resolver, error) {
