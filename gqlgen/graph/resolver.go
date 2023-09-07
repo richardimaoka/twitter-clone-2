@@ -19,7 +19,7 @@ type Resolver struct {
 	firestoreClient *firestore.Client
 }
 
-func NewResolver() (*Resolver, error) {
+func NewResolver(firebaseApp *firebase.App, firestoreClient *firestore.Client) (*Resolver, error) {
 	bytes, err := os.ReadFile("data/timeline.json")
 	if err != nil {
 		return nil, err
@@ -30,6 +30,9 @@ func NewResolver() (*Resolver, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	resolver.firebaseApp = firebaseApp
+	resolver.firestoreClient = firestoreClient
 
 	return &resolver, nil
 }
