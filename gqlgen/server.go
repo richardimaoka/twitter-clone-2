@@ -72,7 +72,7 @@ func main() {
 
 	router.Use(graph.AuthMiddleware)
 
-	resolver, err := graph.NewResolver()
+	resolver, err := graph.NewResolver(app, client)
 	if err != nil {
 		panic(err)
 	}
