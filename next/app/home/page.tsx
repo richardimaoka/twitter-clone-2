@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Auth } from "../components/auth/authentication";
-import { TweetTimelineView } from "../components/timeline/TweetTimeline";
+import { Auth } from "../../components/auth/authentication";
+import { TweetTimelineView } from "../../components/timeline/TweetTimeline";
 
 import { cookies } from "next/headers";
 

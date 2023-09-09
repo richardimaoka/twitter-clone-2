@@ -1,5 +1,5 @@
 import { graphql } from "@/libs/gql";
-import { TweetColumn } from "./components/thread/TweetColumn";
+import { TweetColumn } from "../components/thread/TweetColumn";
 // import { print } from "graphql";
 
 import { request } from "graphql-request";
