@@ -1,3 +1,4 @@
+import { RightPane } from "@/components/rightpane/RightPane";
 import { TweetTimelineView } from "../../components/timeline/TweetTimeline";
 import styles from "./style.module.css";
 
@@ -24,6 +25,9 @@ export default async function Page() {
       <main>
         <TweetTimelineView firebaseConfig={firebaseConfig} />
       </main>
+      <section className={styles.rightPane}>
+        <RightPane />
+      </section>
     </div>
   );
 }
