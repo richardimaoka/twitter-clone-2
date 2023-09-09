@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { SearchButton } from "./SearchButton";
 import Link from "next/link";
+import { HomeButton } from "./HomeButton";
+import { SearchButton } from "./SearchButton";
 
 export function LeftPane() {
   return (
@@ -10,6 +11,7 @@ export function LeftPane() {
           <Image src="/images/x.svg" width={30} height={30} alt={"xlogo"} />
         </Link>
       </div>
+      <HomeButton />
       <SearchButton />
     </div>
   );
