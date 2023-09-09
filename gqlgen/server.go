@@ -16,15 +16,6 @@ import (
 
 const defaultPort = "8080"
 
-type City struct {
-	Name       string   `firestore:"name,omitempty"`
-	State      string   `firestore:"state,omitempty"`
-	Country    string   `firestore:"country,omitempty"`
-	Capital    bool     `firestore:"capital,omitempty"`
-	Population int64    `firestore:"population,omitempty"`
-	Regions    []string `firestore:"regions,omitempty"`
-}
-
 func server() {
 	app, err := firebase.NewApp(context.Background(), nil)
 	if err != nil {
@@ -32,27 +23,9 @@ func server() {
 	}
 	client, err := app.Firestore(context.Background())
 	if err != nil {
-		log.Printf(os.Getenv("GOOGLE_APPLICATION_CREDENTIALS"))
-
 		log.Fatalln("failed to initialize firestore", err)
 	}
 	defer client.Close()
-	// cities := []struct {
-	// 	id string
-	// 	c  City
-	// }{
-	// 	{id: "SF", c: City{Name: "San Francisco", State: "CA", Country: "USA", Capital: false, Population: 860000}},
-	// 	{id: "LA", c: City{Name: "Los Angeles", State: "CA", Country: "USA", Capital: false, Population: 3900000}},
-	// 	{id: "DC", c: City{Name: "Washington D.C.", Country: "USA", Capital: true, Population: 680000}},
-	// 	{id: "TOK", c: City{Name: "Tokyo", Country: "Japan", Capital: true, Population: 9000000}},
-	// 	{id: "BJ", c: City{Name: "Beijing", Country: "China", Capital: true, Population: 21500000}},
-	// }
-	// for _, c := range cities {
-	// 	_, err := client.Collection("cities").Doc(c.id).Set(context.Background(), c.c)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// }
 
 	port := os.Getenv("PORT")
 	if port == "" {

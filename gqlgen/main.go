@@ -21,6 +21,7 @@ func main() {
 		server()
 	case "seed":
 		seedSubCmd.Parse(os.Args[2:])
+		seed()
 	default:
 		fmt.Println("expected 'server' or 'seed' subcommands")
 		os.Exit(1)
