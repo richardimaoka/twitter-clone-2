@@ -10,8 +10,6 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.0",
-    "@apollo/experimental-nextjs-app-support": "^0.4.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
@@ -31,7 +29,6 @@
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.1.0",
-    "@graphql-codegen/typescript-apollo-client-helpers": "^2.2.6",
     "@parcel/watcher": "^2.2.0",
     "encoding": "^0.1.13",
     "typescript": "^5.1.6"
