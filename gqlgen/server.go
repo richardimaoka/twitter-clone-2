@@ -19,6 +19,7 @@ const defaultPort = "8080"
 func debugMiddleWare(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("header Authorization: %s", r.Header.Get("Authorization"))
+		next.ServeHTTP(w, r)
 	})
 }
 
