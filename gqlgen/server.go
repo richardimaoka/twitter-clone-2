@@ -87,6 +87,9 @@ func server() {
 	log.Fatal(http.ListenAndServe(":"+port, router))
 }
 
+func seed() {
+}
+
 func main() {
 	serverSubCmd := flag.NewFlagSet("server", flag.ExitOnError)
 	seedSubCmd := flag.NewFlagSet("seed", flag.ExitOnError)
