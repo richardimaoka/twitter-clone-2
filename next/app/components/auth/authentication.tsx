@@ -22,6 +22,7 @@ export const Auth = (props: Props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("user authenticated");
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
@@ -38,5 +39,9 @@ export const Auth = (props: Props) => {
     };
   });
 
-  return <></>;
+  return (
+    <div>
+      <button>login</button>
+    </div>
+  );
 };

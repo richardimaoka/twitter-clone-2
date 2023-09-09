@@ -18,8 +18,8 @@ export default async function Page() {
 
   return (
     <main>
-      <Auth firebaseConfig={firebaseConfig} />
       <Link href="/">twitter</Link>
+      <Auth firebaseConfig={firebaseConfig} />
       <TweetTimelineView />
     </main>
   );
