@@ -26,6 +26,9 @@ type User struct {
 	IsAdmin bool
 }
 
+// https://firebase.google.com/docs/auth/admin/manage-sessions
+// > Firebase ID tokens are short lived and last for an hour; the refresh token can be used to retrieve new ID tokens.
+// So, we assume every time a fresh ID token is sent from the client, so that expiration is within an hour time.
 func validateAndGetUserID(ctx context.Context, authClient *auth.Client, idToken string) (string, error) {
 	token, err := authClient.VerifyIDToken(ctx, idToken)
 	if err != nil {
