@@ -60,8 +60,8 @@ func seed() {
 	}
 	defer client.Close()
 
-	u := User{UserName: "richardimoaka"}
-	res, err := client.Doc("users").Set(ctx, u)
+	u := &User{UserName: "richardimoaka"}
+	res, err := client.Doc("users/richardimoaka").Set(ctx, u)
 	if err != nil {
 		log.Fatalf("failed to set user: %v\n", err)
 	}
