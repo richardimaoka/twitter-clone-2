@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Auth } from "../components/auth/authentication";
 import { TweetTimelineView } from "../components/timeline/TweetTimeline";
 
@@ -14,9 +15,11 @@ export default async function Page() {
   const theme = cookieStore.get("theme");
   console.log(theme);
   console.log("env", firebaseConfig);
+
   return (
     <main>
       <Auth firebaseConfig={firebaseConfig} />
+      <Link href="/">twitter</Link>
       <TweetTimelineView />
     </main>
   );
