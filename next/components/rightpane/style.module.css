@@ -1,0 +1,17 @@
+.searchBox {
+  display: flex;
+  gap: 20px;
+  background-color: rgb(239, 243, 244);
+  border-color: rgb(118, 118, 118);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.searchInputArea {
+  border: none;
+  background-color: inherit;
+}
+
+.searchIcon {
+  color: rgb(118, 118, 118);
+}

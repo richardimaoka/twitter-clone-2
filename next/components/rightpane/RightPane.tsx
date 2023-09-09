@@ -1,3 +1,9 @@
+import { SearchBox } from "./SearchBox";
+
 export function RightPane() {
-  return <div>right pane</div>;
+  return (
+    <div>
+      <SearchBox />
+    </div>
+  );
 }
