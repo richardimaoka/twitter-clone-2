@@ -23,6 +23,7 @@ export const Auth = (props: Props) => {
 
   // Initialize Firebase Authentication and get a reference to the service
   const auth = getAuth(app);
+  console.log("currentUser", auth.currentUser);
 
   const provider = new GoogleAuthProvider();
 
