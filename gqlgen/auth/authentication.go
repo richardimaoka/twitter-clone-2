@@ -20,6 +20,14 @@ type User struct {
 	IsAdmin bool
 }
 
+func validateAndGetUserID(c *http.Cookie) (string, error) {
+	return "", nil
+}
+
+func getUserByID(db *sql.DB, userId string) *User {
+	return nil
+}
+
 // Middleware decodes the share session cookie and packs the session into context
 func Middleware(db *sql.DB) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
