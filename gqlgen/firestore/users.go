@@ -5,7 +5,3 @@ type User struct {
 	UserId         string `firestore:"userId"`
 	ProfilePicture string `firestore:"profilePicture"`
 }
-
-type Tweet struct {
-	UserId string `firestore:"userId"`
-}
