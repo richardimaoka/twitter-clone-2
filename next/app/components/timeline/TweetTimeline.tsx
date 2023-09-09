@@ -12,6 +12,7 @@ import { useEffect, useReducer } from "react";
 import { LoadMoreTweetButton } from "./LoadMoreTweetButton";
 import { PostTweetForm } from "./PostTweetForm";
 import { emptyState, reducer } from "./TimelineReducerDesign";
+import { useSignInState } from "../auth/authHooks";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query TimeLinePageQuery($currentTime: Time!) {
@@ -22,7 +23,17 @@ const queryDefinition = graphql(/* GraphQL */ `
   }
 `);
 
-export const TweetTimelineView = () => {
+interface FirebaseConfig {
+  apiKey: string | undefined;
+  authDomain: string | undefined;
+  projectId: string | undefined;
+}
+
+interface Props {
+  firebaseConfig: FirebaseConfig;
+}
+
+export const TweetTimelineView = (props: Props) => {
   // console.log(print(queryDefinition));
   const initialTime = "2023-08-18T09:30:10.000Z" as TimeString; // "2023-08-18T09:30:10.000Z" is known to be a good TimeString
   const [state, dispatch] = useReducer(reducer, emptyState());
@@ -36,15 +47,19 @@ export const TweetTimelineView = () => {
     dispatch({ actionType: "LOAD_NEWER_TWEETS", queryResult: queryResult });
   }
 
+  const signInState = useSignInState(props.firebaseConfig);
+
   useEffect(() => {
     const currentTime = toTimeString(initialTime);
     if (!currentTime) return; //TOOD : error handling
 
-    // trick to run async function in useEffect
-    (async () => {
-      await loadNewTweets(currentTime);
-    })();
-  }, []); // run only once
+    if (signInState.kind !== "WaitingSignIn") {
+      // trick to run async function in useEffect
+      (async () => {
+        await loadNewTweets(currentTime);
+      })();
+    }
+  }, [signInState]);
 
   return (
     <div className={styles.column}>

@@ -20,7 +20,7 @@ export default async function Page() {
     <main>
       <Link href="/">twitter</Link>
       <Auth firebaseConfig={firebaseConfig} />
-      <TweetTimelineView />
+      <TweetTimelineView firebaseConfig={firebaseConfig} />
     </main>
   );
 }

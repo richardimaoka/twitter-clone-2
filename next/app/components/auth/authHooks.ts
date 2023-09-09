@@ -23,7 +23,7 @@ interface FirebaseConfig {
   projectId: string | undefined;
 }
 
-function useSignInState(firebaseConfig: FirebaseConfig) {
+export function useSignInState(firebaseConfig: FirebaseConfig) {
   const [state, setState] = useState<SignInStatus>({ kind: "WaitingSignIn" });
 
   // Initialize Firebase
@@ -49,7 +49,8 @@ function useSignInState(firebaseConfig: FirebaseConfig) {
     });
 
     return unsubscribe;
-  });
+  }, [auth]);
 
+  console.log("returning sign in state", state);
   return state;
 }
