@@ -35,9 +35,9 @@ import (
 // }
 
 type User struct {
-	UserName       string
-	UserId         string
-	ProfilePicture string
+	UserName       string `firestore:"userName"`
+	UserId         string `firestore:"userId"`
+	ProfilePicture string `firestore:"profilePicture"`
 }
 
 func seed() {
