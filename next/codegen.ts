@@ -25,9 +25,6 @@ const config: CodegenConfig = {
         },
       },
     },
-    "libs/apollo-helpers.ts": {
-      plugins: ["typescript-apollo-client-helpers"],
-    },
   },
   watch: ["app/**/*.tsx", "../gqlgen/graph/schema.graphqls"],
   hooks: { afterOneFileWrite: ["npx prettier --write"] },
