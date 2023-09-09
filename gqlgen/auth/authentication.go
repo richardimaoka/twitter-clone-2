@@ -2,8 +2,10 @@ package auth
 
 import (
 	"context"
-	"database/sql"
 	"net/http"
+
+	"cloud.google.com/go/firestore"
+	"github.com/richardimaoka/twitter-clone-2/gqlgen/database"
 )
 
 // A private key for context that only this package can access. This is important
@@ -24,12 +26,8 @@ func validateAndGetUserID(c *http.Cookie) (string, error) {
 	return "", nil
 }
 
-func getUserByID(db *sql.DB, userId string) *User {
-	return nil
-}
-
 // Middleware decodes the share session cookie and packs the session into context
-func Middleware(db *sql.DB) func(http.Handler) http.Handler {
+func Middleware(client *firestore.Client) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			c, err := r.Cookie("auth-cookie")
@@ -47,7 +45,7 @@ func Middleware(db *sql.DB) func(http.Handler) http.Handler {
 			}
 
 			// get the user from the database
-			user := getUserByID(db, userId)
+			user, err := database.GetUser(r.Context(), client, userId)
 
 			// put it in context
 			ctx := context.WithValue(r.Context(), userCtxKey, user)

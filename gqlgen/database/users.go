@@ -14,7 +14,7 @@ type User struct {
 }
 
 // Get user from firestore
-func GetUserFromFirestore(ctx context.Context, client *firestore.Client, userId string) (*User, error) {
+func GetUser(ctx context.Context, client *firestore.Client, userId string) (*User, error) {
 	userRef := client.Doc("users/" + userId)
 
 	docSnap, err := userRef.Get(ctx)
