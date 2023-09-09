@@ -30,7 +30,10 @@ export const TweetTimelineView = () => {
   async function loadNewTweets(currentTime: TimeString) {
     const url = "http://localhost:8080/query";
     const variables = { currentTime: currentTime };
-    const queryResult = await request(url, queryDefinition, variables);
+    const headers = {
+      authorization: "athhththththththththththththtthth",
+    };
+    const queryResult = await request(url, queryDefinition, variables, headers);
     dispatch({ actionType: "LOAD_NEWER_TWEETS", queryResult: queryResult });
   }
 

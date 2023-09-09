@@ -16,6 +16,12 @@ import (
 
 const defaultPort = "8080"
 
+func debugMiddleWare(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("header Authorization: %s", r.Header.Get("Authorization"))
+	})
+}
+
 func server() {
 	app, err := firebase.NewApp(context.Background(), nil)
 	if err != nil {
@@ -39,7 +45,7 @@ func server() {
 	router.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowCredentials: true,
-		AllowedHeaders:   []string{"Access-Control-Allow-Credentials", "Content-Type"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
 		Debug:            true,
 	}).Handler)
 
@@ -52,7 +58,7 @@ func server() {
 	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: resolver}))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	router.Handle("/query", srv)
+	router.Handle("/query", debugMiddleWare(srv))
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))
