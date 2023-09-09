@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { TweetTimelineView } from "../../components/timeline/TweetTimeline";
 import styles from "./style.module.css";
 
@@ -19,7 +18,6 @@ export default async function Page() {
 
   return (
     <div>
-      <Link href="/">twitter</Link>
       <section className={styles.leftPane}>
         <LeftPane />
       </section>
