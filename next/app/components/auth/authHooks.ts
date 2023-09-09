@@ -23,19 +23,6 @@ interface FirebaseConfig {
   projectId: string | undefined;
 }
 
-function withTimeout<T>(promise: Promise<T>, timeout: number) {
-  const errorMessage = `await での待機が ${timeout}ms を超えました`;
-
-  const timeoutPromise: Promise<T> = new Promise((_, reject) =>
-    setTimeout(() => reject(errorMessage), timeout)
-  );
-  // Promise.race()を利用して先に解決した方を優先する
-  return Promise.race([
-    promise, // 本来実行したい promise 関数
-    timeoutPromise, // こちらの方が早く解決すると reject()
-  ]);
-}
-
 function useSignInState(firebaseConfig: FirebaseConfig) {
   const [state, setState] = useState<SignInStatus>({ kind: "WaitingSignIn" });
 
@@ -53,9 +40,10 @@ function useSignInState(firebaseConfig: FirebaseConfig) {
         // https://firebase.google.com/docs/reference/js/auth.user
         setState({ kind: "SignedIn", user: user });
       } else {
+        // The else block is called, also when user is completely signed out from the beginning,
+        // not only explicitly signed out by user action
         console.log("onAuthStateChanged successful signed out");
         // User is signed out
-        // ...
         setState({ kind: "SignedOut" });
       }
     });

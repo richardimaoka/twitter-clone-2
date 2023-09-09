@@ -6,6 +6,7 @@ import {
   getAuth,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { useEffect } from "react";
 
@@ -53,6 +54,10 @@ export const Auth = (props: Props) => {
       });
   };
 
+  const logout = () => {
+    signOut(auth);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -76,7 +81,12 @@ export const Auth = (props: Props) => {
 
   return (
     <div>
-      <button onClick={login}>login</button>
+      <div>
+        <button onClick={login}>login</button>
+      </div>
+      <div>
+        <button onClick={logout}>logout</button>
+      </div>
     </div>
   );
 };
