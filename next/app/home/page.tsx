@@ -3,6 +3,7 @@ import { Auth } from "../../components/auth/authentication";
 import { TweetTimelineView } from "../../components/timeline/TweetTimeline";
 
 import { cookies } from "next/headers";
+import { LeftPane } from "@/components/leftpane/LeftPane";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -17,10 +18,15 @@ export default async function Page() {
   console.log("env", firebaseConfig);
 
   return (
-    <main>
+    <div>
       <Link href="/">twitter</Link>
       <Auth firebaseConfig={firebaseConfig} />
-      <TweetTimelineView firebaseConfig={firebaseConfig} />
-    </main>
+      <section>
+        <LeftPane />
+      </section>
+      <main>
+        <TweetTimelineView firebaseConfig={firebaseConfig} />
+      </main>
+    </div>
   );
 }
