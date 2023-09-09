@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Auth } from "../../components/auth/authentication";
 import { TweetTimelineView } from "../../components/timeline/TweetTimeline";
+import styles from "./style.module.css";
 
-import { cookies } from "next/headers";
 import { LeftPane } from "@/components/leftpane/LeftPane";
+import { cookies } from "next/headers";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -20,8 +20,7 @@ export default async function Page() {
   return (
     <div>
       <Link href="/">twitter</Link>
-      <Auth firebaseConfig={firebaseConfig} />
-      <section>
+      <section className={styles.leftPane}>
         <LeftPane />
       </section>
       <main>
