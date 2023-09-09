@@ -17,7 +17,7 @@ export default async function Page() {
   console.log("env", firebaseConfig);
 
   return (
-    <div>
+    <div className={styles.home}>
       <section className={styles.leftPane}>
         <LeftPane />
       </section>
