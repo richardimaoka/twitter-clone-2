@@ -1,3 +1,7 @@
+.xLogoWrapper {
+  padding: 10px;
+}
+
 .menuItem {
   display: flex;
   gap: 20px;
