@@ -5,7 +5,7 @@
 .menuItem {
   display: flex;
   gap: 20px;
-  padding: 10px;
+  padding: 16px 10px;
 }
 
 .icon {
