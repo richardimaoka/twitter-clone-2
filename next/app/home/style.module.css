@@ -1,3 +1,13 @@
 .home {
   display: flex;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.leftPane {
+  width: 250px;
+}
+
+.rightPane {
+  width: 320px;
 }
