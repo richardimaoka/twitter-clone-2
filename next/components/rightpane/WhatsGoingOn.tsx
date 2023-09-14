@@ -1,9 +1,9 @@
-import { WhatAreYouDoing } from "./WhatAreYouDoing";
+import { WhatsHappening } from "./WhatsHappening";
 
 export function WhatsGoingOn() {
   return (
     <div>
-      <WhatAreYouDoing />
+      <WhatsHappening />
       <div>Event</div>
       <div>Promotion</div>
       <div>Trend 1</div>
