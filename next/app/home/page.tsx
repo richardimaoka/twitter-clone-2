@@ -15,23 +15,23 @@ const firebaseConfig = {
 };
 
 export default async function Page() {
-  const cookieStore = cookies();
-  const idToken = cookieStore.get("idToken");
+  // const cookieStore = cookies();
+  // const idToken = cookieStore.get("idToken");
 
-  if (!idToken) redirect("/login");
+  // if (!idToken) redirect("/login");
 
-  const appAlreadyExists = getApps().length === 0;
-  const app = appAlreadyExists ? initializeApp() : getApp();
-  const auth = getAuth(app);
+  // const appAlreadyExists = getApps().length === 0;
+  // const app = appAlreadyExists ? initializeApp() : getApp();
+  // const auth = getAuth(app);
 
-  try {
-    const decoded = await auth.verifyIdToken(idToken.value);
-  } catch (error) {
-    console.log(
-      `redirecting to /login as the id token from cookie = '${idToken.value}' is invalid: ${error}`
-    );
-    redirect("/login");
-  }
+  // try {
+  //   const decoded = await auth.verifyIdToken(idToken.value);
+  // } catch (error) {
+  //   console.log(
+  //     `redirecting to /login as the id token from cookie = '${idToken.value}' is invalid: ${error}`
+  //   );
+  //   redirect("/login");
+  // }
 
   return (
     <div className={styles.home}>

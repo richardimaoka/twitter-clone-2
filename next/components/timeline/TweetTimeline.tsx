@@ -5,7 +5,7 @@ import styles from "./style.module.css";
 
 import { graphql } from "@/libs/gql";
 import { toTimeString } from "@/libs/gql/timeString";
-import { request } from "graphql-request";
+import { GraphQLClient, request } from "graphql-request";
 
 import { TimeString } from "@/libs/gql/graphql";
 import { useEffect, useReducer } from "react";
@@ -43,7 +43,8 @@ export const TweetTimelineView = (props: Props) => {
     const variables = { currentTime: currentTime };
 
     // authentication via cookies, so http header 'Authorization' is not passed
-    const queryResult = await request(url, queryDefinition, variables);
+    const client = new GraphQLClient(url, { credentials: "include" });
+    const queryResult = await client.request(queryDefinition, variables);
     dispatch({ actionType: "LOAD_NEWER_TWEETS", queryResult: queryResult });
   }
 
