@@ -53,11 +53,15 @@ export async function POST(request: Request) {
           });
 
           // Set cookie policy for session cookie.
-          const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-          let response = NextResponse.next();
-          response.cookies.set("session", sessionCookie, options);
+          let response = NextResponse.json({ status: "success" });
+          response.cookies.set("session", sessionCookie, {
+            maxAge: expiresIn,
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+          });
 
-          return NextResponse.json({ status: "success" });
+          return response;
         } catch (e) {
           console.log(e);
           console.log("Failed to create session cookie");

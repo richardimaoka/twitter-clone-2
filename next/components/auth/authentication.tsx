@@ -33,8 +33,6 @@ export const Auth = (props: Props) => {
 
   // Initialize Firebase Authentication and get a reference to the service
   const auth = getAuth(app);
-  console.log("currentUser", auth.currentUser);
-
   const provider = new GoogleAuthProvider();
 
   async function login() {
@@ -52,8 +50,9 @@ export const Auth = (props: Props) => {
         console.log("making request to /login/handler");
         try {
           const res = await sendLoginRequest(idToken);
+          const json = await res.json();
           if (res.ok) {
-            console.log("successful login", res);
+            console.log("successful login", res, json);
           } else {
             console.log("login failure");
           }
