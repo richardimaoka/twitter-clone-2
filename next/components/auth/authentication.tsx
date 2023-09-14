@@ -41,6 +41,9 @@ export const Auth = (props: Props) => {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
+
+        console.log("making request to /login/handler");
+        fetch("/login/handler");
       })
       .catch((error) => {
         // Handle Errors here.
