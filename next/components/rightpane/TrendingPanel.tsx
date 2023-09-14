@@ -1,5 +1,6 @@
 import { LiveEvent } from "./LiveEvent";
 import { PromotedHashTag } from "./PromotedHashTag";
+import { TrendItem } from "./TrendItem";
 import { WhatsHappening } from "./WhatsHappening";
 
 export function TrendingPanel() {
@@ -8,9 +9,9 @@ export function TrendingPanel() {
       <WhatsHappening />
       <LiveEvent />
       <PromotedHashTag />
-      <div>Trend 1</div>
-      <div>Trend 2</div>
-      <div>Trend 3</div>
+      <TrendItem />
+      <TrendItem />
+      <TrendItem />
       <div>更に表示</div>
     </div>
   );

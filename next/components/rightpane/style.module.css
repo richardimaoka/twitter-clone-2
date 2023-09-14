@@ -73,3 +73,21 @@
 .promotedHashTagAuthorIcon {
   margin-right: 5px;
 }
+
+.trendingItem {
+  background-color: rgb(247, 249, 249);
+  padding: 10px;
+}
+
+.trendingItemTrend {
+  font-size: 12px;
+}
+
+.trendingItemName {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.trendingItemPosts {
+  font-size: 14px;
+}
