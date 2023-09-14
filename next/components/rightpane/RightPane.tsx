@@ -1,12 +1,12 @@
 import { SearchBox } from "./SearchBox";
-import { WhatsGoingOn } from "./WhatsGoingOn";
+import { TrendingPanel } from "./TrendingPanel";
 import styles from "./style.module.css";
 
 export function RightPane() {
   return (
     <div className={styles.rightPane}>
       <SearchBox />
-      <WhatsGoingOn />
+      <TrendingPanel />
     </div>
   );
 }

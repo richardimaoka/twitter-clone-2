@@ -1,6 +1,6 @@
 import { WhatsHappening } from "./WhatsHappening";
 
-export function WhatsGoingOn() {
+export function TrendingPanel() {
   return (
     <div>
       <WhatsHappening />
