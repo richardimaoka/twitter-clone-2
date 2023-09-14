@@ -27,3 +27,27 @@
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
+
+.liveEvent {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(247, 249, 249);
+  padding: 10px;
+}
+
+.liveEventType {
+  font-size: 12px;
+}
+
+.liveEventName {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.liveEventImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 10px;
+}

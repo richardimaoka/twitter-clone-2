@@ -1,10 +1,11 @@
+import { LiveEvent } from "./LiveEvent";
 import { WhatsHappening } from "./WhatsHappening";
 
 export function TrendingPanel() {
   return (
     <div>
       <WhatsHappening />
-      <div>Event</div>
+      <LiveEvent />
       <div>Promotion</div>
       <div>Trend 1</div>
       <div>Trend 2</div>

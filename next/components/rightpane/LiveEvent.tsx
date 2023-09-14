@@ -1,14 +1,21 @@
 import Image from "next/image";
+import styles from "./style.module.css";
 
 export function LiveEvent() {
   return (
-    <div>
+    <div className={styles.liveEvent}>
       <div>
-        <div>Event</div>
-        <div>New Yrok Fashion Week</div>
+        <div className={styles.liveEventType}>Event・LIVE</div>
+        <div className={styles.liveEventName}>New York Fashion Week 2023</div>
       </div>
       <div>
-        <Image src="/images/nyfw.jpg" width={300} height={200} alt={"nyfw"} />
+        <Image
+          className={styles.liveEventImage}
+          src="/images/newyork-fashion-week.webp"
+          width={120}
+          height={68}
+          alt={"nyfw"}
+        />
       </div>
     </div>
   );
