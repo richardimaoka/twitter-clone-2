@@ -9,11 +9,16 @@ type LoginRequestBody = {
 };
 
 function isValidRequest(jsonBody: any): jsonBody is LoginRequestBody {
-  return "idToken" in jsonBody;
+  return (
+    typeof jsonBody === "object" &&
+    /* jsonBody can be null*/ jsonBody &&
+    "idToken" in jsonBody &&
+    typeof jsonBody.idToken === "string"
+  );
 }
 
-export async function GET(request: Request) {
-  console.log("/login/handler/route.ts GET");
+export async function POST(request: Request) {
+  console.log("POST: /login/handler/route.ts");
   try {
     // Firebase Admin SDK as route handler is purely on server-side
     const appAlreadyExists = getApps().length === 0;
@@ -62,7 +67,9 @@ export async function GET(request: Request) {
           );
         }
       } else {
-        console.log("invalid login request - missing idToken in json body");
+        console.log(
+          "invalid login request - missing idToken string in json body"
+        );
         return NextResponse.json(
           { error: "invalid login request" },
           { status: 401 }
