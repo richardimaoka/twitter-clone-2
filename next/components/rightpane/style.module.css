@@ -51,3 +51,21 @@
   overflow: hidden;
   border-radius: 10px;
 }
+
+.promotedHashTag {
+  background-color: rgb(247, 249, 249);
+  padding: 10px;
+}
+
+.promotedHashTagTag {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.promotedHashTagTitle {
+  font-size: 14px;
+}
+
+.promotedHashTagAuthor {
+  font-size: 12px;
+}
