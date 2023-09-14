@@ -69,3 +69,7 @@
 .promotedHashTagAuthor {
   font-size: 12px;
 }
+
+.promotedHashTagAuthorIcon {
+  margin-right: 5px;
+}
