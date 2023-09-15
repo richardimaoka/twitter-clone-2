@@ -2,6 +2,7 @@ import { AuthComponent } from "@/components/auth/authentication";
 import { getApp, getApps, initializeApp } from "firebase-admin/app";
 import { Auth, getAuth } from "firebase-admin/auth";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type ErrorResult = {
   kind: "ErrorResult";
@@ -28,7 +29,7 @@ function getFirebaseAuth(): Auth | ErrorResult {
   }
 }
 
-export default function Page() {
+export default async function Page() {
   const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -37,6 +38,10 @@ export default function Page() {
 
   const cookieStore = cookies();
   const sessionCookie = cookieStore.get("session");
+  console.log("sessionCookie", sessionCookie);
+  if (!sessionCookie) {
+    return <AuthComponent firebaseConfig={firebaseConfig} />;
+  }
 
   // 1. Firebase Admin SDK as route handler is purely on server-side
   const auth = getFirebaseAuth();
@@ -46,5 +51,17 @@ export default function Page() {
     throw new Error("internal error");
   }
 
-  return <AuthComponent firebaseConfig={firebaseConfig} />;
+  try {
+    // upon verificatoin failure, it will throw
+    await auth.verifySessionCookie(
+      sessionCookie.value + "abc",
+      true /** checkRevoked */
+    );
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to verify session cookie");
+    throw new Error("invalid login credentials");
+  }
+
+  redirect("/home");
 }
