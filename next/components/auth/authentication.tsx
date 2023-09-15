@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 interface Props {
@@ -34,6 +35,7 @@ export const AuthComponent = (props: Props) => {
   // Initialize Firebase Authentication and get a reference to the service
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
+  const router = useRouter();
 
   async function login() {
     try {
@@ -53,6 +55,7 @@ export const AuthComponent = (props: Props) => {
           const json = await res.json();
           if (res.ok) {
             console.log("successful login", res, json);
+            router.push("/home");
           } else {
             console.log("login failure");
           }

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 // Firebase Admin SDK as route handler is purely on server-side
 import { getApp, getApps, initializeApp } from "firebase-admin/app";
 import { Auth, getAuth } from "firebase-admin/auth";
+import { ErrorResult, isErrorResult } from "@/libs/errors";
+import { getFirebaseAuth } from "@/libs/serverAuth";
 
 type LoginRequestBody = {
   idToken: string;
@@ -15,31 +17,6 @@ function isValidRequest(jsonBody: any): jsonBody is LoginRequestBody {
     "idToken" in jsonBody &&
     typeof jsonBody.idToken === "string"
   );
-}
-
-type ErrorResult = {
-  kind: "ErrorResult";
-  error: string;
-  detail: string;
-};
-
-function isErrorResult(result: any): result is ErrorResult {
-  return "kind" in result && result.kind === "ErrorResult";
-}
-
-function getFirebaseAuth(): Auth | ErrorResult {
-  try {
-    // Firebase Admin SDK as route handler is purely on server-side
-    const appAlreadyExists = getApps().length === 0;
-    const app = appAlreadyExists ? initializeApp() : getApp();
-    return getAuth(app);
-  } catch (e) {
-    return {
-      kind: "ErrorResult",
-      error: "Firebase Admin SDK initialization error",
-      detail: `${e}`,
-    };
-  }
 }
 
 async function jsonBody(request: Request): Promise<any | ErrorResult> {
