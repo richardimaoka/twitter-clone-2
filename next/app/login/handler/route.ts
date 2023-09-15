@@ -57,61 +57,13 @@ async function createSessionCooke(
 
 export async function POST(request: Request) {
   console.log("POST: /login/handler/route.ts");
+
+  let auth: Auth;
   try {
     // Firebase Admin SDK as route handler is purely on server-side
     const appAlreadyExists = getApps().length === 0;
     const app = appAlreadyExists ? initializeApp() : getApp();
-    const auth = getAuth(app);
-
-    const json = await jsonBody(request);
-    if (!json) {
-      return NextResponse.json(
-        { error: "invalid login request" },
-        { status: 401 }
-      );
-    }
-
-    if (!isValidRequest(json)) {
-      console.log(
-        "invalid login request - missing idToken string in json body"
-      );
-      return NextResponse.json(
-        { error: "invalid login request" },
-        { status: 401 }
-      );
-    }
-
-    // https://firebase.google.com/docs/auth/admin/manage-cookies#create_session_cookie
-    // Get the ID token passed and the CSRF token.
-    const idToken = json.idToken;
-
-    // const csrfToken =json.csrfToken
-    // // Guard against CSRF attacks.
-    // if (csrfToken !== req.cookies.csrfToken) {
-    //   res.status(401).send("UNAUTHORIZED REQUEST!");
-    //   return;
-    // }
-
-    const sessionCookie = await createSessionCooke(auth, idToken);
-    if (!sessionCookie) {
-      return NextResponse.json(
-        { error: "internal server error" },
-        { status: 500 }
-      );
-    }
-
-    // Set session expiration to 5 days.
-    const expiresIn = 60 * 60 * 24 * 5 * 1000;
-    // Set cookie policy for session cookie.
-    let response = NextResponse.json({ status: "success" });
-    response.cookies.set("session", sessionCookie, {
-      maxAge: expiresIn,
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
-
-    return response;
+    auth = getAuth(app);
   } catch (e) {
     console.log(e);
     console.log("Firebase Admin SDK initialization error");
@@ -121,4 +73,52 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+
+  const json = await jsonBody(request);
+  if (!json) {
+    return NextResponse.json(
+      { error: "invalid login request" },
+      { status: 401 }
+    );
+  }
+
+  if (!isValidRequest(json)) {
+    console.log("invalid login request - missing idToken string in json body");
+    return NextResponse.json(
+      { error: "invalid login request" },
+      { status: 401 }
+    );
+  }
+
+  // https://firebase.google.com/docs/auth/admin/manage-cookies#create_session_cookie
+  // Get the ID token passed and the CSRF token.
+  const idToken = json.idToken;
+
+  // const csrfToken =json.csrfToken
+  // // Guard against CSRF attacks.
+  // if (csrfToken !== req.cookies.csrfToken) {
+  //   res.status(401).send("UNAUTHORIZED REQUEST!");
+  //   return;
+  // }
+
+  const sessionCookie = await createSessionCooke(auth, idToken);
+  if (!sessionCookie) {
+    return NextResponse.json(
+      { error: "internal server error" },
+      { status: 500 }
+    );
+  }
+
+  // Set session expiration to 5 days.
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+  // Set cookie policy for session cookie.
+  let response = NextResponse.json({ status: "success" });
+  response.cookies.set("session", sessionCookie, {
+    maxAge: expiresIn,
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  return response;
 }
