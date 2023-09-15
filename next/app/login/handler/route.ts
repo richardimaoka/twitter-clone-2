@@ -19,6 +19,7 @@ function isValidRequest(jsonBody: any): jsonBody is LoginRequestBody {
   );
 }
 
+// try-catch at the root - (i.e.) no throw
 async function jsonBody(request: Request): Promise<any | ErrorResult> {
   try {
     const json = await request.json();
@@ -32,6 +33,7 @@ async function jsonBody(request: Request): Promise<any | ErrorResult> {
   }
 }
 
+// try-catch at the root - (i.e.) no throw
 async function createSessionCooke(
   firebaseAuth: Auth,
   idToken: string,

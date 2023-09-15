@@ -2,6 +2,7 @@ import { getApp, getApps, initializeApp } from "firebase-admin/app";
 import { Auth, getAuth } from "firebase-admin/auth";
 import { ErrorResult, isErrorResult } from "./errors";
 
+// try-catch at the root - (i.e.) no throw
 export function getFirebaseAuth(): Auth | ErrorResult {
   try {
     // Firebase Admin SDK as it's a server-side function
@@ -17,11 +18,11 @@ export function getFirebaseAuth(): Auth | ErrorResult {
   }
 }
 
+// try-catch at the root - (i.e.) no throw
 async function verifySessionCookie(
   firebaseAuth: Auth,
   sessionCookie: string
 ): Promise<boolean | ErrorResult> {
-  // try-catch at the root - (i.e.) no throw
   try {
     // upon verificatoin failure, it will throw
     await firebaseAuth.verifySessionCookie(
