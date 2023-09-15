@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 // Firebase Admin SDK as route handler is purely on server-side
 import { getApp, getApps, initializeApp } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+import { Auth, getAuth } from "firebase-admin/auth";
 
 type LoginRequestBody = {
   idToken: string;
@@ -15,6 +15,34 @@ function isValidRequest(jsonBody: any): jsonBody is LoginRequestBody {
     "idToken" in jsonBody &&
     typeof jsonBody.idToken === "string"
   );
+}
+
+type ErrorResult = {
+  error: string;
+  detail: string;
+};
+
+async function createSessionCooke(
+  firebaseAuth: Auth,
+  idToken: string
+): Promise<string | null> {
+  // Set session expiration to 5 days.
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
+  try {
+    // Create the session cookie. This will also verify the ID token in the process.
+    // The session cookie will have the same claims as the ID token.
+    // To only allow session cookie setting on recent sign-in, auth_time in ID token
+    // can be checked to ensure user was recently signed in before creating a session cookie.
+    const sessionCookie = await firebaseAuth.createSessionCookie(idToken, {
+      expiresIn,
+    });
+    return sessionCookie;
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to create session cookie");
+    return null;
+  }
 }
 
 export async function POST(request: Request) {
@@ -48,37 +76,26 @@ export async function POST(request: Request) {
       //   return;
       // }
 
-      // Set session expiration to 5 days.
-      const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
-      // Create the session cookie. This will also verify the ID token in the process.
-      // The session cookie will have the same claims as the ID token.
-      // To only allow session cookie setting on recent sign-in, auth_time in ID token
-      // can be checked to ensure user was recently signed in before creating a session cookie.
-
-      try {
-        const sessionCookie = await auth.createSessionCookie(idToken, {
-          expiresIn,
-        });
-
-        // Set cookie policy for session cookie.
-        let response = NextResponse.json({ status: "success" });
-        response.cookies.set("session", sessionCookie, {
-          maxAge: expiresIn,
-          httpOnly: true,
-          secure: true,
-          sameSite: "strict",
-        });
-
-        return response;
-      } catch (e) {
-        console.log(e);
-        console.log("Failed to create session cookie");
+      const sessionCookie = await createSessionCooke(auth, idToken);
+      if (!sessionCookie) {
         return NextResponse.json(
           { error: "internal server error" },
           { status: 500 }
         );
       }
+
+      // Set session expiration to 5 days.
+      const expiresIn = 60 * 60 * 24 * 5 * 1000;
+      // Set cookie policy for session cookie.
+      let response = NextResponse.json({ status: "success" });
+      response.cookies.set("session", sessionCookie, {
+        maxAge: expiresIn,
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      return response;
     } catch (e) {
       console.log("invalid login request - missing json body");
       return NextResponse.json(
