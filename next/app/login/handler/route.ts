@@ -57,11 +57,9 @@ async function jsonBody(request: Request): Promise<any | ErrorResult> {
 
 async function createSessionCooke(
   firebaseAuth: Auth,
-  idToken: string
-): Promise<string | null> {
-  // Set session expiration to 5 days.
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
-
+  idToken: string,
+  expiresIn: number
+): Promise<string | ErrorResult> {
   try {
     // Create the session cookie. This will also verify the ID token in the process.
     // The session cookie will have the same claims as the ID token.
@@ -72,9 +70,11 @@ async function createSessionCooke(
     });
     return sessionCookie;
   } catch (e) {
-    console.log(e);
-    console.log("Failed to create session cookie");
-    return null;
+    return {
+      kind: "ErrorResult",
+      error: "missing json body",
+      detail: `${e}`,
+    };
   }
 }
 
@@ -123,18 +123,21 @@ export async function POST(request: Request) {
   //   return;
   // }
 
+  // Set session expiration to 5 days.
+  const expiresIn = 60 * 60 * 24 * 5 * 1000;
+
   // 4. Create session cookie
-  const sessionCookie = await createSessionCooke(auth, idToken);
-  if (!sessionCookie) {
+  const sessionCookie = await createSessionCooke(auth, idToken, expiresIn);
+  if (isErrorResult(sessionCookie)) {
+    console.log(sessionCookie.error);
+    console.log(sessionCookie.detail);
     return NextResponse.json(
       { error: "internal server error" },
       { status: 500 }
     );
   }
 
-  // Set session expiration to 5 days.
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
-  // Set cookie policy for session cookie.
+  // 5. Set cookie policy for session cookie.
   let response = NextResponse.json({ status: "success" });
   response.cookies.set("session", sessionCookie, {
     maxAge: expiresIn,
