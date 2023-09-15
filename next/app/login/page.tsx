@@ -29,6 +29,27 @@ function getFirebaseAuth(): Auth | ErrorResult {
   }
 }
 
+async function verifySessionCookie(
+  firebaseAuth: Auth,
+  sessionCookie: string
+): Promise<boolean | ErrorResult> {
+  try {
+    // upon verificatoin failure, it will throw
+    await firebaseAuth.verifySessionCookie(
+      sessionCookie,
+      true /** checkRevoked */
+    );
+
+    return true;
+  } catch (e) {
+    return {
+      kind: "ErrorResult",
+      error: "Failed to verify session cookie",
+      detail: `${e}`,
+    };
+  }
+}
+
 export default async function Page() {
   const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -38,30 +59,29 @@ export default async function Page() {
 
   const cookieStore = cookies();
   const sessionCookie = cookieStore.get("session");
-  console.log("sessionCookie", sessionCookie);
+
+  // 1. If no session, let the user log-in
   if (!sessionCookie) {
     return <AuthComponent firebaseConfig={firebaseConfig} />;
   }
 
-  // 1. Firebase Admin SDK as route handler is purely on server-side
+  // 2. Get firebase Auth for login verification
+  // Firebase Admin SDK as route handler is purely on server-side
   const auth = getFirebaseAuth();
   if (isErrorResult(auth)) {
     console.log(auth.error);
     console.log(auth.detail);
-    throw new Error("internal error");
+    throw new Error("internal error"); // can't proceed, show error and halt
   }
 
-  try {
-    // upon verificatoin failure, it will throw
-    await auth.verifySessionCookie(
-      sessionCookie.value + "abc",
-      true /** checkRevoked */
-    );
-  } catch (e) {
-    console.log(e);
-    console.log("Failed to verify session cookie");
-    throw new Error("invalid login credentials");
+  // 3. Verify session cookie
+  const verified = await verifySessionCookie(auth, sessionCookie.value);
+  if (isErrorResult(verified)) {
+    return <AuthComponent firebaseConfig={firebaseConfig} />;
+  } else if (!verified) {
+    return <AuthComponent firebaseConfig={firebaseConfig} />;
+  } else {
+    // if already logged in successfully, then redirect
+    redirect("/home");
   }
-
-  redirect("/home");
 }
