@@ -34,6 +34,7 @@ function getFirebaseAuth(): Auth | ErrorResult {
   }
 }
 
+// always resolves, no throw
 async function verifySessionCookie(
   firebaseAuth: Auth,
   sessionCookie: string
@@ -55,22 +56,8 @@ async function verifySessionCookie(
   }
 }
 
-export default async function Page() {
-  const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-  };
-
-  const cookieStore = cookies();
-  const sessionCookie = cookieStore.get("session");
-
-  // 1. If no session, let the user log-in
-  if (!sessionCookie) {
-    return <AuthComponent firebaseConfig={firebaseConfig} />;
-  }
-
-  // 2. Get firebase Auth for login verification
+// Promise fails if there is an unexpected Firebase initialization error
+async function isLoggedInServerSide(sessionCookie?: string): Promise<boolean> {
   // Firebase Admin SDK as route handler is purely on server-side
   const auth = getFirebaseAuth();
   if (isErrorResult(auth)) {
@@ -79,14 +66,31 @@ export default async function Page() {
     throw new Error("internal error"); // can't proceed, show error and halt
   }
 
-  // 3. Verify session cookie
-  const verified = await verifySessionCookie(auth, sessionCookie.value);
+  if (!sessionCookie) return false;
+
+  const verified = await verifySessionCookie(auth, sessionCookie);
   if (isErrorResult(verified)) {
-    return <AuthComponent firebaseConfig={firebaseConfig} />;
-  } else if (!verified) {
-    return <AuthComponent firebaseConfig={firebaseConfig} />;
+    return false;
   } else {
+    return verified;
+  }
+}
+
+export default async function Page() {
+  const cookieStore = cookies();
+  const sessionCookie = cookieStore.get("session");
+
+  const isLoggedIn = await isLoggedInServerSide(sessionCookie?.value);
+  if (isLoggedIn) {
     // if already logged in successfully, then redirect
     redirect("/home");
+  } else {
+    // else, let the user log-in
+    const firebaseConfig = {
+      apiKey: process.env.FIREBASE_API_KEY,
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+      projectId: process.env.FIREBASE_PROJECT_ID,
+    };
+    return <AuthComponent firebaseConfig={firebaseConfig} />;
   }
 }
