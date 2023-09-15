@@ -11,7 +11,12 @@ type ErrorResult = {
 };
 
 function isErrorResult(result: any): result is ErrorResult {
-  return "kind" in result && result.kind === "ErrorResult";
+  return (
+    typeof result === "object" &&
+    result && // null can be "object", so check `result` is true
+    "kind" in result &&
+    result.kind === "ErrorResult"
+  );
 }
 
 function getFirebaseAuth(): Auth | ErrorResult {
