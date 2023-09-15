@@ -18,17 +18,40 @@ function isValidRequest(jsonBody: any): jsonBody is LoginRequestBody {
 }
 
 type ErrorResult = {
+  kind: "ErrorResult";
   error: string;
   detail: string;
 };
 
-async function jsonBody(request: Request): Promise<any | null> {
+function isErrorResult(result: any): result is ErrorResult {
+  return "kind" in result && result.kind === "ErrorResult";
+}
+
+function getFirebaseAuth(): Auth | ErrorResult {
+  try {
+    // Firebase Admin SDK as route handler is purely on server-side
+    const appAlreadyExists = getApps().length === 0;
+    const app = appAlreadyExists ? initializeApp() : getApp();
+    return getAuth(app);
+  } catch (e) {
+    return {
+      kind: "ErrorResult",
+      error: "Firebase Admin SDK initialization error",
+      detail: `${e}`,
+    };
+  }
+}
+
+async function jsonBody(request: Request): Promise<any | ErrorResult> {
   try {
     const json = await request.json();
     return json;
   } catch (e) {
-    console.log("invalid login request - missing json body");
-    return null;
+    return {
+      kind: "ErrorResult",
+      error: "missing json body",
+      detail: `${e}`,
+    };
   }
 }
 
@@ -58,34 +81,33 @@ async function createSessionCooke(
 export async function POST(request: Request) {
   console.log("POST: /login/handler/route.ts");
 
-  let auth: Auth;
-  try {
-    // Firebase Admin SDK as route handler is purely on server-side
-    const appAlreadyExists = getApps().length === 0;
-    const app = appAlreadyExists ? initializeApp() : getApp();
-    auth = getAuth(app);
-  } catch (e) {
-    console.log(e);
-    console.log("Firebase Admin SDK initialization error");
-
+  // 1. Firebase Admin SDK as route handler is purely on server-side
+  const auth = getFirebaseAuth();
+  if (isErrorResult(auth)) {
+    console.log(auth.error);
+    console.log(auth.detail);
     return NextResponse.json(
       { error: "internal server error" },
       { status: 500 }
     );
   }
 
+  // 2. JSON from request body
   const json = await jsonBody(request);
-  if (!json) {
+  if (isErrorResult(json)) {
+    console.log(json.error);
+    console.log(json.detail);
     return NextResponse.json(
-      { error: "invalid login request" },
+      { error: "invalid login request - missing json" },
       { status: 401 }
     );
   }
 
+  // 3. Validate JSON body
   if (!isValidRequest(json)) {
     console.log("invalid login request - missing idToken string in json body");
     return NextResponse.json(
-      { error: "invalid login request" },
+      { error: "invalid login request - missing idToke string in json body" },
       { status: 401 }
     );
   }
@@ -101,6 +123,7 @@ export async function POST(request: Request) {
   //   return;
   // }
 
+  // 4. Create session cookie
   const sessionCookie = await createSessionCooke(auth, idToken);
   if (!sessionCookie) {
     return NextResponse.json(
