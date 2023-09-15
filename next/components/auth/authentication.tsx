@@ -27,7 +27,7 @@ async function sendLoginRequest(idToken: string): Promise<Response> {
   return res;
 }
 
-export const Auth = (props: Props) => {
+export const AuthComponent = (props: Props) => {
   // Initialize Firebase
   const app = initializeApp(props.firebaseConfig); // Initialize Firebase
 

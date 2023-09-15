@@ -1,4 +1,5 @@
-import { Auth } from "@/components/auth/authentication";
+import { AuthComponent } from "@/components/auth/authentication";
+import { cookies } from "next/headers";
 
 export default function Page() {
   const firebaseConfig = {
@@ -7,5 +8,8 @@ export default function Page() {
     projectId: process.env.FIREBASE_PROJECT_ID,
   };
 
-  return <Auth firebaseConfig={firebaseConfig} />;
+  const cookieStore = cookies();
+  const sessionCookie = cookieStore.get("session");
+
+  return <AuthComponent firebaseConfig={firebaseConfig} />;
 }
