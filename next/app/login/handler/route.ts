@@ -22,6 +22,16 @@ type ErrorResult = {
   detail: string;
 };
 
+async function jsonBody(request: Request): Promise<any | null> {
+  try {
+    const json = await request.json();
+    return json;
+  } catch (e) {
+    console.log("invalid login request - missing json body");
+    return null;
+  }
+}
+
 async function createSessionCooke(
   firebaseAuth: Auth,
   idToken: string
@@ -53,11 +63,8 @@ export async function POST(request: Request) {
     const app = appAlreadyExists ? initializeApp() : getApp();
     const auth = getAuth(app);
 
-    let json;
-    try {
-      json = await request.json();
-    } catch (e) {
-      console.log("invalid login request - missing json body");
+    const json = await jsonBody(request);
+    if (!json) {
       return NextResponse.json(
         { error: "invalid login request" },
         { status: 401 }
