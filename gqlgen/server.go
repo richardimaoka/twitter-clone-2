@@ -10,6 +10,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi"
+	"github.com/richardimaoka/twitter-clone-2/gqlgen/auth"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph"
 	"github.com/rs/cors"
 )
@@ -18,7 +19,7 @@ const defaultPort = "8080"
 
 func debugMiddleWare(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("header Authorization: %s", r.Header.Get("Authorization"))
+		// log.Printf("header Authorization: %s", r.Header.Get("Authorization"))
 		next.ServeHTTP(w, r)
 	})
 }
@@ -28,11 +29,17 @@ func server() {
 	if err != nil {
 		log.Fatalf("error initializing app: %v\n", err)
 	}
-	client, err := app.Firestore(context.Background())
+
+	dbClient, err := app.Firestore(context.Background())
 	if err != nil {
 		log.Fatalln("failed to initialize firestore", err)
 	}
-	defer client.Close()
+	defer dbClient.Close()
+
+	authClient, err := app.Auth(context.Background())
+	if err != nil {
+		log.Fatalf("error getting Auth client: %v\n", err)
+	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -50,9 +57,9 @@ func server() {
 		Debug:            true,
 	}).Handler)
 
-	router.Use(graph.AuthMiddleware)
+	router.Use(auth.Middleware(dbClient, authClient))
 
-	resolver, err := graph.NewResolver(app, client)
+	resolver, err := graph.NewResolver(app, dbClient)
 	if err != nil {
 		panic(err)
 	}

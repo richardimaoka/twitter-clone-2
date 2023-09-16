@@ -65,9 +65,10 @@ func findUser(r *http.Request, dbClient *firestore.Client, authClient *auth.Clie
 }
 
 // Middleware decodes the share session cookie and packs the session into context
-func AuthMiddleware(dbClient *firestore.Client, authClient *auth.Client) func(http.Handler) http.Handler {
+func Middleware(dbClient *firestore.Client, authClient *auth.Client) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			log.Println("user authentication starts")
 			// get the user
 			user := findUser(r, dbClient, authClient)
 

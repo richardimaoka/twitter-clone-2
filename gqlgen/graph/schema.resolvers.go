@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/richardimaoka/twitter-clone-2/gqlgen/auth"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
@@ -68,6 +69,17 @@ func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Twe
 
 // Tweet is the resolver for the tweet field.
 func (r *queryResolver) Tweet(ctx context.Context) (*model.Tweet, error) {
+	user := auth.ForContext(ctx)
+	if user == nil {
+		log.Printf("anonymous user is viewing the tweet")
+	} else {
+		log.Printf("user = %s is viewing the tweet", user.Name)
+	}
+
+	if !canViewTweet(user) {
+		return nil, fmt.Errorf("not authorized to see this tweet")
+	}
+
 	log.Printf("sleeping for 2 seconds")
 	time.Sleep(2 * time.Second)
 	bytes, err := os.ReadFile("data/tweet.json")
