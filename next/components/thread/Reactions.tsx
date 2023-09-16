@@ -3,7 +3,7 @@ import { BookmarkButton } from "./reactions/BookmarkButton";
 import { LikeButton } from "./reactions/LikeButton";
 import { ReplyButton } from "./reactions/ReplyButton";
 import { RetweetyButton } from "./reactions/RetweetyButton";
-import styles from "./TweetThreadActions.module.css";
+import styles from "./Reactions.module.css";
 import { ShareButton } from "./reactions/ShareButton";
 
 const fragmentDefinition = graphql(`
