@@ -1,0 +1,14 @@
+.home {
+  display: flex;
+  width: fit-content;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.leftPane {
+  width: 250px;
+}
+
+.rightPane {
+  width: 320px;
+}
