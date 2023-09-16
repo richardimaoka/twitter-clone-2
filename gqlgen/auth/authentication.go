@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -26,44 +25,59 @@ type User struct {
 	IsAdmin bool
 }
 
-// https://firebase.google.com/docs/auth/admin/manage-sessions
-// > Firebase ID tokens are short lived and last for an hour; the refresh token can be used to retrieve new ID tokens.
-// So, we assume every time a fresh ID token is sent from the client, so that expiration is within an hour time.
-func validateAndGetUserID(ctx context.Context, authClient *auth.Client, idToken string) (string, error) {
-	token, err := authClient.VerifyIDToken(ctx, idToken)
+// https://firebase.google.com/docs/auth/admin/manage-cookies#go_2
+func validateAndGetUserID(ctx context.Context, authClient *auth.Client, sessionCookie string) (string, error) {
+	// Verify the session cookie. In this case an additional check is added to detect
+	// if the user's Firebase session was revoked, user deleted/disabled, etc.
+	decoded, err := authClient.VerifySessionCookieAndCheckRevoked(ctx, sessionCookie)
 	if err != nil {
-		log.Fatalf("error verifying ID token: %v\n", err)
-		return "", fmt.Errorf("invalid credentials")
+		return "", err
 	}
 
-	log.Printf("Verified ID token: %v\n", token)
-	return "", nil
+	return decoded.UID, nil
+}
+
+func findUser(r *http.Request, dbClient *firestore.Client, authClient *auth.Client) *User {
+	c, err := r.Cookie("sessionCookie")
+	if err != nil {
+		log.Println("no sessionCookie, so no user")
+		return nil
+	}
+
+	// error from this includes session cookie expiration
+	userId, err := validateAndGetUserID(r.Context(), authClient, c.Value)
+	if err != nil {
+		log.Println("failed to validate and get user ID, so no user.", err)
+		return nil
+	}
+
+	// get the user from the database
+	user, err := database.GetUser(r.Context(), dbClient, userId)
+	if err != nil {
+		log.Println("failed get user from DB, so no user.", err)
+		return nil
+	}
+
+	return &User{
+		Name:    user.UserName,
+		IsAdmin: false,
+	}
 }
 
 // Middleware decodes the share session cookie and packs the session into context
 func AuthMiddleware(dbClient *firestore.Client, authClient *auth.Client) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			c, err := r.Cookie("auth-cookie")
-			if err != nil {
-				http.Error(w, "Invalid cookie", http.StatusForbidden)
-				return
-			}
-
-			userId, err := validateAndGetUserID(r.Context(), authClient, c.Value)
-			if err != nil {
-				http.Error(w, "Invalid cookie", http.StatusForbidden)
-				return
-			}
-
-			// get the user from the database
-			user, err := database.GetUser(r.Context(), dbClient, userId)
+			// get the user
+			user := findUser(r, dbClient, authClient)
 
 			// put it in context
-			ctx := context.WithValue(r.Context(), userCtxKey, user)
+			if user != nil {
+				ctx := context.WithValue(r.Context(), userCtxKey, user)
+				r = r.WithContext(ctx)
+			}
 
 			// and call the next with our new context
-			r = r.WithContext(ctx)
 			next.ServeHTTP(w, r)
 		})
 	}
