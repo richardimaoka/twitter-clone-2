@@ -1,0 +1,9 @@
+.component {
+  color: rgb(83, 100, 113);
+  font-size: 13px;
+  margin: 16px 0px;
+}
+
+.emphasize {
+  font-weight: 700;
+}
