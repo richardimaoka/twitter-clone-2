@@ -5,21 +5,17 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetThreadActions } from "./TweetThreadActions";
 import { TweetThreadHeader } from "./TweetThreadHeader";
 import { TweetTimeImpressionView } from "./TweetTimeImpressionView";
+import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
     ...TweetThreadHeaderFragment
     ...TweetTimeImpressionFragment
+    ...TweetStatsFragment
     body
     picturePath
     pictureWidth
     pictureHeight
-    time
-    date
-    retweets
-    quotes
-    numLikes
-    bookmarks
   }
 `);
 
@@ -50,24 +46,7 @@ export const TweetView = (props: TweetViewProps) => {
         )}
 
       <TweetTimeImpressionView fragment={fragment} />
-      <div className={styles.reactions}>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.retweets}</span>
-          <span className={styles.reactionname}> 件のリツイート</span>
-        </div>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.quotes}</span>
-          <span className={styles.reactionname}> 件の引用</span>
-        </div>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.numLikes}</span>
-          <span className={styles.reactionname}> 件のいいね</span>
-        </div>
-        <div>
-          <span className={styles.reactionvalue}>{fragment.bookmarks}</span>
-          <span className={styles.reactionname}> ブックマーク</span>
-        </div>
-      </div>
+      <TweetStats fragment={fragment} />
       <TweetThreadActions />
     </div>
   );
