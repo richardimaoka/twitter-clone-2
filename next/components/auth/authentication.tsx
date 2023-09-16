@@ -62,12 +62,15 @@ export const AuthComponent = (props: Props) => {
         } catch (error) {
           console.log("error", error);
           console.log("failed in a login request to /login/handler");
+          alert(error);
         }
       } catch (error) {
         console.log("error", error);
         console.log("failed in a getIdToken request");
+        alert(error);
       }
     } catch (error: any) {
+      alert(error);
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
