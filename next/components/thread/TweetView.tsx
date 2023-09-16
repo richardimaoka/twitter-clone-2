@@ -5,13 +5,13 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetThreadActions } from "./TweetThreadActions";
 import { TweetThreadHeader } from "./TweetThreadHeader";
 import { TweetTimeImpression } from "./TweetTimeImpression";
-import { TweetStats } from "./TweetStats";
+// import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
     ...TweetThreadHeaderFragment
     ...TweetTimeImpressionFragment
-    ...TweetStatsFragment
+    ...TweetThreadActionsFragment
     body
     picturePath
     pictureWidth
@@ -44,10 +44,9 @@ export const TweetView = (props: TweetViewProps) => {
             alt={"tweet pic"}
           />
         )}
-
       <TweetTimeImpression fragment={fragment} />
-      <TweetStats fragment={fragment} />
-      <TweetThreadActions />
+      {/* <TweetStats fragment={fragment} /> */}
+      <TweetThreadActions fragment={fragment} />
     </div>
   );
 };
