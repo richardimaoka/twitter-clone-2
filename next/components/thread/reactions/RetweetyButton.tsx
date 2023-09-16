@@ -8,11 +8,11 @@ interface Props {
 
 export function RetweetyButton(props: Props) {
   return (
-    <div>
+    <button className={styles.button}>
       <FontAwesomeIcon className={styles.icon} icon={faRetweet} />
       {typeof props.counts === "number" && props.counts > 0 && (
         <span className={styles.counts}>{props.counts}</span>
       )}
-    </div>
+    </button>
   );
 }

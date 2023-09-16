@@ -8,7 +8,7 @@ interface Props {
 
 export function LikeButton(props: Props) {
   return (
-    <button className={styles.component}>
+    <button className={styles.button}>
       <FontAwesomeIcon className={styles.icon} icon={faHeart} />
       {typeof props.counts === "number" && props.counts > 0 && (
         <span className={styles.counts}>{props.counts}</span>

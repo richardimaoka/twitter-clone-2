@@ -91,6 +91,14 @@ export type RootPageQueryQuery = {
     | null;
 };
 
+export type ReactionsFragment = {
+  __typename: "Tweet";
+  retweets?: number | null;
+  quotes?: number | null;
+  numLikes?: number | null;
+  bookmarks?: number | null;
+} & { " $fragmentName"?: "ReactionsFragment" };
+
 export type TweetColumnFragmentFragment = ({ __typename: "Tweet" } & {
   " $fragmentRefs"?: {
     TweetThreadFragmentFragment: TweetThreadFragmentFragment;
@@ -131,14 +139,6 @@ export type TweetThreadFragmentFragment = ({
   " $fragmentName"?: "TweetThreadFragmentFragment";
 };
 
-export type TweetThreadActionsFragmentFragment = {
-  __typename: "Tweet";
-  retweets?: number | null;
-  quotes?: number | null;
-  numLikes?: number | null;
-  bookmarks?: number | null;
-} & { " $fragmentName"?: "TweetThreadActionsFragmentFragment" };
-
 export type TweetThreadHeaderFragmentFragment = {
   __typename: "Tweet";
   userName?: string | null;
@@ -163,7 +163,7 @@ export type TweetFragmentFragment = ({
   " $fragmentRefs"?: {
     TweetThreadHeaderFragmentFragment: TweetThreadHeaderFragmentFragment;
     TweetTimeImpressionFragmentFragment: TweetTimeImpressionFragmentFragment;
-    TweetThreadActionsFragmentFragment: TweetThreadActionsFragmentFragment;
+    ReactionsFragment: ReactionsFragment;
   };
 }) & { " $fragmentName"?: "TweetFragmentFragment" };
 
@@ -291,12 +291,12 @@ export const TweetTimeImpressionFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TweetTimeImpressionFragmentFragment, unknown>;
-export const TweetThreadActionsFragmentFragmentDoc = {
+export const ReactionsFragmentDoc = {
   kind: "Document",
   definitions: [
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "TweetThreadActionsFragment" },
+      name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -312,7 +312,7 @@ export const TweetThreadActionsFragmentFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<TweetThreadActionsFragmentFragment, unknown>;
+} as unknown as DocumentNode<ReactionsFragment, unknown>;
 export const TweetFragmentFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -336,7 +336,7 @@ export const TweetFragmentFragmentDoc = {
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "TweetThreadActionsFragment" },
+            name: { kind: "Name", value: "Reactions" },
           },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "picturePath" } },
@@ -379,7 +379,7 @@ export const TweetFragmentFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "TweetThreadActionsFragment" },
+      name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -489,7 +489,7 @@ export const TweetThreadFragmentFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "TweetThreadActionsFragment" },
+      name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -524,7 +524,7 @@ export const TweetThreadFragmentFragmentDoc = {
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "TweetThreadActionsFragment" },
+            name: { kind: "Name", value: "Reactions" },
           },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "picturePath" } },
@@ -610,7 +610,7 @@ export const TweetColumnFragmentFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "TweetThreadActionsFragment" },
+      name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -645,7 +645,7 @@ export const TweetColumnFragmentFragmentDoc = {
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "TweetThreadActionsFragment" },
+            name: { kind: "Name", value: "Reactions" },
           },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "picturePath" } },
@@ -961,7 +961,7 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "TweetThreadActionsFragment" },
+      name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -996,7 +996,7 @@ export const RootPageQueryDocument = {
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "TweetThreadActionsFragment" },
+            name: { kind: "Name", value: "Reactions" },
           },
           { kind: "Field", name: { kind: "Name", value: "body" } },
           { kind: "Field", name: { kind: "Name", value: "picturePath" } },

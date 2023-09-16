@@ -2,7 +2,7 @@ import Image from "next/image";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { TweetThreadActions } from "./TweetThreadActions";
+import { Reactions } from "./Reactions";
 import { TweetThreadHeader } from "./TweetThreadHeader";
 import { TweetTimeImpression } from "./TweetTimeImpression";
 // import { TweetStats } from "./TweetStats";
@@ -11,7 +11,7 @@ const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
     ...TweetThreadHeaderFragment
     ...TweetTimeImpressionFragment
-    ...TweetThreadActionsFragment
+    ...Reactions
     body
     picturePath
     pictureWidth
@@ -46,7 +46,7 @@ export const TweetView = (props: TweetViewProps) => {
         )}
       <TweetTimeImpression fragment={fragment} />
       {/* <TweetStats fragment={fragment} /> */}
-      <TweetThreadActions fragment={fragment} />
+      <Reactions fragment={fragment} />
     </div>
   );
 };

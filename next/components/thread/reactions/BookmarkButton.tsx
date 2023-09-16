@@ -8,7 +8,7 @@ interface Props {
 
 export function BookmarkButton(props: Props) {
   return (
-    <button>
+    <button className={styles.button}>
       <FontAwesomeIcon className={styles.icon} icon={faBookmark} />
       {typeof props.counts === "number" && props.counts > 0 && (
         <span className={styles.counts}>{props.counts}</span>

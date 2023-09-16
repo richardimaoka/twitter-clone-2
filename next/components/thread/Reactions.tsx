@@ -7,7 +7,7 @@ import styles from "./TweetThreadActions.module.css";
 import { ShareButton } from "./reactions/ShareButton";
 
 const fragmentDefinition = graphql(`
-  fragment TweetThreadActionsFragment on Tweet {
+  fragment Reactions on Tweet {
     retweets
     quotes
     numLikes
@@ -19,7 +19,7 @@ interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export const TweetThreadActions = (props: Props) => {
+export const Reactions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
   return (

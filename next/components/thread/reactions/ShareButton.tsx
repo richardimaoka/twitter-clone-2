@@ -4,8 +4,8 @@ import styles from "./style.module.css";
 
 export function ShareButton() {
   return (
-    <div>
+    <button className={styles.button}>
       <FontAwesomeIcon className={styles.icon} icon={faArrowUpFromBracket} />
-    </div>
+    </button>
   );
 }
