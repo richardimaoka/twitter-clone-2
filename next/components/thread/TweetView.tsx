@@ -4,7 +4,7 @@ import styles from "./style.module.css";
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetThreadActions } from "./TweetThreadActions";
 import { TweetThreadHeader } from "./TweetThreadHeader";
-import { TweetTimeImpressionView } from "./TweetTimeImpressionView";
+import { TweetTimeImpression } from "./TweetTimeImpression";
 import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
@@ -45,7 +45,7 @@ export const TweetView = (props: TweetViewProps) => {
           />
         )}
 
-      <TweetTimeImpressionView fragment={fragment} />
+      <TweetTimeImpression fragment={fragment} />
       <TweetStats fragment={fragment} />
       <TweetThreadActions />
     </div>
