@@ -1,11 +1,11 @@
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { TweetThreadActionItem } from "./TweetThreadActionItem";
-import styles from "./TweetThreadActions.module.css";
 import { BookmarkButton } from "./reactions/BookmarkButton";
 import { LikeButton } from "./reactions/LikeButton";
 import { ReplyButton } from "./reactions/ReplyButton";
 import { RetweetyButton } from "./reactions/RetweetyButton";
+import styles from "./TweetThreadActions.module.css";
 
 const fragmentDefinition = graphql(`
   fragment TweetThreadActionsFragment on Tweet {
@@ -28,7 +28,7 @@ export const TweetThreadActions = (props: Props) => {
       <ReplyButton counts={0} />
       <RetweetyButton counts={fragment.retweets} />
       <LikeButton counts={fragment.numLikes} />
-      <BookmarkButton counts={fragment.bookmarks} />
+      <BookmarkButton counts={2600} />
       <TweetThreadActionItem value={0} icon={faArrowUpFromBracket} />
     </div>
   );

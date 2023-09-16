@@ -10,7 +10,9 @@ export function ReplyButton(props: Props) {
   return (
     <div>
       <FontAwesomeIcon className={styles.icon} icon={faComment} />
-      {props.counts && <span className={styles.counts}>{props.counts}</span>}
+      {typeof props.counts === "number" && props.counts > 0 && (
+        <span className={styles.counts}>{props.counts}</span>
+      )}
     </div>
   );
 }

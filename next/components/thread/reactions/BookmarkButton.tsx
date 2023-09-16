@@ -8,9 +8,11 @@ interface Props {
 
 export function BookmarkButton(props: Props) {
   return (
-    <div>
+    <button>
       <FontAwesomeIcon className={styles.icon} icon={faBookmark} />
-      {props.counts && <span className={styles.counts}>{props.counts}</span>}
-    </div>
+      {typeof props.counts === "number" && props.counts > 0 && (
+        <span className={styles.counts}>{props.counts}</span>
+      )}
+    </button>
   );
 }
