@@ -1,11 +1,15 @@
-import { TweetThread } from "./TweetThread";
+import { TweetReply } from "./TweetReply";
+import { RootTweet } from "./root/RootTweet";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
   fragment TweetColumnFragment on Tweet {
-    ...TweetThreadFragment
+    ...RootTweet
+    replies {
+      ...TweetReplyFragment
+    }
   }
 `);
 
@@ -18,7 +22,10 @@ export const TweetColumn = (props: TweetColumnProps) => {
 
   return (
     <div className={styles.column}>
-      <TweetThread fragment={fragment} />
+      <RootTweet fragment={fragment} />
+      {fragment.replies?.map(
+        (reply, index) => reply && <TweetReply key={index} fragment={reply} />
+      )}
     </div>
   );
 };
