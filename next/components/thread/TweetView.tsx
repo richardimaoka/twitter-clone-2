@@ -1,11 +1,11 @@
-import Image from "next/image";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "./Reactions";
+import { Body } from "./tweet/Body";
+import { Picture } from "./tweet/Picture";
 import { TweetThreadHeader } from "./tweet/TweetThreadHeader";
 import { TweetTimeImpression } from "./tweet/TweetTimeImpression";
-import { Picture } from "./tweet/Picture";
 // import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
@@ -14,7 +14,7 @@ const fragmentDefinition = graphql(`
     ...TweetTimeImpressionFragment
     ...Reactions
     ...Picture
-    body
+    ...Body
   }
 `);
 
@@ -31,7 +31,7 @@ export const TweetView = (props: TweetViewProps) => {
   return (
     <div className={styles.tweet}>
       <TweetThreadHeader fragment={fragment} />
-      <div className={styles.body}>{fragment.body}</div>
+      <Body fragment={fragment} />
       <Picture fragment={fragment} />
       <TweetTimeImpression fragment={fragment} />
       {/* <TweetStats fragment={fragment} /> */}
