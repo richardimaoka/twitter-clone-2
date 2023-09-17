@@ -1,3 +1,10 @@
+.component {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 16px 0px;
+}
+
 .icon {
   display: inline-block;
   font-size: 16px;

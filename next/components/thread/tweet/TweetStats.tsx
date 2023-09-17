@@ -3,10 +3,10 @@ import styles from "./TweetStats.module.css";
 
 const fragmentDefinition = graphql(`
   fragment TweetStatsFragment on Tweet {
-    retweets
-    quotes
+    numRetweets
+    numQuotes
     numLikes
-    bookmarks
+    numBookmarks
   }
 `);
 
@@ -20,11 +20,11 @@ export const TweetStats = (props: Props) => {
   return (
     <div className={styles.component}>
       <div>
-        <span className={styles.reactionvalue}>{fragment.retweets}</span>
+        <span className={styles.reactionvalue}>{fragment.numRetweets}</span>
         <span className={styles.reactionname}> 件のリツイート</span>
       </div>
       <div>
-        <span className={styles.reactionvalue}>{fragment.quotes}</span>
+        <span className={styles.reactionvalue}>{fragment.numQuotes}</span>
         <span className={styles.reactionname}> 件の引用</span>
       </div>
       <div>
@@ -32,7 +32,7 @@ export const TweetStats = (props: Props) => {
         <span className={styles.reactionname}> 件のいいね</span>
       </div>
       <div>
-        <span className={styles.reactionvalue}>{fragment.bookmarks}</span>
+        <span className={styles.reactionvalue}>{fragment.numBookmarks}</span>
         <span className={styles.reactionname}> ブックマーク</span>
       </div>
     </div>

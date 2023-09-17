@@ -1,7 +1,7 @@
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { Reactions } from "./Reactions";
+import { Reactions } from "./reactions/Reactions";
 import { Body } from "./tweet/Body";
 import { Picture } from "./tweet/Picture";
 import { ContentHeader } from "./tweet/ContentHeader";

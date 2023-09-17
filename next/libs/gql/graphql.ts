@@ -95,14 +95,6 @@ export type RootPageQueryQuery = {
     | null;
 };
 
-export type ReactionsFragment = {
-  __typename: "Tweet";
-  retweets?: number | null;
-  quotes?: number | null;
-  numLikes?: number | null;
-  bookmarks?: number | null;
-} & { " $fragmentName"?: "ReactionsFragment" };
-
 export type TweetColumnFragmentFragment = ({ __typename: "Tweet" } & {
   " $fragmentRefs"?: {
     TweetThreadFragmentFragment: TweetThreadFragmentFragment;
@@ -145,6 +137,14 @@ export type TweetFragmentFragment = ({ __typename: "Tweet" } & {
   };
 }) & { " $fragmentName"?: "TweetFragmentFragment" };
 
+export type ReactionsFragment = {
+  __typename: "Tweet";
+  numRetweets?: number | null;
+  numQuotes?: number | null;
+  numLikes?: number | null;
+  numBookmarks?: number | null;
+} & { " $fragmentName"?: "ReactionsFragment" };
+
 export type ReplyFragment = { __typename: "Tweet"; id: string } & {
   " $fragmentName"?: "ReplyFragment";
 };
@@ -176,10 +176,10 @@ export type PictureFragment = {
 
 export type TweetStatsFragmentFragment = {
   __typename: "Tweet";
-  retweets?: number | null;
-  quotes?: number | null;
+  numRetweets?: number | null;
+  numQuotes?: number | null;
   numLikes?: number | null;
-  bookmarks?: number | null;
+  numBookmarks?: number | null;
 } & { " $fragmentName"?: "TweetStatsFragmentFragment" };
 
 export type TimelineHeaderFragmentFragment = {
@@ -319,10 +319,10 @@ export const ReactionsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
         ],
       },
     },
@@ -438,10 +438,10 @@ export const TweetFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
         ],
       },
     },
@@ -576,10 +576,10 @@ export const TweetThreadFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
         ],
       },
     },
@@ -723,10 +723,10 @@ export const TweetColumnFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
         ],
       },
     },
@@ -868,10 +868,10 @@ export const TweetStatsFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
         ],
       },
     },
@@ -1117,10 +1117,10 @@ export const RootPageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "retweets" } },
-          { kind: "Field", name: { kind: "Name", value: "quotes" } },
+          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
+          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
         ],
       },
     },
