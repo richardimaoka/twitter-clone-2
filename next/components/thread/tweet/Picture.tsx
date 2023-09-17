@@ -1,6 +1,6 @@
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import Image from "next/image";
-import styles from "./style.module.css";
+import styles from "./Picture.module.css";
 
 const fragmentDefinition = graphql(`
   fragment Picture on Tweet {

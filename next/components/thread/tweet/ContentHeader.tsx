@@ -1,20 +1,20 @@
 import Image from "next/image";
-import styles from "./style.module.css";
+import styles from "./ContentHeader.module.css";
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
-  fragment TweetThreadHeaderFragment on Tweet {
+  fragment ContentHeader on Tweet {
     userName
     userId
     profilePicture
   }
 `);
 
-interface TweetThreadHeaderProps {
+interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export const TweetThreadHeader = (props: TweetThreadHeaderProps) => {
+export const ContentHeader = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
   const noProfilePic = "/images/no-profile-egg.png";
 

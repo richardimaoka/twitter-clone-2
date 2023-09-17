@@ -4,14 +4,14 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "./Reactions";
 import { Body } from "./tweet/Body";
 import { Picture } from "./tweet/Picture";
-import { TweetThreadHeader } from "./tweet/TweetThreadHeader";
-import { TweetTimeImpression } from "./tweet/TweetTimeImpression";
+import { ContentHeader } from "./tweet/ContentHeader";
+import { ContentBottom } from "./tweet/ContentBottom";
 // import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
   fragment TweetFragment on Tweet {
-    ...TweetThreadHeaderFragment
-    ...TweetTimeImpressionFragment
+    ...ContentHeader
+    ...ContentBottom
     ...Reactions
     ...Picture
     ...Body
@@ -30,10 +30,10 @@ export const TweetView = (props: TweetViewProps) => {
   //https://twitter.com/TwitterJP/status/1587301348604841987
   return (
     <div className={styles.tweet}>
-      <TweetThreadHeader fragment={fragment} />
+      <ContentHeader fragment={fragment} />
       <Body fragment={fragment} />
       <Picture fragment={fragment} />
-      <TweetTimeImpression fragment={fragment} />
+      <ContentBottom fragment={fragment} />
       {/* <TweetStats fragment={fragment} /> */}
       <Reactions fragment={fragment} />
     </div>

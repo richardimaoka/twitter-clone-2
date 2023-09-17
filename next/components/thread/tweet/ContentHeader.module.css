@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  gap: 10px;
+}
+
+.profilepic {
+  border-radius: 20px;
+}
+
+.username {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.userid {
+  font-size: 15px;
+  color: rgb(83, 100, 113);
+}
