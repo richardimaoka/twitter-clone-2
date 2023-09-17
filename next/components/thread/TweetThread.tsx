@@ -20,11 +20,11 @@ export const TweetThread = (props: TweetThreadProps) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
   return (
-    <>
+    <div>
       <RootTweet fragment={fragment} />
       {fragment.replies?.map(
         (reply, index) => reply && <TweetReply key={index} fragment={reply} />
       )}
-    </>
+    </div>
   );
 };
