@@ -1,11 +1,11 @@
 import { TweetReply } from "./TweetReply";
-import { TweetView } from "./TweetView";
+import { RootTweet } from "./root/RootTweet";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
   fragment TweetThreadFragment on Tweet {
-    ...TweetFragment
+    ...RootTweet
     replies {
       ...TweetReplyFragment
     }
@@ -21,7 +21,7 @@ export const TweetThread = (props: TweetThreadProps) => {
 
   return (
     <>
-      <TweetView fragment={fragment} />
+      <RootTweet fragment={fragment} />
       {fragment.replies?.map(
         (reply, index) => reply && <TweetReply key={index} fragment={reply} />
       )}

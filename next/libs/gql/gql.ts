@@ -19,10 +19,8 @@ const documents = {
     types.TweetColumnFragmentFragmentDoc,
   "\n  fragment TweetReplyFragment on Tweet {\n    userName\n    userId\n    profilePicture\n    body\n    date\n    retweets\n    quotes\n    numLikes\n  }\n":
     types.TweetReplyFragmentFragmentDoc,
-  "\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n":
+  "\n  fragment TweetThreadFragment on Tweet {\n    ...RootTweet\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n":
     types.TweetThreadFragmentFragmentDoc,
-  "\n  fragment TweetFragment on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n":
-    types.TweetFragmentFragmentDoc,
   "\n  fragment Reactions on Tweet {\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n":
     types.ReactionsFragmentDoc,
   "\n  fragment ReplyContentBody on Tweet {\n    body\n  }\n":
@@ -38,6 +36,8 @@ const documents = {
     types.ContentHeaderFragmentDoc,
   "\n  fragment Picture on Tweet {\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n":
     types.PictureFragmentDoc,
+  "\n  fragment RootTweet on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n":
+    types.RootTweetFragmentDoc,
   "\n  fragment TweetStatsFragment on Tweet {\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n":
     types.TweetStatsFragmentFragmentDoc,
   "\n  fragment TimelineHeaderFragment on Tweet {\n    userName\n    userId\n    date\n  }\n":
@@ -92,14 +92,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n",
-): (typeof documents)["\n  fragment TweetThreadFragment on Tweet {\n    ...TweetFragment\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  fragment TweetFragment on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n",
-): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n"];
+  source: "\n  fragment TweetThreadFragment on Tweet {\n    ...RootTweet\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n",
+): (typeof documents)["\n  fragment TweetThreadFragment on Tweet {\n    ...RootTweet\n    replies {\n      ...TweetReplyFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -148,6 +142,12 @@ export function graphql(
 export function graphql(
   source: "\n  fragment Picture on Tweet {\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n",
 ): (typeof documents)["\n  fragment Picture on Tweet {\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment RootTweet on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n",
+): (typeof documents)["\n  fragment RootTweet on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

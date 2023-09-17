@@ -1,15 +1,15 @@
-import styles from "./style.module.css";
+import styles from "./RootTweet.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import { Reactions } from "./reactions/Reactions";
-import { Body } from "./root/Body";
-import { Picture } from "./root/Picture";
-import { ContentHeader } from "./root/ContentHeader";
-import { ContentBottom } from "./root/ContentBottom";
+import { Reactions } from "../reactions/Reactions";
+import { Body } from "./Body";
+import { Picture } from "./Picture";
+import { ContentHeader } from "./ContentHeader";
+import { ContentBottom } from "./ContentBottom";
 // import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
-  fragment TweetFragment on Tweet {
+  fragment RootTweet on Tweet {
     ...ContentHeader
     ...ContentBottom
     ...Reactions
@@ -18,11 +18,11 @@ const fragmentDefinition = graphql(`
   }
 `);
 
-interface TweetViewProps {
+interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export const TweetView = (props: TweetViewProps) => {
+export const RootTweet = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
   const noProfilePic = "/images/no-profile-egg.png";
 
