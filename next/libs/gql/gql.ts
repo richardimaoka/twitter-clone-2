@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "\n  query RootPageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n":
     types.RootPageQueryDocument,
+  "\n  fragment Picture on Tweet {\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n":
+    types.PictureFragmentDoc,
   "\n  fragment Reactions on Tweet {\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n":
     types.ReactionsFragmentDoc,
   "\n  fragment TweetColumnFragment on Tweet {\n    ...TweetThreadFragment\n  }\n":
@@ -29,7 +31,7 @@ const documents = {
     types.TweetThreadHeaderFragmentFragmentDoc,
   "\n  fragment TweetTimeImpressionFragment on Tweet {\n    time\n    date\n    impressions\n  }\n":
     types.TweetTimeImpressionFragmentFragmentDoc,
-  "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    ...TweetTimeImpressionFragment\n    ...Reactions\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n":
+  "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    ...TweetTimeImpressionFragment\n    ...Reactions\n    ...Picture\n    body\n  }\n":
     types.TweetFragmentFragmentDoc,
   "\n  fragment TimelineHeaderFragment on Tweet {\n    userName\n    userId\n    date\n  }\n":
     types.TimelineHeaderFragmentFragmentDoc,
@@ -67,6 +69,12 @@ export function graphql(source: string): unknown;
 export function graphql(
   source: "\n  query RootPageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n",
 ): (typeof documents)["\n  query RootPageQuery {\n    tweet {\n      ...TweetColumnFragment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment Picture on Tweet {\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n",
+): (typeof documents)["\n  fragment Picture on Tweet {\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -113,8 +121,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    ...TweetTimeImpressionFragment\n    ...Reactions\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n",
-): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    ...TweetTimeImpressionFragment\n    ...Reactions\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n  }\n"];
+  source: "\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    ...TweetTimeImpressionFragment\n    ...Reactions\n    ...Picture\n    body\n  }\n",
+): (typeof documents)["\n  fragment TweetFragment on Tweet {\n    ...TweetThreadHeaderFragment\n    ...TweetTimeImpressionFragment\n    ...Reactions\n    ...Picture\n    body\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

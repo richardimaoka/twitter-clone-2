@@ -91,6 +91,13 @@ export type RootPageQueryQuery = {
     | null;
 };
 
+export type PictureFragment = {
+  __typename: "Tweet";
+  picturePath?: string | null;
+  pictureWidth?: number | null;
+  pictureHeight?: number | null;
+} & { " $fragmentName"?: "PictureFragment" };
+
 export type ReactionsFragment = {
   __typename: "Tweet";
   retweets?: number | null;
@@ -156,14 +163,12 @@ export type TweetTimeImpressionFragmentFragment = {
 export type TweetFragmentFragment = ({
   __typename: "Tweet";
   body?: string | null;
-  picturePath?: string | null;
-  pictureWidth?: number | null;
-  pictureHeight?: number | null;
 } & {
   " $fragmentRefs"?: {
     TweetThreadHeaderFragmentFragment: TweetThreadHeaderFragmentFragment;
     TweetTimeImpressionFragmentFragment: TweetTimeImpressionFragmentFragment;
     ReactionsFragment: ReactionsFragment;
+    PictureFragment: PictureFragment;
   };
 }) & { " $fragmentName"?: "TweetFragmentFragment" };
 
@@ -313,6 +318,27 @@ export const ReactionsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ReactionsFragment, unknown>;
+export const PictureFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "Picture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<PictureFragment, unknown>;
 export const TweetFragmentFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -338,10 +364,8 @@ export const TweetFragmentFragmentDoc = {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
           },
+          { kind: "FragmentSpread", name: { kind: "Name", value: "Picture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
-          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
         ],
       },
     },
@@ -391,6 +415,22 @@ export const TweetFragmentFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "quotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "bookmarks" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "Picture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
         ],
       },
     },
@@ -506,6 +546,22 @@ export const TweetThreadFragmentFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "Picture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "TweetFragment" },
       typeCondition: {
         kind: "NamedType",
@@ -526,10 +582,8 @@ export const TweetThreadFragmentFragmentDoc = {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
           },
+          { kind: "FragmentSpread", name: { kind: "Name", value: "Picture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
-          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
         ],
       },
     },
@@ -627,6 +681,22 @@ export const TweetColumnFragmentFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "Picture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "TweetFragment" },
       typeCondition: {
         kind: "NamedType",
@@ -647,10 +717,8 @@ export const TweetColumnFragmentFragmentDoc = {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
           },
+          { kind: "FragmentSpread", name: { kind: "Name", value: "Picture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
-          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
         ],
       },
     },
@@ -978,6 +1046,22 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "Picture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
+          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "TweetFragment" },
       typeCondition: {
         kind: "NamedType",
@@ -998,10 +1082,8 @@ export const RootPageQueryDocument = {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
           },
+          { kind: "FragmentSpread", name: { kind: "Name", value: "Picture" } },
           { kind: "Field", name: { kind: "Name", value: "body" } },
-          { kind: "Field", name: { kind: "Name", value: "picturePath" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureWidth" } },
-          { kind: "Field", name: { kind: "Name", value: "pictureHeight" } },
         ],
       },
     },
