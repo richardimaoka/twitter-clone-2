@@ -9,12 +9,7 @@ import { request } from "graphql-request";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query StatusPageQuery {
-    tweet {
-      ...TweetColumnFragment
-    }
-    me {
-      userName
-    }
+    ...TweetColumnFragment
   }
 `);
 
@@ -25,7 +20,7 @@ export default async function Page() {
       <section className={styles.leftPane}>
         <LeftPane />
       </section>
-      <main>{data.tweet && <TweetColumn fragment={data.tweet} />}</main>
+      <main>{data && <TweetColumn fragment={data} />}</main>
       <section className={styles.rightPane}>
         <RightPane />
       </section>

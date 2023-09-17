@@ -5,10 +5,15 @@ import styles from "./style.module.css";
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
-  fragment TweetColumnFragment on Tweet {
-    ...RootTweet
-    replies {
-      ...TweetReplyFragment
+  fragment TweetColumnFragment on Query {
+    tweet {
+      ...RootTweet
+      replies {
+        ...TweetReplyFragment
+      }
+    }
+    me {
+      userName
     }
   }
 `);
@@ -22,8 +27,9 @@ export const TweetColumn = (props: TweetColumnProps) => {
 
   return (
     <div className={styles.column}>
-      <RootTweet fragment={fragment} />
-      {fragment.replies?.map(
+      {/* TODO: to render error.tsx on missing fragment.tweet, move this under /app dir */}
+      {fragment.tweet && <RootTweet fragment={fragment.tweet} />}
+      {fragment.tweet?.replies?.map(
         (reply, index) => reply && <TweetReply key={index} fragment={reply} />
       )}
     </div>

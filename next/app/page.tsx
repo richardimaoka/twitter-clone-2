@@ -6,13 +6,11 @@ import { request } from "graphql-request";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query RootPageQuery {
-    tweet {
-      ...TweetColumnFragment
-    }
+    ...TweetColumnFragment
   }
 `);
 
 export default async function Home() {
   const data = await request("http://localhost:8080/query", queryDefinition);
-  return <main>{data.tweet && <TweetColumn fragment={data.tweet} />}</main>;
+  return <main>{data && <TweetColumn fragment={data} />}</main>;
 }
