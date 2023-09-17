@@ -1,4 +1,4 @@
-import { TweetReply } from "./TweetReply";
+import { ReplyTweet } from "./reply/ReplyTweet";
 import { ReplyForm } from "./reply/ReplyForm";
 import { RootTweet } from "./root/RootTweet";
 import styles from "./style.module.css";
@@ -10,7 +10,7 @@ const fragmentDefinition = graphql(`
     tweet {
       ...RootTweet
       replies {
-        ...TweetReplyFragment
+        ...ReplyTweet
       }
     }
     me {
@@ -32,7 +32,7 @@ export const TweetColumn = (props: TweetColumnProps) => {
       {fragment.tweet && <RootTweet fragment={fragment.tweet} />}
       {fragment.me && <ReplyForm fragment={fragment.me} />}
       {fragment.tweet?.replies?.map(
-        (reply, index) => reply && <TweetReply key={index} fragment={reply} />
+        (reply, index) => reply && <ReplyTweet key={index} fragment={reply} />
       )}
     </div>
   );
