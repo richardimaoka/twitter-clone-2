@@ -29,7 +29,7 @@ const documents = {
     types.ReplyContentHeaderFragmentDoc,
   "\n  fragment ReplyForm on User {\n    userName\n    ...ProfilePicture\n  }\n":
     types.ReplyFormFragmentDoc,
-  "\n  fragment ReplyTweet on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n  }\n":
+  "\n  fragment ReplyTweet on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n    user {\n      ...ProfilePicture\n    }\n  }\n":
     types.ReplyTweetFragmentDoc,
   "\n  fragment Body on Tweet {\n    body\n  }\n": types.BodyFragmentDoc,
   "\n  fragment ContentBottom on Tweet {\n    time\n    date\n    impressions\n  }\n":
@@ -124,8 +124,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment ReplyTweet on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n  }\n",
-): (typeof documents)["\n  fragment ReplyTweet on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n  }\n"];
+  source: "\n  fragment ReplyTweet on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n    user {\n      ...ProfilePicture\n    }\n  }\n",
+): (typeof documents)["\n  fragment ReplyTweet on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n    user {\n      ...ProfilePicture\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -11,6 +11,7 @@ type Tweet {
   userName: String
   userId: String
   profilePicture: String
+  user: User
 
   # body info
   body: String

@@ -78,6 +78,7 @@ type ComplexityRoot struct {
 		Retweets       func(childComplexity int) int
 		Time           func(childComplexity int) int
 		TimeStamp      func(childComplexity int) int
+		User           func(childComplexity int) int
 		UserID         func(childComplexity int) int
 		UserName       func(childComplexity int) int
 	}
@@ -303,6 +304,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Tweet.TimeStamp(childComplexity), true
+
+	case "Tweet.user":
+		if e.complexity.Tweet.User == nil {
+			break
+		}
+
+		return e.complexity.Tweet.User(childComplexity), true
 
 	case "Tweet.userId":
 		if e.complexity.Tweet.UserID == nil {
@@ -604,6 +612,8 @@ func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context,
 				return ec.fieldContext_Tweet_userId(ctx, field)
 			case "profilePicture":
 				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "user":
+				return ec.fieldContext_Tweet_user(ctx, field)
 			case "body":
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
@@ -702,6 +712,8 @@ func (ec *executionContext) fieldContext_Mutation_like(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_userId(ctx, field)
 			case "profilePicture":
 				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "user":
+				return ec.fieldContext_Tweet_user(ctx, field)
 			case "body":
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
@@ -800,6 +812,8 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 				return ec.fieldContext_Tweet_userId(ctx, field)
 			case "profilePicture":
 				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "user":
+				return ec.fieldContext_Tweet_user(ctx, field)
 			case "body":
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
@@ -887,6 +901,8 @@ func (ec *executionContext) fieldContext_Query_timeline(ctx context.Context, fie
 				return ec.fieldContext_Tweet_userId(ctx, field)
 			case "profilePicture":
 				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "user":
+				return ec.fieldContext_Tweet_user(ctx, field)
 			case "body":
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
@@ -1281,6 +1297,55 @@ func (ec *executionContext) fieldContext_Tweet_profilePicture(ctx context.Contex
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tweet_user(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_user(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.User, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.User)
+	fc.Result = res
+	return ec.marshalOUser2ᚖgithubᚗcomᚋrichardimaokaᚋtwitterᚑcloneᚑ2ᚋgqlgenᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "userName":
+				return ec.fieldContext_User_userName(ctx, field)
+			case "userId":
+				return ec.fieldContext_User_userId(ctx, field)
+			case "profilePicture":
+				return ec.fieldContext_User_profilePicture(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
 		},
 	}
 	return fc, nil
@@ -2027,6 +2092,8 @@ func (ec *executionContext) fieldContext_Tweet_replies(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_userId(ctx, field)
 			case "profilePicture":
 				return ec.fieldContext_Tweet_profilePicture(ctx, field)
+			case "user":
+				return ec.fieldContext_Tweet_user(ctx, field)
 			case "body":
 				return ec.fieldContext_Tweet_body(ctx, field)
 			case "picturePath":
@@ -4153,6 +4220,8 @@ func (ec *executionContext) _Tweet(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Tweet_userId(ctx, field, obj)
 		case "profilePicture":
 			out.Values[i] = ec._Tweet_profilePicture(ctx, field, obj)
+		case "user":
+			out.Values[i] = ec._Tweet_user(ctx, field, obj)
 		case "body":
 			out.Values[i] = ec._Tweet_body(ctx, field, obj)
 		case "picturePath":

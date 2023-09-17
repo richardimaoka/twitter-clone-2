@@ -11,6 +11,7 @@ type Tweet struct {
 	UserName       *string    `json:"userName,omitempty"`
 	UserID         *string    `json:"userId,omitempty"`
 	ProfilePicture *string    `json:"profilePicture,omitempty"`
+	User           *User      `json:"user,omitempty"`
 	Body           *string    `json:"body,omitempty"`
 	PicturePath    *string    `json:"picturePath,omitempty"`
 	PictureWidth   *int       `json:"pictureWidth,omitempty"`

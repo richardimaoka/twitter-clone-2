@@ -80,6 +80,7 @@ export type Tweet = {
   retweets?: Maybe<Scalars["Int"]["output"]>;
   time?: Maybe<Scalars["String"]["output"]>;
   timeStamp?: Maybe<Scalars["Time"]["output"]>;
+  user?: Maybe<User>;
   userId?: Maybe<Scalars["String"]["output"]>;
   userName?: Maybe<Scalars["String"]["output"]>;
 };
@@ -160,7 +161,14 @@ export type ReplyFormFragment = ({
   " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
 }) & { " $fragmentName"?: "ReplyFormFragment" };
 
-export type ReplyTweetFragment = ({ __typename: "Tweet" } & {
+export type ReplyTweetFragment = ({
+  __typename: "Tweet";
+  user?:
+    | ({ __typename: "User" } & {
+        " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
+      })
+    | null;
+} & {
   " $fragmentRefs"?: {
     ReplyContentHeaderFragment: ReplyContentHeaderFragment;
     ReplyContentBodyFragment: ReplyContentBodyFragment;
@@ -544,6 +552,25 @@ export const ReplyContentBodyFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ReplyContentBodyFragment, unknown>;
+export const ProfilePictureFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ProfilePicture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "User" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProfilePictureFragment, unknown>;
 export const ReplyTweetFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -568,6 +595,19 @@ export const ReplyTweetFragmentDoc = {
           {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "ProfilePicture" },
+                },
+              ],
+            },
           },
         ],
       },
@@ -618,11 +658,6 @@ export const ReplyTweetFragmentDoc = {
         ],
       },
     },
-  ],
-} as unknown as DocumentNode<ReplyTweetFragment, unknown>;
-export const ProfilePictureFragmentDoc = {
-  kind: "Document",
-  definitions: [
     {
       kind: "FragmentDefinition",
       name: { kind: "Name", value: "ProfilePicture" },
@@ -638,7 +673,7 @@ export const ProfilePictureFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<ProfilePictureFragment, unknown>;
+} as unknown as DocumentNode<ReplyTweetFragment, unknown>;
 export const ReplyFormFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -899,6 +934,19 @@ export const TweetColumnFragmentFragmentDoc = {
           {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
+          },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "ProfilePicture" },
+                },
+              ],
+            },
           },
         ],
       },
@@ -1269,6 +1317,20 @@ export const StatusPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ProfilePicture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "User" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "ReplyTweet" },
       typeCondition: {
         kind: "NamedType",
@@ -1289,20 +1351,19 @@ export const StatusPageQueryDocument = {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
           },
-        ],
-      },
-    },
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ProfilePicture" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "User" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "ProfilePicture" },
+                },
+              ],
+            },
+          },
         ],
       },
     },
@@ -1533,6 +1594,20 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ProfilePicture" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "User" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "ReplyTweet" },
       typeCondition: {
         kind: "NamedType",
@@ -1553,20 +1628,19 @@ export const RootPageQueryDocument = {
             kind: "FragmentSpread",
             name: { kind: "Name", value: "Reactions" },
           },
-        ],
-      },
-    },
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ProfilePicture" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "User" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "profilePicture" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "ProfilePicture" },
+                },
+              ],
+            },
+          },
         ],
       },
     },
