@@ -111,6 +111,25 @@ func (r *queryResolver) Timeline(ctx context.Context, currentTime time.Time) ([]
 	return tweets, nil
 }
 
+// Me is the resolver for the me field.
+func (r *queryResolver) Me(ctx context.Context) (*model.User, error) {
+	filename := "data/me.json"
+	bytes, err := os.ReadFile(filename)
+	if err != nil {
+		log.Printf("failed to read %s, %s", filename, err)
+		return nil, fmt.Errorf("internal server error")
+	}
+
+	var user model.User
+	err = json.Unmarshal(bytes, &user)
+	if err != nil {
+		log.Printf("failed to unmarshal %s, %s", filename, err)
+		return nil, fmt.Errorf("internal server error")
+	}
+
+	return &user, nil
+}
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 

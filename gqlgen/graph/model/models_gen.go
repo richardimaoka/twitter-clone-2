@@ -30,3 +30,9 @@ type Tweet struct {
 	Impressions    *int       `json:"impressions,omitempty"`
 	Replies        []*Tweet   `json:"replies,omitempty"`
 }
+
+type User struct {
+	UserName       *string `json:"userName,omitempty"`
+	UserID         *string `json:"userId,omitempty"`
+	ProfilePicture *string `json:"profilePicture,omitempty"`
+}

@@ -39,9 +39,16 @@ type Tweet {
   replies: [Tweet]
 }
 
+type User {
+  userName: String
+  userId: String
+  profilePicture: String
+}
+
 type Query {
   tweet: Tweet
   timeline(currentTime: Time!): [Tweet!]
+  me: User
 }
 
 type Mutation {
