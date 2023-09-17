@@ -10,9 +10,22 @@
 .username {
   font-size: 15px;
   font-weight: 700;
+  max-width: 250px;
+
+  /* ellipsis settings */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .userid {
   font-size: 15px;
+  max-width: 100px;
+
   color: rgb(83, 100, 113);
+
+  /* ellipsis settings */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

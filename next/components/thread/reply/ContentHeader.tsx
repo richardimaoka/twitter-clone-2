@@ -3,8 +3,10 @@ import styles from "./ContentHeader.module.css";
 
 const fragmentDefinition = graphql(`
   fragment ReplyContentHeader on Tweet {
-    userName
-    userId
+    user {
+      userName
+      userId
+    }
     date
   }
 `);
@@ -15,11 +17,16 @@ interface Props {
 
 export function ContentHeader(props: Props) {
   const fragment = useFragment(fragmentDefinition, props.fragment);
+
   return (
     <div className={styles.header}>
-      <div className={styles.username}>{fragment.userName}</div>
-      <div className={styles.userid}>&#064;{fragment.userId}</div>
-      <div className={styles.userid}>&#064;{fragment.date}</div>
+      {fragment.user && (
+        <div className={styles.username}>{fragment.user.userName}</div>
+      )}
+      {fragment.user && (
+        <div className={styles.userid}>{`@${fragment.user.userId}`}</div>
+      )}
+      <div className={styles.userid}>{fragment.date}</div>
     </div>
   );
 }

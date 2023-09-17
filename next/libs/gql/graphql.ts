@@ -149,9 +149,12 @@ export type ReplyContentBodyFragment = {
 
 export type ReplyContentHeaderFragment = {
   __typename: "Tweet";
-  userName?: string | null;
-  userId?: string | null;
   date?: string | null;
+  user?: {
+    __typename: "User";
+    userName?: string | null;
+    userId?: string | null;
+  } | null;
 } & { " $fragmentName"?: "ReplyContentHeaderFragment" };
 
 export type ReplyFormFragment = ({
@@ -527,8 +530,17 @@ export const ReplyContentHeaderFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "userName" } },
-          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "userName" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+              ],
+            },
+          },
           { kind: "Field", name: { kind: "Name", value: "date" } },
         ],
       },
@@ -622,8 +634,17 @@ export const ReplyTweetFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "userName" } },
-          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "userName" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+              ],
+            },
+          },
           { kind: "Field", name: { kind: "Name", value: "date" } },
         ],
       },
@@ -854,8 +875,17 @@ export const TweetColumnFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "userName" } },
-          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "userName" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+              ],
+            },
+          },
           { kind: "Field", name: { kind: "Name", value: "date" } },
         ],
       },
@@ -1297,8 +1327,17 @@ export const StatusPageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "userName" } },
-          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "userName" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+              ],
+            },
+          },
           { kind: "Field", name: { kind: "Name", value: "date" } },
         ],
       },
@@ -1574,8 +1613,17 @@ export const RootPageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
-          { kind: "Field", name: { kind: "Name", value: "userName" } },
-          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "userName" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+              ],
+            },
+          },
           { kind: "Field", name: { kind: "Name", value: "date" } },
         ],
       },
