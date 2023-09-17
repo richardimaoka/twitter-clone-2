@@ -1,4 +1,4 @@
-import { TweetThread } from "./TweetThread";
+import { TweetThread } from "./tweet/TweetThread";
 import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";

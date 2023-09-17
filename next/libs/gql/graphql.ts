@@ -91,13 +91,6 @@ export type RootPageQueryQuery = {
     | null;
 };
 
-export type PictureFragment = {
-  __typename: "Tweet";
-  picturePath?: string | null;
-  pictureWidth?: number | null;
-  pictureHeight?: number | null;
-} & { " $fragmentName"?: "PictureFragment" };
-
 export type ReactionsFragment = {
   __typename: "Tweet";
   retweets?: number | null;
@@ -123,6 +116,25 @@ export type TweetReplyFragmentFragment = {
   quotes?: number | null;
   numLikes?: number | null;
 } & { " $fragmentName"?: "TweetReplyFragmentFragment" };
+
+export type TweetFragmentFragment = ({
+  __typename: "Tweet";
+  body?: string | null;
+} & {
+  " $fragmentRefs"?: {
+    TweetThreadHeaderFragmentFragment: TweetThreadHeaderFragmentFragment;
+    TweetTimeImpressionFragmentFragment: TweetTimeImpressionFragmentFragment;
+    ReactionsFragment: ReactionsFragment;
+    PictureFragment: PictureFragment;
+  };
+}) & { " $fragmentName"?: "TweetFragmentFragment" };
+
+export type PictureFragment = {
+  __typename: "Tweet";
+  picturePath?: string | null;
+  pictureWidth?: number | null;
+  pictureHeight?: number | null;
+} & { " $fragmentName"?: "PictureFragment" };
 
 export type TweetStatsFragmentFragment = {
   __typename: "Tweet";
@@ -159,18 +171,6 @@ export type TweetTimeImpressionFragmentFragment = {
   date?: string | null;
   impressions?: number | null;
 } & { " $fragmentName"?: "TweetTimeImpressionFragmentFragment" };
-
-export type TweetFragmentFragment = ({
-  __typename: "Tweet";
-  body?: string | null;
-} & {
-  " $fragmentRefs"?: {
-    TweetThreadHeaderFragmentFragment: TweetThreadHeaderFragmentFragment;
-    TweetTimeImpressionFragmentFragment: TweetTimeImpressionFragmentFragment;
-    ReactionsFragment: ReactionsFragment;
-    PictureFragment: PictureFragment;
-  };
-}) & { " $fragmentName"?: "TweetFragmentFragment" };
 
 export type TimelineHeaderFragmentFragment = {
   __typename: "Tweet";

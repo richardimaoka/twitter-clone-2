@@ -3,9 +3,9 @@ import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "./Reactions";
-import { TweetThreadHeader } from "./TweetThreadHeader";
-import { TweetTimeImpression } from "./TweetTimeImpression";
-import { Picture } from "./Picture";
+import { TweetThreadHeader } from "./tweet/TweetThreadHeader";
+import { TweetTimeImpression } from "./tweet/TweetTimeImpression";
+import { Picture } from "./tweet/Picture";
 // import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
