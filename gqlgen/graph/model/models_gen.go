@@ -25,6 +25,7 @@ type Tweet struct {
 	NumRetweets    *int       `json:"numRetweets,omitempty"`
 	NumBookmarks   *int       `json:"numBookmarks,omitempty"`
 	NumImpressions *int       `json:"numImpressions,omitempty"`
+	NumReplies     *int       `json:"numReplies,omitempty"`
 	Bookmarks      *int       `json:"bookmarks,omitempty"`
 	Impressions    *int       `json:"impressions,omitempty"`
 	Replies        []*Tweet   `json:"replies,omitempty"`

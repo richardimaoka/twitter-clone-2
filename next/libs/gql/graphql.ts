@@ -68,6 +68,7 @@ export type Tweet = {
   numImpressions?: Maybe<Scalars["Int"]["output"]>;
   numLikes?: Maybe<Scalars["Int"]["output"]>;
   numQuotes?: Maybe<Scalars["Int"]["output"]>;
+  numReplies?: Maybe<Scalars["Int"]["output"]>;
   numRetweets?: Maybe<Scalars["Int"]["output"]>;
   pictureHeight?: Maybe<Scalars["Int"]["output"]>;
   picturePath?: Maybe<Scalars["String"]["output"]>;
@@ -139,6 +140,7 @@ export type TweetFragmentFragment = ({ __typename: "Tweet" } & {
 
 export type ReactionsFragment = {
   __typename: "Tweet";
+  numReplies?: number | null;
   numRetweets?: number | null;
   numQuotes?: number | null;
   numLikes?: number | null;
@@ -319,6 +321,7 @@ export const ReactionsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
@@ -438,6 +441,7 @@ export const TweetFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
@@ -576,6 +580,7 @@ export const TweetThreadFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
@@ -723,6 +728,7 @@ export const TweetColumnFragmentFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
@@ -1117,6 +1123,7 @@ export const RootPageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },

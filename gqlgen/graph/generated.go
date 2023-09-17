@@ -66,6 +66,7 @@ type ComplexityRoot struct {
 		NumImpressions func(childComplexity int) int
 		NumLikes       func(childComplexity int) int
 		NumQuotes      func(childComplexity int) int
+		NumReplies     func(childComplexity int) int
 		NumRetweets    func(childComplexity int) int
 		PictureHeight  func(childComplexity int) int
 		PicturePath    func(childComplexity int) int
@@ -210,6 +211,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Tweet.NumQuotes(childComplexity), true
+
+	case "Tweet.numReplies":
+		if e.complexity.Tweet.NumReplies == nil {
+			break
+		}
+
+		return e.complexity.Tweet.NumReplies(childComplexity), true
 
 	case "Tweet.numRetweets":
 		if e.complexity.Tweet.NumRetweets == nil {
@@ -588,6 +596,8 @@ func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context,
 				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
 			case "numImpressions":
 				return ec.fieldContext_Tweet_numImpressions(ctx, field)
+			case "numReplies":
+				return ec.fieldContext_Tweet_numReplies(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
 			case "impressions":
@@ -684,6 +694,8 @@ func (ec *executionContext) fieldContext_Mutation_like(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
 			case "numImpressions":
 				return ec.fieldContext_Tweet_numImpressions(ctx, field)
+			case "numReplies":
+				return ec.fieldContext_Tweet_numReplies(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
 			case "impressions":
@@ -780,6 +792,8 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
 			case "numImpressions":
 				return ec.fieldContext_Tweet_numImpressions(ctx, field)
+			case "numReplies":
+				return ec.fieldContext_Tweet_numReplies(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
 			case "impressions":
@@ -865,6 +879,8 @@ func (ec *executionContext) fieldContext_Query_timeline(ctx context.Context, fie
 				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
 			case "numImpressions":
 				return ec.fieldContext_Tweet_numImpressions(ctx, field)
+			case "numReplies":
+				return ec.fieldContext_Tweet_numReplies(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
 			case "impressions":
@@ -1759,6 +1775,47 @@ func (ec *executionContext) fieldContext_Tweet_numImpressions(ctx context.Contex
 	return fc, nil
 }
 
+func (ec *executionContext) _Tweet_numReplies(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_numReplies(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumReplies, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_numReplies(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Tweet_bookmarks(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Tweet_bookmarks(ctx, field)
 	if err != nil {
@@ -1913,6 +1970,8 @@ func (ec *executionContext) fieldContext_Tweet_replies(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
 			case "numImpressions":
 				return ec.fieldContext_Tweet_numImpressions(ctx, field)
+			case "numReplies":
+				return ec.fieldContext_Tweet_numReplies(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
 			case "impressions":
@@ -3895,6 +3954,8 @@ func (ec *executionContext) _Tweet(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Tweet_numBookmarks(ctx, field, obj)
 		case "numImpressions":
 			out.Values[i] = ec._Tweet_numImpressions(ctx, field, obj)
+		case "numReplies":
+			out.Values[i] = ec._Tweet_numReplies(ctx, field, obj)
 		case "bookmarks":
 			out.Values[i] = ec._Tweet_bookmarks(ctx, field, obj)
 		case "impressions":
