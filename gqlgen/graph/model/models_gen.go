@@ -20,8 +20,12 @@ type Tweet struct {
 	Date           *string    `json:"date,omitempty"`
 	Retweets       *int       `json:"retweets,omitempty"`
 	Quotes         *int       `json:"quotes,omitempty"`
+	NumQuotes      *int       `json:"numQuotes,omitempty"`
 	NumLikes       *int       `json:"numLikes,omitempty"`
+	NumRetweets    *int       `json:"numRetweets,omitempty"`
+	NumBookmarks   *int       `json:"numBookmarks,omitempty"`
+	NumImpressions *int       `json:"numImpressions,omitempty"`
 	Bookmarks      *int       `json:"bookmarks,omitempty"`
-	Replies        []*Tweet   `json:"replies,omitempty"`
 	Impressions    *int       `json:"impressions,omitempty"`
+	Replies        []*Tweet   `json:"replies,omitempty"`
 }

@@ -62,7 +62,11 @@ type ComplexityRoot struct {
 		Date           func(childComplexity int) int
 		ID             func(childComplexity int) int
 		Impressions    func(childComplexity int) int
+		NumBookmarks   func(childComplexity int) int
+		NumImpressions func(childComplexity int) int
 		NumLikes       func(childComplexity int) int
+		NumQuotes      func(childComplexity int) int
+		NumRetweets    func(childComplexity int) int
 		PictureHeight  func(childComplexity int) int
 		PicturePath    func(childComplexity int) int
 		PictureWidth   func(childComplexity int) int
@@ -179,12 +183,40 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tweet.Impressions(childComplexity), true
 
+	case "Tweet.numBookmarks":
+		if e.complexity.Tweet.NumBookmarks == nil {
+			break
+		}
+
+		return e.complexity.Tweet.NumBookmarks(childComplexity), true
+
+	case "Tweet.numImpressions":
+		if e.complexity.Tweet.NumImpressions == nil {
+			break
+		}
+
+		return e.complexity.Tweet.NumImpressions(childComplexity), true
+
 	case "Tweet.numLikes":
 		if e.complexity.Tweet.NumLikes == nil {
 			break
 		}
 
 		return e.complexity.Tweet.NumLikes(childComplexity), true
+
+	case "Tweet.numQuotes":
+		if e.complexity.Tweet.NumQuotes == nil {
+			break
+		}
+
+		return e.complexity.Tweet.NumQuotes(childComplexity), true
+
+	case "Tweet.numRetweets":
+		if e.complexity.Tweet.NumRetweets == nil {
+			break
+		}
+
+		return e.complexity.Tweet.NumRetweets(childComplexity), true
 
 	case "Tweet.pictureHeight":
 		if e.complexity.Tweet.PictureHeight == nil {
@@ -546,14 +578,22 @@ func (ec *executionContext) fieldContext_Mutation_postTweet(ctx context.Context,
 				return ec.fieldContext_Tweet_retweets(ctx, field)
 			case "quotes":
 				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "numQuotes":
+				return ec.fieldContext_Tweet_numQuotes(ctx, field)
 			case "numLikes":
 				return ec.fieldContext_Tweet_numLikes(ctx, field)
+			case "numRetweets":
+				return ec.fieldContext_Tweet_numRetweets(ctx, field)
+			case "numBookmarks":
+				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
+			case "numImpressions":
+				return ec.fieldContext_Tweet_numImpressions(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
-			case "replies":
-				return ec.fieldContext_Tweet_replies(ctx, field)
 			case "impressions":
 				return ec.fieldContext_Tweet_impressions(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
@@ -634,14 +674,22 @@ func (ec *executionContext) fieldContext_Mutation_like(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_retweets(ctx, field)
 			case "quotes":
 				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "numQuotes":
+				return ec.fieldContext_Tweet_numQuotes(ctx, field)
 			case "numLikes":
 				return ec.fieldContext_Tweet_numLikes(ctx, field)
+			case "numRetweets":
+				return ec.fieldContext_Tweet_numRetweets(ctx, field)
+			case "numBookmarks":
+				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
+			case "numImpressions":
+				return ec.fieldContext_Tweet_numImpressions(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
-			case "replies":
-				return ec.fieldContext_Tweet_replies(ctx, field)
 			case "impressions":
 				return ec.fieldContext_Tweet_impressions(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
@@ -722,14 +770,22 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 				return ec.fieldContext_Tweet_retweets(ctx, field)
 			case "quotes":
 				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "numQuotes":
+				return ec.fieldContext_Tweet_numQuotes(ctx, field)
 			case "numLikes":
 				return ec.fieldContext_Tweet_numLikes(ctx, field)
+			case "numRetweets":
+				return ec.fieldContext_Tweet_numRetweets(ctx, field)
+			case "numBookmarks":
+				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
+			case "numImpressions":
+				return ec.fieldContext_Tweet_numImpressions(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
-			case "replies":
-				return ec.fieldContext_Tweet_replies(ctx, field)
 			case "impressions":
 				return ec.fieldContext_Tweet_impressions(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
@@ -799,14 +855,22 @@ func (ec *executionContext) fieldContext_Query_timeline(ctx context.Context, fie
 				return ec.fieldContext_Tweet_retweets(ctx, field)
 			case "quotes":
 				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "numQuotes":
+				return ec.fieldContext_Tweet_numQuotes(ctx, field)
 			case "numLikes":
 				return ec.fieldContext_Tweet_numLikes(ctx, field)
+			case "numRetweets":
+				return ec.fieldContext_Tweet_numRetweets(ctx, field)
+			case "numBookmarks":
+				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
+			case "numImpressions":
+				return ec.fieldContext_Tweet_numImpressions(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
-			case "replies":
-				return ec.fieldContext_Tweet_replies(ctx, field)
 			case "impressions":
 				return ec.fieldContext_Tweet_impressions(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
@@ -1490,6 +1554,47 @@ func (ec *executionContext) fieldContext_Tweet_quotes(ctx context.Context, field
 	return fc, nil
 }
 
+func (ec *executionContext) _Tweet_numQuotes(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_numQuotes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumQuotes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_numQuotes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Tweet_numLikes(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Tweet_numLikes(ctx, field)
 	if err != nil {
@@ -1531,6 +1636,129 @@ func (ec *executionContext) fieldContext_Tweet_numLikes(ctx context.Context, fie
 	return fc, nil
 }
 
+func (ec *executionContext) _Tweet_numRetweets(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_numRetweets(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumRetweets, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_numRetweets(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tweet_numBookmarks(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_numBookmarks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumBookmarks, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_numBookmarks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tweet_numImpressions(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_numImpressions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumImpressions, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_numImpressions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Tweet_bookmarks(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Tweet_bookmarks(ctx, field)
 	if err != nil {
@@ -1560,6 +1788,47 @@ func (ec *executionContext) _Tweet_bookmarks(ctx context.Context, field graphql.
 }
 
 func (ec *executionContext) fieldContext_Tweet_bookmarks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Tweet",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Tweet_impressions(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tweet_impressions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Impressions, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Tweet_impressions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Tweet",
 		Field:      field,
@@ -1634,57 +1903,24 @@ func (ec *executionContext) fieldContext_Tweet_replies(ctx context.Context, fiel
 				return ec.fieldContext_Tweet_retweets(ctx, field)
 			case "quotes":
 				return ec.fieldContext_Tweet_quotes(ctx, field)
+			case "numQuotes":
+				return ec.fieldContext_Tweet_numQuotes(ctx, field)
 			case "numLikes":
 				return ec.fieldContext_Tweet_numLikes(ctx, field)
+			case "numRetweets":
+				return ec.fieldContext_Tweet_numRetweets(ctx, field)
+			case "numBookmarks":
+				return ec.fieldContext_Tweet_numBookmarks(ctx, field)
+			case "numImpressions":
+				return ec.fieldContext_Tweet_numImpressions(ctx, field)
 			case "bookmarks":
 				return ec.fieldContext_Tweet_bookmarks(ctx, field)
-			case "replies":
-				return ec.fieldContext_Tweet_replies(ctx, field)
 			case "impressions":
 				return ec.fieldContext_Tweet_impressions(ctx, field)
+			case "replies":
+				return ec.fieldContext_Tweet_replies(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Tweet_impressions(ctx context.Context, field graphql.CollectedField, obj *model.Tweet) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Tweet_impressions(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Impressions, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*int)
-	fc.Result = res
-	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Tweet_impressions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Tweet",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
 		},
 	}
 	return fc, nil
@@ -3649,14 +3885,22 @@ func (ec *executionContext) _Tweet(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Tweet_retweets(ctx, field, obj)
 		case "quotes":
 			out.Values[i] = ec._Tweet_quotes(ctx, field, obj)
+		case "numQuotes":
+			out.Values[i] = ec._Tweet_numQuotes(ctx, field, obj)
 		case "numLikes":
 			out.Values[i] = ec._Tweet_numLikes(ctx, field, obj)
+		case "numRetweets":
+			out.Values[i] = ec._Tweet_numRetweets(ctx, field, obj)
+		case "numBookmarks":
+			out.Values[i] = ec._Tweet_numBookmarks(ctx, field, obj)
+		case "numImpressions":
+			out.Values[i] = ec._Tweet_numImpressions(ctx, field, obj)
 		case "bookmarks":
 			out.Values[i] = ec._Tweet_bookmarks(ctx, field, obj)
-		case "replies":
-			out.Values[i] = ec._Tweet_replies(ctx, field, obj)
 		case "impressions":
 			out.Values[i] = ec._Tweet_impressions(ctx, field, obj)
+		case "replies":
+			out.Values[i] = ec._Tweet_replies(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

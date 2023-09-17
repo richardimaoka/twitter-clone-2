@@ -64,7 +64,11 @@ export type Tweet = {
   date?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
   impressions?: Maybe<Scalars["Int"]["output"]>;
+  numBookmarks?: Maybe<Scalars["Int"]["output"]>;
+  numImpressions?: Maybe<Scalars["Int"]["output"]>;
   numLikes?: Maybe<Scalars["Int"]["output"]>;
+  numQuotes?: Maybe<Scalars["Int"]["output"]>;
+  numRetweets?: Maybe<Scalars["Int"]["output"]>;
   pictureHeight?: Maybe<Scalars["Int"]["output"]>;
   picturePath?: Maybe<Scalars["String"]["output"]>;
   pictureWidth?: Maybe<Scalars["Int"]["output"]>;

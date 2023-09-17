@@ -6,22 +6,36 @@ scalar Time
 
 type Tweet {
   id: ID!
+
+  # user info
   userName: String
   userId: String
   profilePicture: String
+
+  # body info
   body: String
   picturePath: String
   pictureWidth: Int
   pictureHeight: Int
+
+  # time info
   timeStamp: Time
   time: String
   date: String
+
+  # stats
   retweets: Int
   quotes: Int
+  numQuotes: Int
   numLikes: Int
+  numRetweets: Int
+  numBookmarks: Int
+  numImpressions: Int
   bookmarks: Int
-  replies: [Tweet]
   impressions: Int
+
+  # replies
+  replies: [Tweet]
 }
 
 type Query {
