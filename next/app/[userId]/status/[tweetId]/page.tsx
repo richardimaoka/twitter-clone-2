@@ -8,9 +8,12 @@ import { request } from "graphql-request";
 // import { print } from "graphql";
 
 const queryDefinition = graphql(/* GraphQL */ `
-  query RootPageQuery {
+  query StatusPageQuery {
     tweet {
       ...TweetColumnFragment
+    }
+    me {
+      userName
     }
   }
 `);
