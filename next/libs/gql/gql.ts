@@ -25,7 +25,12 @@ const documents = {
     types.TweetFragmentFragmentDoc,
   "\n  fragment Reactions on Tweet {\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n":
     types.ReactionsFragmentDoc,
-  "\n  fragment Reply on Tweet {\n    id\n  }\n": types.ReplyFragmentDoc,
+  "\n  fragment ReplyContentBody on Tweet {\n    body\n  }\n":
+    types.ReplyContentBodyFragmentDoc,
+  "\n  fragment ReplyContentHeader on Tweet {\n    userName\n    userId\n    date\n  }\n":
+    types.ReplyContentHeaderFragmentDoc,
+  "\n  fragment Reply on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n  }\n":
+    types.ReplyFragmentDoc,
   "\n  fragment Body on Tweet {\n    body\n  }\n": types.BodyFragmentDoc,
   "\n  fragment ContentBottom on Tweet {\n    time\n    date\n    impressions\n  }\n":
     types.ContentBottomFragmentDoc,
@@ -105,8 +110,20 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment Reply on Tweet {\n    id\n  }\n",
-): (typeof documents)["\n  fragment Reply on Tweet {\n    id\n  }\n"];
+  source: "\n  fragment ReplyContentBody on Tweet {\n    body\n  }\n",
+): (typeof documents)["\n  fragment ReplyContentBody on Tweet {\n    body\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment ReplyContentHeader on Tweet {\n    userName\n    userId\n    date\n  }\n",
+): (typeof documents)["\n  fragment ReplyContentHeader on Tweet {\n    userName\n    userId\n    date\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment Reply on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n  }\n",
+): (typeof documents)["\n  fragment Reply on Tweet {\n    ...ReplyContentHeader\n    ...ReplyContentBody\n    ...Reactions\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
