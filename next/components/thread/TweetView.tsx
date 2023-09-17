@@ -2,10 +2,10 @@ import styles from "./style.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "./reactions/Reactions";
-import { Body } from "./tweet/Body";
-import { Picture } from "./tweet/Picture";
-import { ContentHeader } from "./tweet/ContentHeader";
-import { ContentBottom } from "./tweet/ContentBottom";
+import { Body } from "./root/Body";
+import { Picture } from "./root/Picture";
+import { ContentHeader } from "./root/ContentHeader";
+import { ContentBottom } from "./root/ContentBottom";
 // import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
