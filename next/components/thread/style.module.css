@@ -2,8 +2,8 @@
   width: 600px;
   height: 100svh;
   margin: 0 auto;
-  border-left: 1px solid rgb(239, 243, 244);
-  border-right: 1px solid rgb(239, 243, 244);
+  border-left: 1px solid #eff3f4;
+  border-right: 1px solid #eff3f4;
 }
 
 .tweet {

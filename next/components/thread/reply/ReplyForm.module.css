@@ -1,0 +1,41 @@
+.component {
+  display: flex;
+  padding: 4px 10px;
+  border-bottom: solid 1px #eff3f4;
+}
+
+.picture {
+  margin: auto 0px;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  width: 100%;
+}
+
+.input {
+  display: block;
+  border-style: none;
+  font-size: 18px;
+  flex-grow: 1;
+}
+
+.button {
+  flex-grow: 0;
+
+  display: block;
+  background-color: #1d9bf0;
+  padding: 6px 16px;
+  border-radius: 20px;
+
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.button:disabled {
+  background-color: #9acdf0;
+}

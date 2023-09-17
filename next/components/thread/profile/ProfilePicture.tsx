@@ -17,14 +17,12 @@ export function ProfilePicture(props: Props) {
   const noProfilePic = "/images/no-profile-egg.png";
 
   return (
-    <div>
-      <Image
-        className={styles.profilepic}
-        src={fragment.profilePicture ? fragment.profilePicture : noProfilePic}
-        width={40}
-        height={40}
-        alt={"user profile pic"}
-      />
-    </div>
+    <Image
+      className={styles.profilepic}
+      src={fragment.profilePicture ? fragment.profilePicture : noProfilePic}
+      width={40}
+      height={40}
+      alt={"user profile pic"}
+    />
   );
 }
