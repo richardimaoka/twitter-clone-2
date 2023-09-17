@@ -141,6 +141,10 @@ export type TweetFragmentFragment = ({ __typename: "Tweet" } & {
   };
 }) & { " $fragmentName"?: "TweetFragmentFragment" };
 
+export type ReplyFragment = { __typename: "Tweet"; id: string } & {
+  " $fragmentName"?: "ReplyFragment";
+};
+
 export type BodyFragment = { __typename: "Tweet"; body?: string | null } & {
   " $fragmentName"?: "BodyFragment";
 };
@@ -830,6 +834,23 @@ export const TweetColumnFragmentFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TweetColumnFragmentFragment, unknown>;
+export const ReplyFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "Reply" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [{ kind: "Field", name: { kind: "Name", value: "id" } }],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ReplyFragment, unknown>;
 export const TweetStatsFragmentFragmentDoc = {
   kind: "Document",
   definitions: [
