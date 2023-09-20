@@ -1,8 +1,8 @@
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import styles from "./ContentBottom.module.css";
+import styles from "./ThreadRootBottom.module.css";
 
 const fragmentDefinition = graphql(`
-  fragment ContentBottom on Tweet {
+  fragment ThreadRootBottom on Tweet {
     time
     date
     impressions
@@ -13,7 +13,7 @@ interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export const ContentBottom = (props: Props) => {
+export const ThreadRootBottom = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
   return (

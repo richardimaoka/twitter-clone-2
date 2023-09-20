@@ -150,20 +150,6 @@ export type BodyFragment = { __typename: "Tweet"; body?: string | null } & {
   " $fragmentName"?: "BodyFragment";
 };
 
-export type ContentBottomFragment = {
-  __typename: "Tweet";
-  time?: string | null;
-  date?: string | null;
-  impressions?: number | null;
-} & { " $fragmentName"?: "ContentBottomFragment" };
-
-export type ContentHeaderFragment = {
-  __typename: "Tweet";
-  userName?: string | null;
-  userId?: string | null;
-  profilePicture?: string | null;
-} & { " $fragmentName"?: "ContentHeaderFragment" };
-
 export type PictureFragment = {
   __typename: "Tweet";
   picturePath?: string | null;
@@ -171,10 +157,24 @@ export type PictureFragment = {
   pictureHeight?: number | null;
 } & { " $fragmentName"?: "PictureFragment" };
 
+export type ThreadRootBottomFragment = {
+  __typename: "Tweet";
+  time?: string | null;
+  date?: string | null;
+  impressions?: number | null;
+} & { " $fragmentName"?: "ThreadRootBottomFragment" };
+
+export type ThreadRootHeaderFragment = {
+  __typename: "Tweet";
+  userName?: string | null;
+  userId?: string | null;
+  profilePicture?: string | null;
+} & { " $fragmentName"?: "ThreadRootHeaderFragment" };
+
 export type ThreadRootViewFragment = ({ __typename: "Tweet" } & {
   " $fragmentRefs"?: {
-    ContentHeaderFragment: ContentHeaderFragment;
-    ContentBottomFragment: ContentBottomFragment;
+    ThreadRootHeaderFragment: ThreadRootHeaderFragment;
+    ThreadRootBottomFragment: ThreadRootBottomFragment;
     ReactionsFragment: ReactionsFragment;
     PictureFragment: PictureFragment;
     BodyFragment: BodyFragment;
@@ -300,12 +300,12 @@ export type TimelineTweetFragmentFragment = ({
   };
 }) & { " $fragmentName"?: "TimelineTweetFragmentFragment" };
 
-export const ContentHeaderFragmentDoc = {
+export const ThreadRootHeaderFragmentDoc = {
   kind: "Document",
   definitions: [
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentHeader" },
+      name: { kind: "Name", value: "ThreadRootHeader" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -320,13 +320,13 @@ export const ContentHeaderFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<ContentHeaderFragment, unknown>;
-export const ContentBottomFragmentDoc = {
+} as unknown as DocumentNode<ThreadRootHeaderFragment, unknown>;
+export const ThreadRootBottomFragmentDoc = {
   kind: "Document",
   definitions: [
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentBottom" },
+      name: { kind: "Name", value: "ThreadRootBottom" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -341,7 +341,7 @@ export const ContentBottomFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<ContentBottomFragment, unknown>;
+} as unknown as DocumentNode<ThreadRootBottomFragment, unknown>;
 export const ReactionsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -418,11 +418,11 @@ export const ThreadRootViewFragmentDoc = {
         selections: [
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentHeader" },
+            name: { kind: "Name", value: "ThreadRootHeader" },
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentBottom" },
+            name: { kind: "Name", value: "ThreadRootBottom" },
           },
           {
             kind: "FragmentSpread",
@@ -435,7 +435,7 @@ export const ThreadRootViewFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentHeader" },
+      name: { kind: "Name", value: "ThreadRootHeader" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -451,7 +451,7 @@ export const ThreadRootViewFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentBottom" },
+      name: { kind: "Name", value: "ThreadRootBottom" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -785,7 +785,7 @@ export const TweetThreadFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentHeader" },
+      name: { kind: "Name", value: "ThreadRootHeader" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -801,7 +801,7 @@ export const TweetThreadFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentBottom" },
+      name: { kind: "Name", value: "ThreadRootBottom" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -924,11 +924,11 @@ export const TweetThreadFragmentDoc = {
         selections: [
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentHeader" },
+            name: { kind: "Name", value: "ThreadRootHeader" },
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentBottom" },
+            name: { kind: "Name", value: "ThreadRootBottom" },
           },
           {
             kind: "FragmentSpread",
@@ -1188,7 +1188,7 @@ export const StatusPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentHeader" },
+      name: { kind: "Name", value: "ThreadRootHeader" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1204,7 +1204,7 @@ export const StatusPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentBottom" },
+      name: { kind: "Name", value: "ThreadRootBottom" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1276,11 +1276,11 @@ export const StatusPageQueryDocument = {
         selections: [
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentHeader" },
+            name: { kind: "Name", value: "ThreadRootHeader" },
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentBottom" },
+            name: { kind: "Name", value: "ThreadRootBottom" },
           },
           {
             kind: "FragmentSpread",
@@ -1474,7 +1474,7 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentHeader" },
+      name: { kind: "Name", value: "ThreadRootHeader" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1490,7 +1490,7 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ContentBottom" },
+      name: { kind: "Name", value: "ThreadRootBottom" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1562,11 +1562,11 @@ export const RootPageQueryDocument = {
         selections: [
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentHeader" },
+            name: { kind: "Name", value: "ThreadRootHeader" },
           },
           {
             kind: "FragmentSpread",
-            name: { kind: "Name", value: "ContentBottom" },
+            name: { kind: "Name", value: "ThreadRootBottom" },
           },
           {
             kind: "FragmentSpread",

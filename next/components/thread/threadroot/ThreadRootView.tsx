@@ -1,17 +1,15 @@
-import styles from "./ThreadRootView.module.css";
-
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "../reactions/Reactions";
 import { Body } from "./Body";
 import { Picture } from "./Picture";
-import { ContentHeader } from "./ContentHeader";
-import { ContentBottom } from "./ContentBottom";
-// import { TweetStats } from "./TweetStats";
+import { ThreadRootBottom } from "./ThreadRootBottom";
+import { ThreadRootHeader } from "./ThreadRootHeader";
+import styles from "./ThreadRootView.module.css";
 
 const fragmentDefinition = graphql(`
   fragment ThreadRootView on Tweet {
-    ...ContentHeader
-    ...ContentBottom
+    ...ThreadRootHeader
+    ...ThreadRootBottom
     ...Reactions
     ...Picture
     ...Body
@@ -30,10 +28,10 @@ export const ThreadRootView = (props: Props) => {
   //https://twitter.com/TwitterJP/status/1587301348604841987
   return (
     <div className={styles.tweet}>
-      <ContentHeader fragment={fragment} />
+      <ThreadRootHeader fragment={fragment} />
       <Body fragment={fragment} />
       <Picture fragment={fragment} />
-      <ContentBottom fragment={fragment} />
+      <ThreadRootBottom fragment={fragment} />
       {/* <TweetStats fragment={fragment} /> */}
       <Reactions fragment={fragment} />
     </div>
