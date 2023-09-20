@@ -30,7 +30,7 @@ func validateAndGetUserID(ctx context.Context, authClient *auth.Client, sessionC
 	// Verify the session cookie. In this case an additional check is added to detect
 	// if the user's Firebase session was revoked, user deleted/disabled, etc.
 	log.Println("verifying user's session cookie")
-	decoded, err := authClient.VerifySessionCookieAndCheckRevoked(ctx, sessionCookie)
+	decoded, err := authClient.VerifySessionCookie(ctx, sessionCookie)
 	if err != nil {
 		return "", err
 	}
