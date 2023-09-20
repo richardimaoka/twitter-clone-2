@@ -1,8 +1,8 @@
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
-import styles from "./ContentHeader.module.css";
+import styles from "./TweetHeader.module.css";
 
 const fragmentDefinition = graphql(`
-  fragment ReplyContentHeader on Tweet {
+  fragment TweetHeader on Tweet {
     user {
       userName
       userId
@@ -15,7 +15,7 @@ interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export function ContentHeader(props: Props) {
+export function TweetHeader(props: Props) {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
   return (
