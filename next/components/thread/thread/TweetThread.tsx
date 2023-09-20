@@ -1,5 +1,5 @@
 import { ReplyTweet } from "../tweet/ReplyTweet";
-import { ReplyForm } from "../tweet/ReplyForm";
+import { ReplyForm } from "../threadreply/ReplyForm";
 import { ThreadRootView } from "../threadroot/ThreadRootView";
 import styles from "./TweetThread.module.css";
 

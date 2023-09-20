@@ -146,6 +146,13 @@ export type TweetThreadFragment = {
     | null;
 } & { " $fragmentName"?: "TweetThreadFragment" };
 
+export type ReplyFormFragment = ({
+  __typename: "User";
+  userName?: string | null;
+} & {
+  " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
+}) & { " $fragmentName"?: "ReplyFormFragment" };
+
 export type BodyFragment = { __typename: "Tweet"; body?: string | null } & {
   " $fragmentName"?: "BodyFragment";
 };
@@ -195,13 +202,6 @@ export type ReplyContentHeaderFragment = {
     userId?: string | null;
   } | null;
 } & { " $fragmentName"?: "ReplyContentHeaderFragment" };
-
-export type ReplyFormFragment = ({
-  __typename: "User";
-  userName?: string | null;
-} & {
-  " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
-}) & { " $fragmentName"?: "ReplyFormFragment" };
 
 export type ReplyTweetFragment = ({
   __typename: "Tweet";
