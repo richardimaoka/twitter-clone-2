@@ -181,14 +181,6 @@ export type ThreadRootViewFragment = ({ __typename: "Tweet" } & {
   };
 }) & { " $fragmentName"?: "ThreadRootViewFragment" };
 
-export type TweetStatsFragmentFragment = {
-  __typename: "Tweet";
-  numRetweets?: number | null;
-  numQuotes?: number | null;
-  numLikes?: number | null;
-  numBookmarks?: number | null;
-} & { " $fragmentName"?: "TweetStatsFragmentFragment" };
-
 export type ReplyContentBodyFragment = {
   __typename: "Tweet";
   body?: string | null;
@@ -1005,28 +997,6 @@ export const TweetThreadFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<TweetThreadFragment, unknown>;
-export const TweetStatsFragmentFragmentDoc = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "TweetStatsFragment" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "Tweet" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
-          { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
-          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-          { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<TweetStatsFragmentFragment, unknown>;
 export const TimelineProfilePicFragmentFragmentDoc = {
   kind: "Document",
   definitions: [

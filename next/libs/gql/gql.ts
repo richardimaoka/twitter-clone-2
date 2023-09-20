@@ -32,8 +32,6 @@ const documents = {
     types.PictureFragmentDoc,
   "\n  fragment ThreadRootView on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n":
     types.ThreadRootViewFragmentDoc,
-  "\n  fragment TweetStatsFragment on Tweet {\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n":
-    types.TweetStatsFragmentFragmentDoc,
   "\n  fragment ReplyContentBody on Tweet {\n    body\n  }\n":
     types.ReplyContentBodyFragmentDoc,
   "\n  fragment ReplyContentHeader on Tweet {\n    user {\n      userName\n      userId\n    }\n    date\n  }\n":
@@ -132,12 +130,6 @@ export function graphql(
 export function graphql(
   source: "\n  fragment ThreadRootView on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n",
 ): (typeof documents)["\n  fragment ThreadRootView on Tweet {\n    ...ContentHeader\n    ...ContentBottom\n    ...Reactions\n    ...Picture\n    ...Body\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  fragment TweetStatsFragment on Tweet {\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n",
-): (typeof documents)["\n  fragment TweetStatsFragment on Tweet {\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
