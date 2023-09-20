@@ -22,7 +22,6 @@ interface Props {
 
 export const ThreadRootView = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
-  const noProfilePic = "/images/no-profile-egg.png";
 
   //https://twitter.com/TwitterJP/status/1570218396775481344
   //https://twitter.com/TwitterJP/status/1587301348604841987
