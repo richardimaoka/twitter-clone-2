@@ -54,7 +54,7 @@ type ComplexityRoot struct {
 	Query struct {
 		Me       func(childComplexity int) int
 		Timeline func(childComplexity int, currentTime time.Time) int
-		Tweet    func(childComplexity int) int
+		Tweet    func(childComplexity int, tweetID *string) int
 	}
 
 	Tweet struct {
@@ -95,7 +95,7 @@ type MutationResolver interface {
 	Like(ctx context.Context, tweetID string) (*model.Tweet, error)
 }
 type QueryResolver interface {
-	Tweet(ctx context.Context) (*model.Tweet, error)
+	Tweet(ctx context.Context, tweetID *string) (*model.Tweet, error)
 	Timeline(ctx context.Context, currentTime time.Time) ([]*model.Tweet, error)
 	Me(ctx context.Context) (*model.User, error)
 }
@@ -163,7 +163,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.Tweet(childComplexity), true
+		args, err := ec.field_Query_tweet_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Tweet(childComplexity, args["tweetId"].(*string)), true
 
 	case "Tweet.body":
 		if e.complexity.Tweet.Body == nil {
@@ -530,6 +535,21 @@ func (ec *executionContext) field_Query_timeline_args(ctx context.Context, rawAr
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_tweet_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *string
+	if tmp, ok := rawArgs["tweetId"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tweetId"))
+		arg0, err = ec.unmarshalOID2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["tweetId"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field___Type_enumValues_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -782,7 +802,7 @@ func (ec *executionContext) _Query_tweet(ctx context.Context, field graphql.Coll
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Tweet(rctx)
+		return ec.resolvers.Query().Tweet(rctx, fc.Args["tweetId"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -853,6 +873,17 @@ func (ec *executionContext) fieldContext_Query_tweet(ctx context.Context, field 
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Tweet", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_tweet_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -4993,6 +5024,22 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 		return graphql.Null
 	}
 	res := graphql.MarshalBoolean(*v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOID2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalID(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOID2ᚖstring(ctx context.Context, sel ast.SelectionSet, v *string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalID(*v)
 	return res
 }
 

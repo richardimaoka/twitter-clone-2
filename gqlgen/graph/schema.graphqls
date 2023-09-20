@@ -47,7 +47,7 @@ type User {
 }
 
 type Query {
-  tweet: Tweet
+  tweet(tweetId: ID): Tweet
   timeline(currentTime: Time!): [Tweet!]
   me: User
 }

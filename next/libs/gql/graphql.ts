@@ -58,6 +58,10 @@ export type QueryTimelineArgs = {
   currentTime: Scalars["Time"]["input"];
 };
 
+export type QueryTweetArgs = {
+  tweetId?: InputMaybe<Scalars["ID"]["input"]>;
+};
+
 export type Tweet = {
   __typename: "Tweet";
   body?: Maybe<Scalars["String"]["output"]>;
