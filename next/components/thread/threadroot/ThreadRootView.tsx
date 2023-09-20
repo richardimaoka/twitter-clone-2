@@ -1,6 +1,6 @@
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "../reactions/Reactions";
-import { Body } from "./Body";
+import { TweetBody } from "../body/TweetBody";
 import { Picture } from "./Picture";
 import { ThreadRootBottom } from "./ThreadRootBottom";
 import { ThreadRootHeader } from "./ThreadRootHeader";
@@ -12,7 +12,7 @@ const fragmentDefinition = graphql(`
     ...ThreadRootBottom
     ...Reactions
     ...Picture
-    ...Body
+    ...TweetBody
   }
 `);
 
@@ -29,10 +29,9 @@ export const ThreadRootView = (props: Props) => {
   return (
     <div className={styles.tweet}>
       <ThreadRootHeader fragment={fragment} />
-      <Body fragment={fragment} />
+      <TweetBody fragment={fragment} />
       <Picture fragment={fragment} />
       <ThreadRootBottom fragment={fragment} />
-      {/* <TweetStats fragment={fragment} /> */}
       <Reactions fragment={fragment} />
     </div>
   );
