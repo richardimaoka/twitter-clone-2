@@ -2,11 +2,11 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { ContentHeader } from "./ContentHeader";
 import { ContentBody } from "./ContentBody";
 import { Reactions } from "../reactions/Reactions";
-import styles from "./ReplyTweet.module.css";
+import styles from "./TweetView.module.css";
 import { ProfilePicture } from "../profile/ProfilePicture";
 
 const fragmentDefinition = graphql(`
-  fragment ReplyTweet on Tweet {
+  fragment TweetView on Tweet {
     ...ReplyContentHeader
     ...ReplyContentBody
     ...Reactions
@@ -20,7 +20,7 @@ interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export function ReplyTweet(props: Props) {
+export function TweetView(props: Props) {
   const fragment = useFragment(fragmentDefinition, props.fragment);
   return (
     <div className={styles.component}>

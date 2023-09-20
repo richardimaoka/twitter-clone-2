@@ -131,7 +131,7 @@ export type TweetThreadFragment = {
         __typename: "Tweet";
         replies?: Array<
           | ({ __typename: "Tweet" } & {
-              " $fragmentRefs"?: { ReplyTweetFragment: ReplyTweetFragment };
+              " $fragmentRefs"?: { TweetViewFragment: TweetViewFragment };
             })
           | null
         > | null;
@@ -203,7 +203,7 @@ export type ReplyContentHeaderFragment = {
   } | null;
 } & { " $fragmentName"?: "ReplyContentHeaderFragment" };
 
-export type ReplyTweetFragment = ({
+export type TweetViewFragment = ({
   __typename: "Tweet";
   user?:
     | ({ __typename: "User" } & {
@@ -216,7 +216,7 @@ export type ReplyTweetFragment = ({
     ReplyContentBodyFragment: ReplyContentBodyFragment;
     ReactionsFragment: ReactionsFragment;
   };
-}) & { " $fragmentName"?: "ReplyTweetFragment" };
+}) & { " $fragmentName"?: "TweetViewFragment" };
 
 export type TimelineHeaderFragmentFragment = {
   __typename: "Tweet";
@@ -579,12 +579,12 @@ export const ProfilePictureFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ProfilePictureFragment, unknown>;
-export const ReplyTweetFragmentDoc = {
+export const TweetViewFragmentDoc = {
   kind: "Document",
   definitions: [
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ReplyTweet" },
+      name: { kind: "Name", value: "TweetView" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -690,7 +690,7 @@ export const ReplyTweetFragmentDoc = {
       },
     },
   ],
-} as unknown as DocumentNode<ReplyTweetFragment, unknown>;
+} as unknown as DocumentNode<TweetViewFragment, unknown>;
 export const ReplyFormFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -759,7 +759,7 @@ export const TweetThreadFragmentDoc = {
                     selections: [
                       {
                         kind: "FragmentSpread",
-                        name: { kind: "Name", value: "ReplyTweet" },
+                        name: { kind: "Name", value: "TweetView" },
                       },
                     ],
                   },
@@ -941,7 +941,7 @@ export const TweetThreadFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ReplyTweet" },
+      name: { kind: "Name", value: "TweetView" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1344,7 +1344,7 @@ export const StatusPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ReplyTweet" },
+      name: { kind: "Name", value: "TweetView" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1426,7 +1426,7 @@ export const StatusPageQueryDocument = {
                     selections: [
                       {
                         kind: "FragmentSpread",
-                        name: { kind: "Name", value: "ReplyTweet" },
+                        name: { kind: "Name", value: "TweetView" },
                       },
                     ],
                   },
@@ -1630,7 +1630,7 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ReplyTweet" },
+      name: { kind: "Name", value: "TweetView" },
       typeCondition: {
         kind: "NamedType",
         name: { kind: "Name", value: "Tweet" },
@@ -1712,7 +1712,7 @@ export const RootPageQueryDocument = {
                     selections: [
                       {
                         kind: "FragmentSpread",
-                        name: { kind: "Name", value: "ReplyTweet" },
+                        name: { kind: "Name", value: "TweetView" },
                       },
                     ],
                   },

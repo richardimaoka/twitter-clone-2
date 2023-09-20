@@ -1,4 +1,4 @@
-import { ReplyTweet } from "../tweet/ReplyTweet";
+import { TweetView } from "../tweet/TweetView";
 import { ReplyForm } from "../threadreply/ReplyForm";
 import { ThreadRootView } from "../threadroot/ThreadRootView";
 import styles from "./TweetThread.module.css";
@@ -10,7 +10,7 @@ const fragmentDefinition = graphql(`
     tweet {
       ...ThreadRootView
       replies {
-        ...ReplyTweet
+        ...TweetView
       }
     }
     me {
@@ -32,7 +32,7 @@ export const TweetThread = (props: TweetColumnProps) => {
       {fragment.tweet && <ThreadRootView fragment={fragment.tweet} />}
       {fragment.me && <ReplyForm fragment={fragment.me} />}
       {fragment.tweet?.replies?.map(
-        (reply, index) => reply && <ReplyTweet key={index} fragment={reply} />
+        (reply, index) => reply && <TweetView key={index} fragment={reply} />
       )}
     </div>
   );
