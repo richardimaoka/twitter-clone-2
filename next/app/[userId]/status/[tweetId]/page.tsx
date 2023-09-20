@@ -1,10 +1,10 @@
 import { LeftPane } from "@/components/leftpane/LeftPane";
 import { RightPane } from "@/components/rightpane/RightPane";
-import styles from "./style.module.css";
-
 import { TweetColumn } from "@/components/thread/TweetColumn";
 import { graphql } from "@/libs/gql";
-import { request } from "graphql-request";
+import { GraphQLClient, request } from "graphql-request";
+import { cookies } from "next/headers";
+import styles from "./style.module.css";
 // import { print } from "graphql";
 
 const queryDefinition = graphql(/* GraphQL */ `
@@ -14,7 +14,15 @@ const queryDefinition = graphql(/* GraphQL */ `
 `);
 
 export default async function Page() {
-  const data = await request("http://localhost:8080/query", queryDefinition);
+  const url = "http://localhost:8080/query";
+  const cookieStore = cookies();
+
+  // authentication via cookies
+  const client = new GraphQLClient(url, {
+    headers: { cookie: cookieStore.toString() },
+  });
+
+  const data = await client.request(queryDefinition);
   return (
     <div className={styles.home}>
       <section className={styles.leftPane}>
