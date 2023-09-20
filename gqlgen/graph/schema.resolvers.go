@@ -76,10 +76,6 @@ func (r *queryResolver) Tweet(ctx context.Context, tweetID *string) (*model.Twee
 		log.Printf("user = %s is viewing the tweet", user.Name)
 	}
 
-	if !canViewTweet(user) {
-		return nil, fmt.Errorf("not authorized to see this tweet")
-	}
-
 	log.Printf("sleeping for 2 seconds")
 	time.Sleep(2 * time.Second)
 	bytes, err := os.ReadFile("data/tweet.json")
@@ -92,6 +88,10 @@ func (r *queryResolver) Tweet(ctx context.Context, tweetID *string) (*model.Twee
 	if err != nil {
 		log.Printf("Error in Tweet - %v", err)
 		return nil, fmt.Errorf("internal server error")
+	}
+
+	if !canViewTweet(user, tweet) {
+		return nil, fmt.Errorf("not authorized to see this tweet")
 	}
 
 	return &tweet, nil
