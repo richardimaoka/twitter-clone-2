@@ -1,6 +1,6 @@
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { TweetHeader } from "./TweetHeader";
-import { ContentBody } from "./ContentBody";
+import { TweetBody } from "../body/TweetBody";
 import { Reactions } from "../reactions/Reactions";
 import styles from "./TweetView.module.css";
 import { ProfilePicture } from "../profile/ProfilePicture";
@@ -8,7 +8,7 @@ import { ProfilePicture } from "../profile/ProfilePicture";
 const fragmentDefinition = graphql(`
   fragment TweetView on Tweet {
     ...TweetHeader
-    ...ReplyContentBody
+    ...TweetBody
     ...Reactions
     user {
       ...ProfilePicture
@@ -29,7 +29,7 @@ export function TweetView(props: Props) {
       </div>
       <div>
         <TweetHeader fragment={fragment} />
-        <ContentBody fragment={fragment} />
+        <TweetBody fragment={fragment} />
         <Reactions fragment={fragment} />
       </div>
     </div>
