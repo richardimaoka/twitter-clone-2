@@ -38,9 +38,9 @@ func validateAndGetUserID(ctx context.Context, authClient *auth.Client, sessionC
 }
 
 func findUser(r *http.Request, dbClient *firestore.Client, authClient *auth.Client) *User {
-	c, err := r.Cookie("sessionCookie")
+	c, err := r.Cookie("session")
 	if err != nil {
-		log.Println("no sessionCookie, so no user")
+		log.Println("no session cookie, so no user")
 		return nil
 	}
 
