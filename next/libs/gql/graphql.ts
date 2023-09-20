@@ -91,6 +91,8 @@ export type Tweet = {
 
 export type User = {
   __typename: "User";
+  followers?: Maybe<Array<Maybe<User>>>;
+  isPrivate?: Maybe<Scalars["Boolean"]["output"]>;
   profilePicture?: Maybe<Scalars["String"]["output"]>;
   userId?: Maybe<Scalars["String"]["output"]>;
   userName?: Maybe<Scalars["String"]["output"]>;

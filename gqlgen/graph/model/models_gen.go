@@ -36,4 +36,6 @@ type User struct {
 	UserName       *string `json:"userName,omitempty"`
 	UserID         *string `json:"userId,omitempty"`
 	ProfilePicture *string `json:"profilePicture,omitempty"`
+	IsPrivate      *bool   `json:"isPrivate,omitempty"`
+	Followers      []*User `json:"followers,omitempty"`
 }

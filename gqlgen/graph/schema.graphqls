@@ -44,6 +44,8 @@ type User {
   userName: String
   userId: String
   profilePicture: String
+  isPrivate: Boolean
+  followers: [User]
 }
 
 type Query {
