@@ -1,6 +1,6 @@
 import { LeftPane } from "@/components/leftpane/LeftPane";
 import { RightPane } from "@/components/rightpane/RightPane";
-import { TweetThread } from "@/components/thread/TweetThread";
+import { TweetThread } from "@/components/thread/thread/TweetThread";
 import { graphql } from "@/libs/gql";
 import { GraphQLClient, request } from "graphql-request";
 import { cookies } from "next/headers";

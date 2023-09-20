@@ -3,7 +3,7 @@ import { isLoggedInServerSide } from "@/libs/serverAuth";
 import { request } from "graphql-request";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { TweetThread } from "../components/thread/TweetThread";
+import { TweetThread } from "../components/thread/thread/TweetThread";
 // import { print } from "graphql";
 
 const queryDefinition = graphql(/* GraphQL */ `

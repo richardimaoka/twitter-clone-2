@@ -1,6 +1,6 @@
-import { ReplyTweet } from "./tweet/ReplyTweet";
-import { ReplyForm } from "./tweet/ReplyForm";
-import { RootTweet } from "./root/RootTweet";
+import { ReplyTweet } from "../tweet/ReplyTweet";
+import { ReplyForm } from "../tweet/ReplyForm";
+import { RootTweet } from "../root/RootTweet";
 import styles from "./TweetThread.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";

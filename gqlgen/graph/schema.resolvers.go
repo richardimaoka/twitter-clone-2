@@ -76,8 +76,8 @@ func (r *queryResolver) Tweet(ctx context.Context, tweetID *string) (*model.Twee
 		log.Printf("user = %s is viewing the tweet", user.Name)
 	}
 
-	log.Printf("sleeping for 2 seconds")
-	time.Sleep(2 * time.Second)
+	// log.Printf("sleeping for 2 seconds")
+	// time.Sleep(2 * time.Second)
 	bytes, err := os.ReadFile("data/tweet.json")
 	if err != nil {
 		return nil, err
