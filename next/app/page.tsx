@@ -3,12 +3,12 @@ import { isLoggedInServerSide } from "@/libs/serverAuth";
 import { request } from "graphql-request";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { TweetColumn } from "../components/thread/TweetColumn";
+import { TweetThread } from "../components/thread/TweetThread";
 // import { print } from "graphql";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query RootPageQuery {
-    ...TweetColumnFragment
+    ...TweetThread
   }
 `);
 
@@ -22,5 +22,5 @@ export default async function Home() {
   }
 
   const data = await request("http://localhost:8080/query", queryDefinition);
-  return <main>{data && <TweetColumn fragment={data} />}</main>;
+  return <main>{data && <TweetThread fragment={data} />}</main>;
 }

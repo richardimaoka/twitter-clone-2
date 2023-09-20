@@ -1,12 +1,12 @@
 import { ReplyTweet } from "./tweet/ReplyTweet";
 import { ReplyForm } from "./tweet/ReplyForm";
 import { RootTweet } from "./root/RootTweet";
-import styles from "./TweetColumn.module.css";
+import styles from "./TweetThread.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
-  fragment TweetColumnFragment on Query {
+  fragment TweetThread on Query {
     tweet {
       ...RootTweet
       replies {
@@ -23,7 +23,7 @@ interface TweetColumnProps {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export const TweetColumn = (props: TweetColumnProps) => {
+export const TweetThread = (props: TweetColumnProps) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
   return (

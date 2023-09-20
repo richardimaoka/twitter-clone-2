@@ -1,6 +1,6 @@
 import { LeftPane } from "@/components/leftpane/LeftPane";
 import { RightPane } from "@/components/rightpane/RightPane";
-import { TweetColumn } from "@/components/thread/TweetColumn";
+import { TweetThread } from "@/components/thread/TweetThread";
 import { graphql } from "@/libs/gql";
 import { GraphQLClient, request } from "graphql-request";
 import { cookies } from "next/headers";
@@ -9,7 +9,7 @@ import styles from "./style.module.css";
 
 const queryDefinition = graphql(/* GraphQL */ `
   query StatusPageQuery {
-    ...TweetColumnFragment
+    ...TweetThread
   }
 `);
 
@@ -28,7 +28,7 @@ export default async function Page() {
       <section className={styles.leftPane}>
         <LeftPane />
       </section>
-      <main>{data && <TweetColumn fragment={data} />}</main>
+      <main>{data && <TweetThread fragment={data} />}</main>
       <section className={styles.rightPane}>
         <RightPane />
       </section>
