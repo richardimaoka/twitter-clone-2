@@ -1,4 +1,4 @@
-import styles from "./RootTweet.module.css";
+import styles from "./ThreadRootView.module.css";
 
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { Reactions } from "../reactions/Reactions";
@@ -9,7 +9,7 @@ import { ContentBottom } from "./ContentBottom";
 // import { TweetStats } from "./TweetStats";
 
 const fragmentDefinition = graphql(`
-  fragment RootTweet on Tweet {
+  fragment ThreadRootView on Tweet {
     ...ContentHeader
     ...ContentBottom
     ...Reactions
@@ -22,7 +22,7 @@ interface Props {
   fragment: FragmentType<typeof fragmentDefinition>;
 }
 
-export const RootTweet = (props: Props) => {
+export const ThreadRootView = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
   const noProfilePic = "/images/no-profile-egg.png";
 
