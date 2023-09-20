@@ -1,5 +1,5 @@
-import { ReplyTweet } from "./reply/ReplyTweet";
-import { ReplyForm } from "./reply/ReplyForm";
+import { ReplyTweet } from "./tweet/ReplyTweet";
+import { ReplyForm } from "./tweet/ReplyForm";
 import { RootTweet } from "./root/RootTweet";
 import styles from "./style.module.css";
 

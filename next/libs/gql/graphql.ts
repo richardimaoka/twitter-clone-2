@@ -148,43 +148,6 @@ export type ReactionsFragment = {
   numBookmarks?: number | null;
 } & { " $fragmentName"?: "ReactionsFragment" };
 
-export type ReplyContentBodyFragment = {
-  __typename: "Tweet";
-  body?: string | null;
-} & { " $fragmentName"?: "ReplyContentBodyFragment" };
-
-export type ReplyContentHeaderFragment = {
-  __typename: "Tweet";
-  date?: string | null;
-  user?: {
-    __typename: "User";
-    userName?: string | null;
-    userId?: string | null;
-  } | null;
-} & { " $fragmentName"?: "ReplyContentHeaderFragment" };
-
-export type ReplyFormFragment = ({
-  __typename: "User";
-  userName?: string | null;
-} & {
-  " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
-}) & { " $fragmentName"?: "ReplyFormFragment" };
-
-export type ReplyTweetFragment = ({
-  __typename: "Tweet";
-  user?:
-    | ({ __typename: "User" } & {
-        " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
-      })
-    | null;
-} & {
-  " $fragmentRefs"?: {
-    ReplyContentHeaderFragment: ReplyContentHeaderFragment;
-    ReplyContentBodyFragment: ReplyContentBodyFragment;
-    ReactionsFragment: ReactionsFragment;
-  };
-}) & { " $fragmentName"?: "ReplyTweetFragment" };
-
 export type BodyFragment = { __typename: "Tweet"; body?: string | null } & {
   " $fragmentName"?: "BodyFragment";
 };
@@ -227,6 +190,43 @@ export type TweetStatsFragmentFragment = {
   numLikes?: number | null;
   numBookmarks?: number | null;
 } & { " $fragmentName"?: "TweetStatsFragmentFragment" };
+
+export type ReplyContentBodyFragment = {
+  __typename: "Tweet";
+  body?: string | null;
+} & { " $fragmentName"?: "ReplyContentBodyFragment" };
+
+export type ReplyContentHeaderFragment = {
+  __typename: "Tweet";
+  date?: string | null;
+  user?: {
+    __typename: "User";
+    userName?: string | null;
+    userId?: string | null;
+  } | null;
+} & { " $fragmentName"?: "ReplyContentHeaderFragment" };
+
+export type ReplyFormFragment = ({
+  __typename: "User";
+  userName?: string | null;
+} & {
+  " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
+}) & { " $fragmentName"?: "ReplyFormFragment" };
+
+export type ReplyTweetFragment = ({
+  __typename: "Tweet";
+  user?:
+    | ({ __typename: "User" } & {
+        " $fragmentRefs"?: { ProfilePictureFragment: ProfilePictureFragment };
+      })
+    | null;
+} & {
+  " $fragmentRefs"?: {
+    ReplyContentHeaderFragment: ReplyContentHeaderFragment;
+    ReplyContentBodyFragment: ReplyContentBodyFragment;
+    ReactionsFragment: ReactionsFragment;
+  };
+}) & { " $fragmentName"?: "ReplyTweetFragment" };
 
 export type TimelineHeaderFragmentFragment = {
   __typename: "Tweet";
