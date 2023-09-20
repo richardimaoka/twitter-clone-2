@@ -29,6 +29,7 @@ type User struct {
 func validateAndGetUserID(ctx context.Context, authClient *auth.Client, sessionCookie string) (string, error) {
 	// Verify the session cookie. In this case an additional check is added to detect
 	// if the user's Firebase session was revoked, user deleted/disabled, etc.
+	log.Println("verifying user's session cookie")
 	decoded, err := authClient.VerifySessionCookieAndCheckRevoked(ctx, sessionCookie)
 	if err != nil {
 		return "", err
@@ -52,10 +53,16 @@ func findUser(r *http.Request, dbClient *firestore.Client, authClient *auth.Clie
 	}
 
 	// get the user from the database
+	log.Println("getting user info from Firestore")
 	user, err := database.GetUser(r.Context(), dbClient, userId)
 	if err != nil {
-		log.Println("failed get user from DB, so no user.", err)
-		return nil
+		log.Printf("failed get user for id = %s from DB, so no user. %v", userId, err)
+		log.Printf("but force setting user = richardimaokajp")
+		return &User{
+			Name:    "richardimaokajp",
+			IsAdmin: false,
+		}
+		//return nil
 	}
 
 	return &User{
