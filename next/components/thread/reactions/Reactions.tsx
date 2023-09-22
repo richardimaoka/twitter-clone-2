@@ -23,8 +23,15 @@ interface Props {
 export const Reactions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
+  async function like(formData: FormData) {
+    "use server";
+
+    // mutate data
+    // revalidate cache
+  }
+
   return (
-    <form className={styles.component}>
+    <form action={like} className={styles.component}>
       <ReplyButton counts={fragment.numReplies} />
       <RetweetyButton counts={fragment.numRetweets} />
       <LikeButton counts={fragment.numLikes} />
