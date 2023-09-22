@@ -21,7 +21,9 @@ const documents = {
     types.TweetBodyFragmentDoc,
   "\n  fragment ProfilePicture on User {\n    profilePicture\n  }\n":
     types.ProfilePictureFragmentDoc,
-  "\n  fragment Reactions on Tweet {\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n":
+  "\n  fragment LikeButton on Tweet {\n    id\n    numLikes\n  }\n":
+    types.LikeButtonFragmentDoc,
+  "\n  fragment Reactions on Tweet {\n    id\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n    ...LikeButton\n  }\n":
     types.ReactionsFragmentDoc,
   "\n  fragment TweetThread on Query {\n    tweet {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n":
     types.TweetThreadFragmentDoc,
@@ -97,8 +99,14 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment Reactions on Tweet {\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n",
-): (typeof documents)["\n  fragment Reactions on Tweet {\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n  }\n"];
+  source: "\n  fragment LikeButton on Tweet {\n    id\n    numLikes\n  }\n",
+): (typeof documents)["\n  fragment LikeButton on Tweet {\n    id\n    numLikes\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  fragment Reactions on Tweet {\n    id\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n    ...LikeButton\n  }\n",
+): (typeof documents)["\n  fragment Reactions on Tweet {\n    id\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n    ...LikeButton\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

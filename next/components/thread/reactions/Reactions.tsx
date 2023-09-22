@@ -8,11 +8,13 @@ import { ShareButton } from "./ShareButton";
 
 const fragmentDefinition = graphql(`
   fragment Reactions on Tweet {
+    id
     numReplies
     numRetweets
     numQuotes
     numLikes
     numBookmarks
+    ...LikeButton
   }
 `);
 
@@ -23,20 +25,13 @@ interface Props {
 export const Reactions = (props: Props) => {
   const fragment = useFragment(fragmentDefinition, props.fragment);
 
-  async function like(formData: FormData) {
-    "use server";
-
-    // mutate data
-    // revalidate cache
-  }
-
   return (
-    <form action={like} className={styles.component}>
+    <div className={styles.component}>
       <ReplyButton counts={fragment.numReplies} />
       <RetweetyButton counts={fragment.numRetweets} />
-      <LikeButton counts={fragment.numLikes} />
+      <LikeButton fragment={fragment} />
       <BookmarkButton counts={fragment.numBookmarks} />
       <ShareButton />
-    </form>
+    </div>
   );
 };

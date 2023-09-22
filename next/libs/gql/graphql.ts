@@ -120,14 +120,23 @@ export type ProfilePictureFragment = {
   profilePicture?: string | null;
 } & { " $fragmentName"?: "ProfilePictureFragment" };
 
-export type ReactionsFragment = {
+export type LikeButtonFragment = {
   __typename: "Tweet";
+  id: string;
+  numLikes?: number | null;
+} & { " $fragmentName"?: "LikeButtonFragment" };
+
+export type ReactionsFragment = ({
+  __typename: "Tweet";
+  id: string;
   numReplies?: number | null;
   numRetweets?: number | null;
   numQuotes?: number | null;
   numLikes?: number | null;
   numBookmarks?: number | null;
-} & { " $fragmentName"?: "ReactionsFragment" };
+} & { " $fragmentRefs"?: { LikeButtonFragment: LikeButtonFragment } }) & {
+  " $fragmentName"?: "ReactionsFragment";
+};
 
 export type TweetThreadFragment = {
   __typename: "Query";
@@ -338,6 +347,26 @@ export const ThreadRootBottomFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<ThreadRootBottomFragment, unknown>;
+export const LikeButtonFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LikeButtonFragment, unknown>;
 export const ReactionsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -351,11 +380,31 @@ export const ReactionsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "LikeButton" },
+          },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
         ],
       },
     },
@@ -434,6 +483,21 @@ export const ThreadRootViewFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "ThreadRootHeader" },
       typeCondition: {
         kind: "NamedType",
@@ -474,11 +538,16 @@ export const ThreadRootViewFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "LikeButton" },
+          },
         ],
       },
     },
@@ -604,6 +673,21 @@ export const TweetViewFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "TweetHeader" },
       typeCondition: {
         kind: "NamedType",
@@ -649,11 +733,16 @@ export const TweetViewFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "LikeButton" },
+          },
         ],
       },
     },
@@ -799,6 +888,21 @@ export const TweetThreadFragmentDoc = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
@@ -807,11 +911,16 @@ export const TweetThreadFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "LikeButton" },
+          },
         ],
       },
     },
@@ -1193,6 +1302,21 @@ export const StatusPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
@@ -1201,11 +1325,16 @@ export const StatusPageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "LikeButton" },
+          },
         ],
       },
     },
@@ -1470,6 +1599,21 @@ export const RootPageQueryDocument = {
     },
     {
       kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LikeButton" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Tweet" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
       name: { kind: "Name", value: "Reactions" },
       typeCondition: {
         kind: "NamedType",
@@ -1478,11 +1622,16 @@ export const RootPageQueryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
           { kind: "Field", name: { kind: "Name", value: "numReplies" } },
           { kind: "Field", name: { kind: "Name", value: "numRetweets" } },
           { kind: "Field", name: { kind: "Name", value: "numQuotes" } },
           { kind: "Field", name: { kind: "Name", value: "numLikes" } },
           { kind: "Field", name: { kind: "Name", value: "numBookmarks" } },
+          {
+            kind: "FragmentSpread",
+            name: { kind: "Name", value: "LikeButton" },
+          },
         ],
       },
     },

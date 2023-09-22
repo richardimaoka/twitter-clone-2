@@ -1,17 +1,27 @@
+import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./style.module.css";
 
+const fragmentDefinition = graphql(`
+  fragment LikeButton on Tweet {
+    id
+    numLikes
+  }
+`);
+
 interface Props {
-  counts?: number | null;
+  fragment: FragmentType<typeof fragmentDefinition>;
 }
 
 export function LikeButton(props: Props) {
+  const fragment = useFragment(fragmentDefinition, props.fragment);
+
   return (
     <button className={styles.button}>
       <FontAwesomeIcon className={styles.icon} icon={faHeart} />
-      {typeof props.counts === "number" && props.counts > 0 && (
-        <span className={styles.counts}>{props.counts}</span>
+      {fragment.numLikes && fragment.numLikes > 0 && (
+        <span className={styles.counts}>{fragment.numLikes}</span>
       )}
     </button>
   );
