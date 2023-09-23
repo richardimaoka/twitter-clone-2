@@ -23,6 +23,8 @@ const documents = {
     types.ProfilePictureFragmentDoc,
   "\n  fragment LikeButton on Tweet {\n    id\n    numLikes\n  }\n":
     types.LikeButtonFragmentDoc,
+  "\n  mutation likeTw($id: ID!) {\n    like(tweetId: $id) {\n      id\n      numLikes\n    }\n  }\n":
+    types.LikeTwDocument,
   "\n  fragment Reactions on Tweet {\n    id\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n    ...LikeButton\n  }\n":
     types.ReactionsFragmentDoc,
   "\n  fragment TweetThread on Query {\n    tweet {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n":
@@ -49,8 +51,6 @@ const documents = {
     types.TimelineProfilePicFragmentFragmentDoc,
   "\n  fragment TimelineTweetActionsFragment on Tweet {\n    id\n    retweets\n    numLikes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n":
     types.TimelineTweetActionsFragmentFragmentDoc,
-  "\n  mutation likeTw($id: ID!) {\n    like(tweetId: $id) {\n      id\n      numLikes\n    }\n  }\n":
-    types.LikeTwDocument,
   "\n  query TimeLinePageQuery($currentTime: Time!) {\n    timeline(currentTime: $currentTime) {\n      ...TimelineTweetFragment\n      id\n    }\n  }\n":
     types.TimeLinePageQueryDocument,
   "\n  fragment TimelineTweetFragment on Tweet {\n    ...TimelineProfilePicFragment\n    ...TimelineHeaderFragment\n    ...TimelineTweetActionsFragment\n    body\n    picturePath\n    pictureWidth\n    pictureHeight\n    time\n    date\n    timeStamp\n    retweets\n    quotes\n    numLikes\n    bookmarks\n  }\n":
@@ -101,6 +101,12 @@ export function graphql(
 export function graphql(
   source: "\n  fragment LikeButton on Tweet {\n    id\n    numLikes\n  }\n",
 ): (typeof documents)["\n  fragment LikeButton on Tweet {\n    id\n    numLikes\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation likeTw($id: ID!) {\n    like(tweetId: $id) {\n      id\n      numLikes\n    }\n  }\n",
+): (typeof documents)["\n  mutation likeTw($id: ID!) {\n    like(tweetId: $id) {\n      id\n      numLikes\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -179,12 +185,6 @@ export function graphql(
 export function graphql(
   source: "\n  fragment TimelineTweetActionsFragment on Tweet {\n    id\n    retweets\n    numLikes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n",
 ): (typeof documents)["\n  fragment TimelineTweetActionsFragment on Tweet {\n    id\n    retweets\n    numLikes\n    bookmarks\n    replies {\n      __typename\n    }\n    impressions\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: "\n  mutation likeTw($id: ID!) {\n    like(tweetId: $id) {\n      id\n      numLikes\n    }\n  }\n",
-): (typeof documents)["\n  mutation likeTw($id: ID!) {\n    like(tweetId: $id) {\n      id\n      numLikes\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -126,6 +126,15 @@ export type LikeButtonFragment = {
   numLikes?: number | null;
 } & { " $fragmentName"?: "LikeButtonFragment" };
 
+export type LikeTwMutationVariables = Exact<{
+  id: Scalars["ID"]["input"];
+}>;
+
+export type LikeTwMutation = {
+  __typename: "Mutation";
+  like?: { __typename: "Tweet"; id: string; numLikes?: number | null } | null;
+};
+
 export type ReactionsFragment = ({
   __typename: "Tweet";
   id: string;
@@ -259,15 +268,6 @@ export type TimelineTweetActionsFragmentFragment = {
   impressions?: number | null;
   replies?: Array<{ __typename: "Tweet" } | null> | null;
 } & { " $fragmentName"?: "TimelineTweetActionsFragmentFragment" };
-
-export type LikeTwMutationVariables = Exact<{
-  id: Scalars["ID"]["input"];
-}>;
-
-export type LikeTwMutation = {
-  __typename: "Mutation";
-  like?: { __typename: "Tweet"; id: string; numLikes?: number | null } | null;
-};
 
 export type TimeLinePageQueryQueryVariables = Exact<{
   currentTime: Scalars["Time"]["input"];
@@ -1842,6 +1842,52 @@ export const RootPageQueryDocument = {
     },
   ],
 } as unknown as DocumentNode<RootPageQueryQuery, RootPageQueryQueryVariables>;
+export const LikeTwDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "likeTw" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "like" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "tweetId" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "numLikes" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LikeTwMutation, LikeTwMutationVariables>;
 export const PostTwDocument = {
   kind: "Document",
   definitions: [
@@ -1988,52 +2034,6 @@ export const PostTwDocument = {
     },
   ],
 } as unknown as DocumentNode<PostTwMutation, PostTwMutationVariables>;
-export const LikeTwDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "mutation",
-      name: { kind: "Name", value: "likeTw" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
-          type: {
-            kind: "NonNullType",
-            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
-          },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "like" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "tweetId" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "id" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "numLikes" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<LikeTwMutation, LikeTwMutationVariables>;
 export const TimeLinePageQueryDocument = {
   kind: "Document",
   definitions: [
