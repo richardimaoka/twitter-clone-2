@@ -28,7 +28,7 @@ interface Props {
 
 export function LikeButton(props: Props) {
   const fragment = useFragment(fragmentDefinition, props.fragment);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false); // technique to avoid flickering
   const [numLikes, setNumLikes] = useState(0);
 
   useEffect(() => {
@@ -43,11 +43,15 @@ export function LikeButton(props: Props) {
     const url = "http://localhost:8080/query";
     const variables = { id: fragment.id };
     const result = await request(url, mutationDefinition, variables);
+    if (result.like?.id && result.like?.numLikes) {
+      setNumLikes(result.like.numLikes);
+      setIsInitialized(true);
+    }
   }
 
   return (
     <div>
-      <button className={styles.button}>
+      <button className={styles.button} onClick={likeTweet}>
         <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         {isInitialized ? (
           <span className={styles.counts}>{numLikes}</span>
