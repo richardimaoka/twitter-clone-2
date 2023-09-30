@@ -3,6 +3,7 @@ package database
 import "time"
 
 type Tweet struct {
+	ID             string    `firestore:"id"`
 	UserId         string    `firestore:"userId"`
 	UserName       string    `firestore:"userName"`
 	UserID         string    `firestore:"userId"`

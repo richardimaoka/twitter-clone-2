@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
+	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/database"
 )
@@ -56,9 +58,36 @@ func JsonRead(filePath string, v interface{}) error {
 	return nil
 }
 
+func seedTweets(client *firestore.Client) error {
+	matches, err := filepath.Glob("data/tweets/*.json")
+	if err != nil {
+		return fmt.Errorf("failed to glob: %s", err)
+	}
+
+	for _, tweetFile := range matches {
+		var tweet database.Tweet
+		err = JsonRead(tweetFile, &tweet)
+		if err != nil {
+			return fmt.Errorf("failed to read %s: %s", tweetFile, err)
+		}
+
+		docPath := fmt.Sprintf("tweets/%s", tweet.ID)
+		_, err = client.Doc(docPath).Set(context.Background(), tweet)
+		if err != nil {
+			return fmt.Errorf("failed to set tweet: %s", err)
+		}
+
+		log.Printf("seed tweet id = %s", tweet.ID)
+	}
+
+	return nil
+}
+
 func seed() {
+	log.Printf("seed() start")
 	ctx := context.Background()
 
+	log.Printf("initialize firebase app")
 	app, err := firebase.NewApp(ctx, nil)
 	if err != nil {
 		// https://firebase.google.com/docs/admin/setup#initialize_the_sdk_in_non-google_environments
@@ -70,12 +99,14 @@ func seed() {
 		log.Fatalf("error initializing app: %v\n", err)
 	}
 
+	log.Printf("initialize firestore client")
 	client, err := app.Firestore(ctx)
 	if err != nil {
 		log.Fatalln("failed to initialize firestore", err)
 	}
 	defer client.Close()
 
+	log.Printf("start seeding users")
 	u := &User{UserName: "richardimoaka"}
 	res, err := client.Doc("users/richardimoaka").Set(ctx, u)
 	if err != nil {
@@ -83,16 +114,9 @@ func seed() {
 	}
 	fmt.Println("result: ", res)
 
-	var t database.Tweet
-	err = JsonRead("data/tweet.json", &t)
+	log.Printf("start seeding tweets")
+	err = seedTweets(client)
 	if err != nil {
-		log.Fatalf("failed to read tweet.json: %v\n", err)
+		log.Fatalf("failed to seed tweets: %v\n", err)
 	}
-
-	res, err = client.Doc("tweets/1").Set(ctx, t)
-	if err != nil {
-		log.Fatalf("failed to set tweet: %v\n", err)
-	}
-
-	fmt.Println("result: ", res)
 }
