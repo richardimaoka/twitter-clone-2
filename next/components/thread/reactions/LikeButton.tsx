@@ -35,26 +35,8 @@ export function LikeButton(props: Props) {
     headers: { cookie: cookieStore.toString() },
   });
 
-  async function like(formData: FormData) {
-    "use server";
-    console.log("formData", formData);
-    const id = formData.get("tweetId");
-    if (!id) {
-      throw new Error("id is required");
-    } else if (typeof id !== "string") {
-      throw new Error("id must be a string");
-    }
-    const variables = { id: id };
-    try {
-      const result = await client.request(mutationDefinition, variables);
-      // console.log("result", result);
-    } catch (e) {
-      console.log("error", e);
-    }
-  }
-
   return (
-    <form action={like}>
+    <div>
       <button className={styles.button}>
         <FontAwesomeIcon className={styles.icon} icon={faHeart} />
         {fragment.numLikes && fragment.numLikes > 0 && (
@@ -62,6 +44,6 @@ export function LikeButton(props: Props) {
         )}
       </button>
       <input type="hidden" name="tweetId" value={fragment.id} />
-    </form>
+    </div>
   );
 }
