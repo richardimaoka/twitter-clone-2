@@ -1,0 +1,26 @@
+{
+  "id": "1702845356046967243",
+  "userName": "ルートヴィヒ・ベートーべン",
+  "userId": "beethoven",
+  "profilePicture": "/images/beethoven.jpg",
+  "user": {
+    "userName": "ルートヴィヒ・ベートーべン",
+    "userId": "beethoven",
+    "profilePicture": "/images/beethoven.jpg"
+  },
+  "body": "、新曲、交響曲第9番、発表しました、ぜひ聞いてください！",
+  "picturePath": "/images/daiku.jpg",
+  "pictureWidth": 680,
+  "pictureHeight": 576,
+  "time": "午前9:42",
+  "date": "2023年09月16日",
+  "timestamp": "2023-08-18T11:22:10.000Z",
+  "numRetweets": 96,
+  "numQuotes": 3,
+  "numLikes": 731,
+  "numBookmarks": 2,
+  "numReplies": 10,
+  "numImpressions": 17000,
+  "impressions": 17000,
+  "replies": []
+}

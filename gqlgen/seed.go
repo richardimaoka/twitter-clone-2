@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 
 	firebase "firebase.google.com/go/v4"
+	"github.com/richardimaoka/twitter-clone-2/gqlgen/database"
 )
 
 // type City struct {
@@ -40,6 +42,20 @@ type User struct {
 	ProfilePicture string `firestore:"profilePicture"`
 }
 
+func JsonRead(filePath string, v interface{}) error {
+	jsonBytes, err := os.ReadFile(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to read file %s, %s", filePath, err)
+	}
+
+	err = json.Unmarshal(jsonBytes, v)
+	if err != nil {
+		return fmt.Errorf("failed to unmarshal %s, %s", filePath, err)
+	}
+
+	return nil
+}
+
 func seed() {
 	ctx := context.Background()
 
@@ -64,6 +80,18 @@ func seed() {
 	res, err := client.Doc("users/richardimoaka").Set(ctx, u)
 	if err != nil {
 		log.Fatalf("failed to set user: %v\n", err)
+	}
+	fmt.Println("result: ", res)
+
+	var t database.Tweet
+	err = JsonRead("data/tweet.json", &t)
+	if err != nil {
+		log.Fatalf("failed to read tweet.json: %v\n", err)
+	}
+
+	res, err = client.Doc("tweets/1").Set(ctx, t)
+	if err != nil {
+		log.Fatalf("failed to set tweet: %v\n", err)
 	}
 
 	fmt.Println("result: ", res)
