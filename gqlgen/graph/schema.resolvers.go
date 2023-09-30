@@ -68,7 +68,7 @@ func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Twe
 }
 
 // Tweet is the resolver for the tweet field.
-func (r *queryResolver) Tweet(ctx context.Context, tweetID *string) (*model.Tweet, error) {
+func (r *queryResolver) Tweet(ctx context.Context, tweetID string) (*model.Tweet, error) {
 	user := auth.ForContext(ctx)
 	if user == nil {
 		log.Printf("anonymous user is viewing the tweet")

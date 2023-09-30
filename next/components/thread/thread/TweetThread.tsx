@@ -7,7 +7,7 @@ import { FragmentType, graphql, useFragment } from "@/libs/gql";
 
 const fragmentDefinition = graphql(`
   fragment TweetThread on Query {
-    tweet {
+    tweet(tweetId: "") {
       ...ThreadRootView
       replies {
         ...TweetView

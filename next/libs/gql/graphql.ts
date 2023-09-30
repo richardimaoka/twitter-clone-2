@@ -59,7 +59,7 @@ export type QueryTimelineArgs = {
 };
 
 export type QueryTweetArgs = {
-  tweetId?: InputMaybe<Scalars["ID"]["input"]>;
+  tweetId: Scalars["ID"]["input"];
 };
 
 export type Tweet = {
@@ -815,6 +815,13 @@ export const TweetThreadFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tweet" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "tweetId" },
+                value: { kind: "StringValue", value: "", block: false },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -1504,6 +1511,13 @@ export const StatusPageQueryDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tweet" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "tweetId" },
+                value: { kind: "StringValue", value: "", block: false },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -1801,6 +1815,13 @@ export const RootPageQueryDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tweet" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "tweetId" },
+                value: { kind: "StringValue", value: "", block: false },
+              },
+            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [

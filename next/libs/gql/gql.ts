@@ -27,7 +27,7 @@ const documents = {
     types.LikeTwDocument,
   "\n  fragment Reactions on Tweet {\n    id\n    numReplies\n    numRetweets\n    numQuotes\n    numLikes\n    numBookmarks\n    ...LikeButton\n  }\n":
     types.ReactionsFragmentDoc,
-  "\n  fragment TweetThread on Query {\n    tweet {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n":
+  '\n  fragment TweetThread on Query {\n    tweet(tweetId: "") {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n':
     types.TweetThreadFragmentDoc,
   "\n  fragment ReplyForm on User {\n    userName\n    ...ProfilePicture\n  }\n":
     types.ReplyFormFragmentDoc,
@@ -117,8 +117,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  fragment TweetThread on Query {\n    tweet {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n",
-): (typeof documents)["\n  fragment TweetThread on Query {\n    tweet {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n"];
+  source: '\n  fragment TweetThread on Query {\n    tweet(tweetId: "") {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n',
+): (typeof documents)['\n  fragment TweetThread on Query {\n    tweet(tweetId: "") {\n      ...ThreadRootView\n      replies {\n        ...TweetView\n      }\n    }\n    me {\n      ...ReplyForm\n    }\n  }\n'];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
