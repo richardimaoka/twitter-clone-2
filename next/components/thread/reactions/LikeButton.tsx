@@ -1,9 +1,10 @@
+"use client";
 import { FragmentType, graphql, useFragment } from "@/libs/gql";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import request from "graphql-request";
+import { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import request, { GraphQLClient } from "graphql-request";
-import { cookies } from "next/headers";
 
 const fragmentDefinition = graphql(`
   fragment LikeButton on Tweet {
@@ -27,19 +28,30 @@ interface Props {
 
 export function LikeButton(props: Props) {
   const fragment = useFragment(fragmentDefinition, props.fragment);
-  const url = "http://localhost:8080/query";
-  const cookieStore = cookies();
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
 
-  // authentication via cookies
-  const client = new GraphQLClient(url, {
-    headers: { cookie: cookieStore.toString() },
-  });
+  useEffect(() => {
+    if (fragment.numLikes) {
+      setNumLikes(fragment.numLikes);
+      setIsInitialized(true);
+    }
+  }, [fragment.numLikes]);
+
+  async function likeTweet() {
+    console.log("likeTweet");
+    const url = "http://localhost:8080/query";
+    const variables = { id: fragment.id };
+    const result = await request(url, mutationDefinition, variables);
+  }
 
   return (
     <div>
       <button className={styles.button}>
         <FontAwesomeIcon className={styles.icon} icon={faHeart} />
-        {fragment.numLikes && fragment.numLikes > 0 && (
+        {isInitialized ? (
+          <span className={styles.counts}>{numLikes}</span>
+        ) : (
           <span className={styles.counts}>{fragment.numLikes}</span>
         )}
       </button>
