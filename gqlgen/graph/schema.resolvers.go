@@ -97,6 +97,11 @@ func (r *queryResolver) Tweet(ctx context.Context, tweetID string) (*model.Tweet
 	} else {
 	}
 
+	if tweet == nil {
+		log.Printf("tweet not found")
+		return nil, fmt.Errorf("tweet not found")
+	}
+
 	////////////////////////////////////
 	// Permission check
 	////////////////////////////////////
