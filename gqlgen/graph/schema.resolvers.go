@@ -14,6 +14,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/auth"
+	"github.com/richardimaoka/twitter-clone-2/gqlgen/file"
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
@@ -69,6 +70,9 @@ func (r *mutationResolver) Like(ctx context.Context, tweetID string) (*model.Twe
 
 // Tweet is the resolver for the tweet field.
 func (r *queryResolver) Tweet(ctx context.Context, tweetID string) (*model.Tweet, error) {
+	////////////////////////////////////
+	// Get the user from the context
+	////////////////////////////////////
 	user := auth.ForContext(ctx)
 	if user == nil {
 		log.Printf("anonymous user is viewing the tweet")
@@ -76,25 +80,31 @@ func (r *queryResolver) Tweet(ctx context.Context, tweetID string) (*model.Tweet
 		log.Printf("user = %s is viewing the tweet", user.Name)
 	}
 
-	// log.Printf("sleeping for 2 seconds")
-	// time.Sleep(2 * time.Second)
-	bytes, err := os.ReadFile("data/tweet.json")
-	if err != nil {
-		return nil, err
+	////////////////////////////////////
+	// Retrieve data
+	////////////////////////////////////
+	//   time.Sleep(2 * time.Second)
+	var tweet *model.Tweet
+	var err error
+	if os.Getenv("USE_FILE_DATA") == "true" {
+		log.Printf("reading tweet from local file")
+
+		tweet, err = file.ReadTweet(tweetID)
+		if err != nil {
+			log.Printf("failed to read tweet %s, %s", tweetID, err)
+			return nil, fmt.Errorf("internal server error")
+		}
+	} else {
 	}
 
-	var tweet model.Tweet
-	err = json.Unmarshal(bytes, &tweet)
-	if err != nil {
-		log.Printf("Error in Tweet - %v", err)
-		return nil, fmt.Errorf("internal server error")
-	}
-
+	////////////////////////////////////
+	// Permission check
+	////////////////////////////////////
 	if !canViewTweet(user, tweet) {
 		return nil, fmt.Errorf("not authorized to see this tweet")
 	}
 
-	return &tweet, nil
+	return tweet, nil
 }
 
 // Timeline is the resolver for the timeline field.

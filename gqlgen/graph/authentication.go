@@ -5,7 +5,7 @@ import (
 	"github.com/richardimaoka/twitter-clone-2/gqlgen/graph/model"
 )
 
-func canViewTweet(viewer *auth.User, tweet model.Tweet) bool {
+func canViewTweet(viewer *auth.User, tweet *model.Tweet) bool {
 	// if tweet's user is nil, then better preserve privacy of the deleted user
 	if tweet.User == nil {
 		return false
