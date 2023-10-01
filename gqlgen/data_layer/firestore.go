@@ -27,3 +27,20 @@ func (f *FireStore) GetUser(ctx context.Context, userId string) (*User, error) {
 
 	return &user, nil
 }
+
+func (f *FireStore) GetTweet(ctx context.Context, tweetId string) (*Tweet, error) {
+	tweetRef := f.client.Doc("tweets/" + tweetId)
+
+	docSnap, err := tweetRef.Get(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get tweet: %v", err)
+	}
+
+	var tweet Tweet
+	err = docSnap.DataTo(&tweet)
+	if err != nil {
+		return nil, fmt.Errorf("failed to convert tweet: %v", err)
+	}
+
+	return &tweet, nil
+}
